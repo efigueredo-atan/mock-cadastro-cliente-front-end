@@ -1,0 +1,69 @@
+.cadastro-cliente-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-header {
+    width: 100vw;
+    border-bottom: 1px solid #ccc;
+}
+
+.cadastro-cliente-box {
+    padding: 2em;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.titulo-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.titulo-page h4 {
+    opacity: 0.5;
+}
+
+.titulo-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    color: #000;
+}
+
+.titulo-step h5 {
+    opacity: 0.5;
+}
+
+.titulo-step h2 {
+    opacity: 1;
+}
+
+.formulario-dados-pessoais {
+    display: grid;
+    grid-template-columns: repeat(2, calc((100% - 1em) / 2));
+    gap: 1em;
+}
+
+.entry {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.duas-colunas {
+    grid-column: 1 / span 2;
+}
+
+.botao-next {
+    margin-top: 1em;
+}

@@ -1,0 +1,94 @@
+<section class="cadastro-cliente-section">
+    <div class="page-header">
+        <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+    </div>
+    <div class="cadastro-cliente-box">
+        <div class="titulo-page">
+            <h1>Cadastro de cliente</h1>
+            <h4>Preencha o formulário de cadastro de cliente</h4>
+        </div>
+        <p-stepper [linear]="true">
+            <p-stepperPanel header="Dados pessoais">
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                    <div class="titulo-step">
+                        <h5>Passo 1</h5>
+                        <h2>Dados pessoais</h2>
+                    </div>
+                    <p-divider></p-divider>
+                    <form class="formulario-dados-pessoais">
+
+                        <div class="entry">
+                            <label for="nome">Nome</label>
+                            <input pInputText id="nome" />
+                        </div>
+                        <div class="entry">
+                            <label for="sobrenome">Sobrenome</label>
+                            <input pInputText id="sobrenome" />
+                        </div>
+                        <div class="entry">
+                            <label for="genero">Gênero</label>
+                            <p-selectButton id="genero" [options]="genero" [multiple]="false"
+                            optionLabel="name" optionValue="value" />
+                        </div>
+                        <div class="entry">
+                            <label for="data-nascimento">Data de nascimento</label>
+                            <p-calendar id="data-nascimento" />
+                        </div>
+                        <div class="entry">
+                            <label for="nome-social">Nome social</label>
+                            <input pInputText id="nome-social" />
+                        </div>
+
+                        <div class="entry duas-colunas">
+                            <label for="genero">Documento</label>
+                            <p-selectButton (onChange)="selecionarDocumento($event)" [options]="tipoDocumento"
+                                optionLabel="label" optionValue="documentoSelecionado" />
+                        </div>
+                        <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+                            <label for="cpf">CPF</label>
+                            <p-inputMask mask="999.999.999-99" />
+                        </div>
+                        <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+                            <label for="rg">RG</label>
+                            <p-inputMask mask="999.999.999-99" />
+                        </div>
+                        <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+                            <label for="cnpj">CNPJ</label>
+                            <p-inputMask mask="99.999.999/9999-99" />
+                        </div>
+                        <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+                            <label for="incricao-estadual">Incrição estadual</label>
+                            <p-inputNumber [useGrouping]="false" id="incricao-estadual" />
+                        </div>
+                        <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+                            <label for="orgao-publico">Orgão público</label>
+                            <input pInputText id="orgao-publico" />
+                        </div>
+
+
+
+                    </form>
+                    <div class="botao-next">
+                        <p-button class="botao-next" label="Avançar" icon="pi pi-arrow-right" iconPos="right" (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Contato">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                    let-index="index">
+                    <div class="flex flex-column h-12rem">
+                        <div
+                            class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium">
+                            Content II
+                        </div>
+                    </div>
+                    <div class="flex pt-4 justify-content-between">
+                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+        </p-stepper>
+    </div>
+</section>

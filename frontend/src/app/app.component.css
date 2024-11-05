@@ -1,0 +1,17 @@
+::ng-deep p-inputNumber, 
+::ng-deep p-inputMask, 
+::ng-deep .p-inputmask, 
+::ng-deep .p-inputnumber, 
+::ng-deep .p-calendar,
+::ng-deep p-divider {
+    width: 100%;
+}
+
+::ng-deep .p-breadcrumb {
+    border: none;
+}
+
+::ng-deep .p-button {
+    background-color: var(--bg1);
+    color: var(--text-color);
+}
