@@ -11,7 +11,11 @@
     border: none;
 }
 
-::ng-deep .p-button {
+::ng-deep .p-highlight {
     background-color: var(--bg1);
     color: var(--text-color);
+}
+
+::ng-deep .p-stepper-header {
+    background-color: transparent;
 }

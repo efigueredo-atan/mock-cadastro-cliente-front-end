@@ -31,6 +31,24 @@
     opacity: 0.5;
 }
 
+.stepper {
+    display: flex;
+    gap: 0.5em;
+    color: var(--text-color2);
+    opacity: 1;
+}
+
+.icone-stepper {
+    background-color: var(--bg1);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .titulo-step {
     display: flex;
     flex-direction: column;
@@ -60,10 +78,23 @@
     gap: 0.5em;
 }
 
+.entry-small-message {
+    color: var(--bg1);
+    font-weight: 500;
+}
+
 .duas-colunas {
     grid-column: 1 / span 2;
 }
 
 .botao-next {
     margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
 }
+
+::ng-deep .botao-next .p-button {
+    background-color: var(--bg1);
+    color: var(--text-color);
+}
+

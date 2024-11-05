@@ -8,11 +8,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CadastroClienteRoutingModule,
     DividerModule,
     BreadcrumbModule,
@@ -30,7 +32,8 @@ import { CalendarModule } from 'primeng/calendar';
     SelectButtonModule,
     InputNumberModule,
     InputMaskModule,
-    CalendarModule
-  ]
+    CalendarModule,
+    SharedModule
+]
 })
 export class CadastroClienteModule { }
