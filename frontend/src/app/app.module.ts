@@ -7,10 +7,18 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './componentes/header/header.component';
+import { ButtonModule } from 'primeng/button';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { BreadCrumbComponent } from './componentes/bread-crumb/bread-crumb.component';
+import { RodapeComponent } from './componentes/rodape/rodape.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    BreadCrumbComponent,
+    RodapeComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ButtonModule,
+    BreadcrumbModule
   ],
   providers: [
     provideClientHydration()

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { CadastroClienteRoutingModule } from './cadastro-cliente-routing.module';
 import { CadastroClienteComponent } from './componentes/page/cadastro-cliente/cadastro-cliente.component';
 import { DividerModule } from 'primeng/divider';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,7 +24,6 @@ import { SharedModule } from "../shared/shared.module";
     ReactiveFormsModule,
     CadastroClienteRoutingModule,
     DividerModule,
-    BreadcrumbModule,
     StepperModule,
     ButtonModule,
     InputTextModule,

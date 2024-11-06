@@ -7,11 +7,6 @@
     height: 100vh;
 }
 
-.page-header {
-    width: 100vw;
-    border-bottom: 1px solid #ccc;
-}
-
 .cadastro-cliente-box {
     padding: 2em;
     width: 800px;

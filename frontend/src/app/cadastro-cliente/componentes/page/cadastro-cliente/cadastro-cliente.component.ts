@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
 
@@ -11,8 +10,6 @@ import { Cliente, Genero } from '../../../../shared/types/types';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class CadastroClienteComponent implements OnInit {
-  public home: MenuItem = { icon: 'pi pi-home' };
-  public items: MenuItem[] = [{ label: 'Cliente' }, { label: 'Cadastro ' }];
   public tipoDocumento: any[] = [
     { label: 'CPF', documentoSelecionado: 'cpf' },
     { label: 'CNPJ', documentoSelecionado: 'cnpj' },
@@ -29,7 +26,7 @@ export class CadastroClienteComponent implements OnInit {
 
   public documentoSelecionado: string = null;
   public generoSelecionado: string = '';
-  public stepAtivo: number = 1;
+  public stepAtivo: number = 0;
 
   public formularioInformacoesPessoais!: FormGroup;
   public formularioInformacoesContato!: FormGroup;

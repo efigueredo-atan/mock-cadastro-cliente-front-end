@@ -19,3 +19,8 @@
 ::ng-deep .p-stepper-header {
     background-color: transparent;
 }
+
+.content {
+    position: absolute;
+    top: 91px;
+}

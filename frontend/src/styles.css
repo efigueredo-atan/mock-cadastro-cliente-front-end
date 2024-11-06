@@ -8,13 +8,20 @@
     --bg1: #990008;
     --text-color: #fff;
     --text-color2: #000;
+    --text-color3: #ddd;
+    --header-bg: #9A0008;
+    --bg2: #70340F;
 }
 
 * {
     font-family: "Open Sans", sans-serif;
 }
 
-body, h1, h2, h3, h4, h5 {
+html {
+    font-size: 14px;
+}
+
+body, h1, h2, h3, h4, h5, p {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

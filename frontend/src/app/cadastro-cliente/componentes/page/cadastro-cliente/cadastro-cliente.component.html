@@ -1,7 +1,4 @@
 <section class="cadastro-cliente-section">
-  <div class="page-header">
-    <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
-  </div>
   <div class="cadastro-cliente-box">
     <div class="titulo-page">
       <h1>Cadastro de cliente</h1>
@@ -105,7 +102,10 @@
           </form>
           <div class="botao-next">
             <p-button
-              [disabled]="!this.formularioInformacoesPessoais.valid || this.documentoSelecionado == null"
+              [disabled]="
+                !this.formularioInformacoesPessoais.valid ||
+                this.documentoSelecionado == null
+              "
               class="botao-next"
               label="Avançar"
               icon="pi pi-arrow-right"

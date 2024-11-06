@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.Emulated
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Cadastro de cliente';
+  constructor(private primengConfig: PrimeNGConfig) {}
+
+    ngOnInit() {
+        this.primengConfig.ripple = true;
+    }
 }
