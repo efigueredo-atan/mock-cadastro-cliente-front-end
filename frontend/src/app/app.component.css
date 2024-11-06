@@ -18,6 +18,8 @@
 
 ::ng-deep .p-stepper-header {
     background-color: transparent;
+    display: flex;
+    align-items: center;
 }
 
 .content {

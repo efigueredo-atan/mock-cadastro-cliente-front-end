@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
+import { validarDocumento } from '../../../../shared/validators/custom-validators';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -20,20 +26,20 @@ export class CadastroClienteComponent implements OnInit {
     { name: Genero.OUTRO, value: Genero.OUTRO.toString() },
   ];
 
-  public messages = [
-    { severity: 'warn', detail: 'Obrigatório' },
-];
+  public messages = [{ severity: 'warn', detail: 'Obrigatório' }];
 
-  public documentoSelecionado: string = null;
+  public documentoSelecionado: string = 'cpf';
   public generoSelecionado: string = '';
   public stepAtivo: number = 0;
 
   public formularioInformacoesPessoais!: FormGroup;
   public formularioInformacoesContato!: FormGroup;
+  public formularioDocumento!: FormGroup;
 
   constructor(private readonly formBuilder: FormBuilder) {}
 
   public ngOnInit(): void {
+    this.criarFormularioDocumentos();
     this.criarFormularioDadosPessoais();
     this.criarFormularioInformacoesContato();
   }
@@ -41,26 +47,24 @@ export class CadastroClienteComponent implements OnInit {
   public selecionarDocumento(event: SelectButtonChangeEvent) {
     this.documentoSelecionado = event.value;
 
-    if(this.documentoSelecionado == null) {
+    if (this.documentoSelecionado == null) {
       return;
     }
-    if(this.documentoSelecionado.toLocaleLowerCase() == "cpf") {
-      this.formularioInformacoesPessoais.removeControl("cnpj");
-      this.formularioInformacoesPessoais.removeControl("incricaoEstadual");
-      this.formularioInformacoesPessoais.removeControl("orgaoPublico");
-      this.formularioInformacoesPessoais.addControl('cpf', new FormControl(null, [Validators.required, Validators.minLength(11)]));
-      this.formularioInformacoesPessoais.addControl('rg', new FormControl(null, [Validators.required, Validators.minLength(11)]));
-    } else if(this.documentoSelecionado.toLocaleLowerCase() == 'cnpj') {
-      this.formularioInformacoesPessoais.removeControl("cpf");
-      this.formularioInformacoesPessoais.removeControl("rg");
-      this.formularioInformacoesPessoais.addControl('cnpj', new FormControl(null, Validators.required));
-      this.formularioInformacoesPessoais.addControl('incricaoEstadual', new FormControl(null, Validators.required));
-      this.formularioInformacoesPessoais.addControl('orgaoPublico', new FormControl(null, Validators.required));
+    if (this.documentoSelecionado.toLocaleLowerCase() == 'cpf') {
+      this.configurarFormularioParaCPF();
+    } else if (this.documentoSelecionado.toLocaleLowerCase() == 'cnpj') {
+      this.configurarFormularioParaCNPJ();
     }
   }
 
   public selecionarGenero(event: SelectButtonChangeEvent) {
     this.generoSelecionado = event.value;
+  }
+
+  public validarDocumento(): void {
+    console.log(this.formularioDocumento.valid)
+    console.log(this.formularioDocumento.value.cpf)
+    console.log(this.formularioDocumento)
   }
 
   private criarFormularioDadosPessoais(): void {
@@ -79,19 +83,40 @@ export class CadastroClienteComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
     });
   }
+
+  private criarFormularioDocumentos(): void {
+    this.formularioDocumento = this.formBuilder.group({
+      documentoSelecionado: ['cpf', Validators.required],
+      cpf: [null, [Validators.required, validarDocumento]],
+    });
+  }
+
+  private configurarFormularioParaCPF(): void {
+    this.formularioDocumento.removeControl('cnpj');
+    this.formularioDocumento.addControl(
+      'cpf',
+      new FormControl(null, [Validators.required])
+    );
+  }
+
+  private configurarFormularioParaCNPJ(): void {
+    this.formularioDocumento.removeControl('cpf');
+    this.formularioDocumento.addControl(
+      'cnpj',
+      new FormControl(null, Validators.required)
+    );
+  }
 }
 
-
-
-    // let cliente: Cliente = {
-    //   nome: this.formularioInformacoesPessoais.value.nome,
-    //   sobrenome: this.formularioInformacoesPessoais.value.sobrenome,
-    //   cpf: this.formularioInformacoesPessoais.value.cpf,
-    //   rg: this.formularioInformacoesPessoais.value.rg,
-    //   genero: this.formularioInformacoesPessoais.value.genero,
-    //   cnpj: this.formularioInformacoesPessoais.value.cnpj,
-    //   incricaoEstadual: this.formularioInformacoesPessoais.value.incricaoEstadual,
-    //   orgaoPublico: this.formularioInformacoesPessoais.value.nome,
-    //   dataNascimento: this.formularioInformacoesPessoais.value.dataNascimento,
-    //   contato: this.formularioInformacoesPessoais.value.contato,
-    // }
+// let cliente: Cliente = {
+//   nome: this.formularioInformacoesPessoais.value.nome,
+//   sobrenome: this.formularioInformacoesPessoais.value.sobrenome,
+//   cpf: this.formularioInformacoesPessoais.value.cpf,
+//   rg: this.formularioInformacoesPessoais.value.rg,
+//   genero: this.formularioInformacoesPessoais.value.genero,
+//   cnpj: this.formularioInformacoesPessoais.value.cnpj,
+//   incricaoEstadual: this.formularioInformacoesPessoais.value.incricaoEstadual,
+//   orgaoPublico: this.formularioInformacoesPessoais.value.nome,
+//   dataNascimento: this.formularioInformacoesPessoais.value.dataNascimento,
+//   contato: this.formularioInformacoesPessoais.value.contato,
+// }

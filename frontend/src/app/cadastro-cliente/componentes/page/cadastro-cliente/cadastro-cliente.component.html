@@ -28,18 +28,54 @@
           </div>
           <p-divider></p-divider>
           <form
-            [formGroup]="formularioInformacoesPessoais"
-            class="formulario-dados-pessoais"
+            [formGroup]="formularioDocumento"
+            class="formulario-documentos"
           >
-            <div class="entry">
+            <div class="campo-documentos">
+              <div class="entry entry-documento">
+                <label for="documentos">Documento</label>
+                <p-selectButton
+                  id="documentos"
+                  (onChange)="selecionarDocumento($event)"
+                  [options]="tipoDocumento"
+                  optionLabel="label"
+                  optionValue="documentoSelecionado"
+                  formControlName="documentoSelecionado"
+                  [allowEmpty]="false"
+                />
+              </div>
+              <div class="entry entry-campo-documento" *ngIf="documentoSelecionado == 'cpf'">
+                <label for="cpf">CPF</label>
+                <p-inputMask [autoClear]="false" formControlName="cpf" mask="999.999.999-99" />
+              </div>
+              <div class="entry entry-campo-documento" *ngIf="documentoSelecionado == 'cnpj'">
+                <label for="cnpj">CNPJ</label>
+                <p-inputMask formControlName="cnpj" mask="99.999.999/9999-99" />
+              </div>
+              <div class="button-consultar-documento">
+                <p-button
+                  [disabled]="
+                    !this.formularioDocumento.valid ||
+                    this.documentoSelecionado == null
+                  "
+                  class="botao-next"
+                  label="Consultar"
+                  icon="pi pi-arrow-right"
+                  iconPos="right"
+                  (onClick)="validarDocumento()"
+                />
+              </div>
+            </div>
+
+            <!-- <div class="entry">
               <label for="nome">Nome</label>
               <input formControlName="nome" pInputText id="nome" />
             </div>
             <div class="entry">
               <label for="sobrenome">Sobrenome</label>
               <input formControlName="sobrenome" pInputText id="sobrenome" />
-            </div>
-            <div class="entry">
+            </div> -->
+            <!-- <div class="entry">
               <label for="genero">Gênero</label>
               <p-selectButton
                 formControlName="genero"
@@ -60,28 +96,10 @@
             <div class="entry">
               <label for="nome-social">Nome social</label>
               <input formControlName="nomeSocial" pInputText id="nome-social" />
-            </div>
-
-            <div class="entry duas-colunas">
-              <label for="genero">Documento</label>
-              <p-selectButton
-                (onChange)="selecionarDocumento($event)"
-                [options]="tipoDocumento"
-                optionLabel="label"
-                optionValue="documentoSelecionado"
-              />
-            </div>
-            <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
-              <label for="cpf">CPF</label>
-              <p-inputMask formControlName="cpf" mask="999.999.999-99" />
-            </div>
-            <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+            </div> -->
+            <!-- <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
               <label for="rg">RG</label>
               <p-inputMask formControlName="rg" mask="999.999.999-99" />
-            </div>
-            <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
-              <label for="cnpj">CNPJ</label>
-              <p-inputMask formControlName="cnpj" mask="99.999.999/9999-99" />
             </div>
             <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
               <label for="incricao-estadual">Incrição estadual</label>
@@ -98,9 +116,9 @@
                 formControlName="orgaoPublico"
                 id="orgao-publico"
               />
-            </div>
+            </div> -->
           </form>
-          <div class="botao-next">
+          <!-- <div class="botao-next">
             <p-button
               [disabled]="
                 !this.formularioInformacoesPessoais.valid ||
@@ -112,7 +130,7 @@
               iconPos="right"
               (onClick)="nextCallback.emit()"
             />
-          </div>
+          </div> -->
         </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>
@@ -166,6 +184,21 @@
               (onClick)="nextCallback.emit()"
             />
           </div>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span class="icone-stepper">{{ index + 1 }}</span>
+            <h3>Estatísticas do cliente</h3>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
         </ng-template>
       </p-stepperPanel>
     </p-stepper>
