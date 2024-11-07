@@ -10,6 +10,10 @@ export let cliente: Cliente = {
     cnpj: "2311321311",
     incricaoEstadual: "1231",
     orgaoPublico: "12313",
-    contatos: null,
-    nomeSocial: "Maria Silva"
+    nomeSocial: "Maria Silva",
+    contatos: {
+        telefone1: '(11) 97625-6212',
+        telefone2: '(87) 99999-9999',
+        email: 'email@atan.com.br'
+    }
 }

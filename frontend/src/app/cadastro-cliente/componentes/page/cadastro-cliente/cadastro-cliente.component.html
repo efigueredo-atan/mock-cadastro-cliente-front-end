@@ -123,9 +123,7 @@
                   </div>
 
                   <p-button
-                    [disabled]="
-                      !dadosClienteEncontrados || modoEdicaoDados
-                    "
+                    [disabled]="!dadosClienteEncontrados || modoEdicaoDados"
                     class="botao botao-next-step"
                     label="Avançar"
                     icon="pi pi-arrow-right"
@@ -152,20 +150,11 @@
             >
               <div class="entry">
                 <label for="nome">Nome</label>
-                <input
-                
-                  formControlName="nome"
-                  pInputText
-                  id="nome"
-                />
+                <input formControlName="nome" pInputText id="nome" />
               </div>
               <div class="entry">
                 <label for="sobrenome">Sobrenome</label>
-                <input
-                  formControlName="sobrenome"
-                  pInputText
-                  id="sobrenome"
-                />
+                <input formControlName="sobrenome" pInputText id="sobrenome" />
               </div>
               <div class="entry">
                 <label for="data-nascimento">Data de nascimento</label>
@@ -184,10 +173,7 @@
               </div>
               <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
                 <label for="rg">RG</label>
-                <p-inputMask
-                  formControlName="rg"
-                  mask="999.999.999-99"
-                />
+                <p-inputMask formControlName="rg" mask="999.999.999-99" />
               </div>
               <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
                 <label for="incricao-estadual">Incrição estadual</label>
@@ -203,6 +189,26 @@
                   pInputText
                   formControlName="orgaoPublico"
                   id="orgao-publico"
+                />
+              </div>
+              <div class="entry">
+                <label for="email">E-mail</label>
+                <input pInputText formControlName="email" id="email" />
+              </div>
+              <div class="entry">
+                <label for="telefone1">Telefone 1</label>
+                <p-inputMask
+                  mask="(99) 99999-9999"
+                  formControlName="telefone1"
+                  id="telefone1"
+                />
+              </div>
+              <div class="entry">
+                <label for="telefone2">Telefone 2</label>
+                <p-inputMask
+                  mask="(99) 99999-9999"
+                  formControlName="telefone2"
+                  id="telefone2"
                 />
               </div>
 

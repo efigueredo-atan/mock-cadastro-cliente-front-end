@@ -39,7 +39,6 @@ export class CadastroClienteComponent implements OnInit {
 
   public formularioInformacoesPessoaisCPF!: FormGroup;
   public formularioInformacoesPessoaisCNPJ!: FormGroup;
-  public formularioInformacoesContato!: FormGroup;
   public formularioDocumento!: FormGroup;
 
   public formularioInformacoesPessoaisSelecionado: FormGroup = this.formularioInformacoesPessoaisCPF;
@@ -57,7 +56,6 @@ export class CadastroClienteComponent implements OnInit {
     this.criarFormularioTipoDocumento();
     this.criarFormularioDadosPessoaisCPF();
     this.criarFormularioDadosPessoaisCNPJ();
-    this.criarFormularioInformacoesContato();
     this.formularioInformacoesPessoaisSelecionado = this.formularioInformacoesPessoaisCPF;
     this.desabilitarCamposCPF();
     this.desabilitarCamposCNPJ();
@@ -134,7 +132,10 @@ export class CadastroClienteComponent implements OnInit {
       genero: [null, [Validators.required]],
       dataNascimento: [null, [Validators.required]],
       nomeSocial: [null],
-      rg: [null, [Validators.required, validarDocumentoCPF]]
+      rg: [null, [Validators.required, validarDocumentoCPF]],
+      telefone1: [null, [Validators.required]],
+      telefone2: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
     });
   }
 
@@ -146,13 +147,9 @@ export class CadastroClienteComponent implements OnInit {
       dataNascimento: [null, [Validators.required]],
       nomeSocial: [null],
       incricaoEstadual: [null, [Validators.required]],
-      orgaoPublico: [null, Validators.required]
-    });
-  }
-
-  private criarFormularioInformacoesContato(): void {
-    this.formularioInformacoesContato = this.formBuilder.group({
-      telefone: [null, [Validators.required]],
+      orgaoPublico: [null, Validators.required],
+      telefone1: [null, [Validators.required]],
+      telefone2: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
     });
   }
@@ -171,6 +168,9 @@ export class CadastroClienteComponent implements OnInit {
     this.formularioInformacoesPessoaisCPF.get('dataNascimento')?.disable();
     this.formularioInformacoesPessoaisCPF.get('genero')?.disable();
     this.formularioInformacoesPessoaisCPF.get('nomeSocial')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('email')?.disable();
   }
 
   private desabilitarCamposCNPJ(): void {
@@ -181,6 +181,9 @@ export class CadastroClienteComponent implements OnInit {
     this.formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.disable();
     this.formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.disable();
     this.formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
+    this.formularioInformacoesPessoaisCPF.get('email')?.disable();
   }
 
   private habilitarCamposCPF(): void {
@@ -190,6 +193,9 @@ export class CadastroClienteComponent implements OnInit {
     this.formularioInformacoesPessoaisCPF.get('dataNascimento')?.enable();
     this.formularioInformacoesPessoaisCPF.get('genero')?.enable();
     this.formularioInformacoesPessoaisCPF.get('nomeSocial')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('email')?.enable();
   }
 
   private habilitarCamposCNPJ(): void {
@@ -200,6 +206,9 @@ export class CadastroClienteComponent implements OnInit {
     this.formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.enable();
     this.formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.enable();
     this.formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
+    this.formularioInformacoesPessoaisCPF.get('email')?.enable();
   }
 
   private atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void { 
@@ -210,6 +219,9 @@ export class CadastroClienteComponent implements OnInit {
       genero: cliente.genero,
       nomeSocial: cliente.nomeSocial,
       rg: cliente.rg,
+      telefone1: cliente.contatos.telefone1,
+      telefone2: cliente.contatos.telefone2,
+      email: cliente.contatos.email
     });
   }
 
@@ -222,6 +234,9 @@ export class CadastroClienteComponent implements OnInit {
       nomeSocial: cliente.nomeSocial,
       incricaoEstadual: cliente.incricaoEstadual,
       orgaoPublico: cliente.orgaoPublico,
+      telefone1: cliente.contatos.telefone1,
+      telefone2: cliente.contatos.telefone2,
+      email: cliente.contatos.email
     });
   }
 }
