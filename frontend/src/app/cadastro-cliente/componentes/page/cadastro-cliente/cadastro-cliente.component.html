@@ -5,7 +5,7 @@
       <h4>Preencha o formulário de cadastro de cliente</h4>
     </div>
     <p-stepper [linear]="true" [(activeStep)]="stepAtivo">
-      <p-stepperPanel header="Dados pessoais">
+      <p-stepperPanel>
         <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
           <div class="stepper">
             <span *ngIf="index == stepAtivo" class="icone-stepper">{{
@@ -14,7 +14,7 @@
             <span *ngIf="index < stepAtivo" class="icone-stepper"
               ><i class="pi pi-check"></i
             ></span>
-            <h3>Informações pessoais</h3>
+            <h3>Buscar documento</h3>
           </div>
         </ng-template>
         <ng-template
@@ -22,122 +22,210 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
-          <div class="titulo-step">
-            <h5>Passo 1</h5>
-            <h2>Dados pessoais</h2>
-          </div>
-          <p-divider></p-divider>
-          <form
-            [formGroup]="formularioDocumento"
-            class="formulario-documentos"
-          >
-            <div class="campo-documentos">
-              <div class="entry entry-documento">
-                <label for="documentos">Documento</label>
-                <p-selectButton
-                  id="documentos"
-                  (onChange)="selecionarDocumento($event)"
-                  [options]="tipoDocumento"
-                  optionLabel="label"
-                  optionValue="documentoSelecionado"
-                  formControlName="documentoSelecionado"
-                  [allowEmpty]="false"
-                />
-              </div>
-              <div class="entry entry-campo-documento" *ngIf="documentoSelecionado == 'cpf'">
-                <label for="cpf">CPF</label>
-                <p-inputMask [autoClear]="false" formControlName="cpf" mask="999.999.999-99" />
-              </div>
-              <div class="entry entry-campo-documento" *ngIf="documentoSelecionado == 'cnpj'">
-                <label for="cnpj">CNPJ</label>
-                <p-inputMask formControlName="cnpj" mask="99.999.999/9999-99" />
-              </div>
-              <div class="button-consultar-documento">
-                <p-button
-                  [disabled]="
-                    !this.formularioDocumento.valid ||
-                    this.documentoSelecionado == null
-                  "
-                  class="botao-next"
-                  label="Consultar"
-                  icon="pi pi-arrow-right"
-                  iconPos="right"
-                  (onClick)="validarDocumento()"
-                />
-              </div>
+          <div class="step-content">
+            <div class="titulo-step">
+              <h5>Passo 1</h5>
+              <h2>Insira o documento do cliente</h2>
+              <p-divider></p-divider>
             </div>
+            <form
+              [formGroup]="formularioDocumento"
+              class="formulario-documentos"
+            >
+              <div class="campo-documentos">
+                <div class="entry entry-documento">
+                  <label for="documentos">Documento</label>
+                  <p-selectButton
+                    id="documentos"
+                    (onChange)="selecionarDocumento($event)"
+                    [options]="tipoDocumento"
+                    optionLabel="label"
+                    formControlName="documentoSelecionado"
+                    optionValue="documentoSelecionado"
+                    [allowEmpty]="false"
+                    [disabled]="consultandoDocumentos"
+                  />
+                </div>
+                <div
+                  class="entry entry-campo-documento"
+                  *ngIf="documentoSelecionado == 'cpf'"
+                >
+                  <label for="cpf">CPF</label>
+                  <p-inputMask
+                    [autoClear]="false"
+                    formControlName="cpf"
+                    mask="999.999.999-99"
+                    [disabled]="consultandoDocumentos"
+                  />
+                </div>
+                <div
+                  class="entry entry-campo-documento"
+                  *ngIf="documentoSelecionado == 'cnpj'"
+                >
+                  <label for="cnpj">CNPJ</label>
+                  <p-inputMask
+                    formControlName="cnpj"
+                    mask="99.999.999/9999-99"
+                    [disabled]="consultandoDocumentos"
+                  />
+                </div>
+                <div class="buttons-box">
+                  <div class="buttons-box-left">
+                    <p-button
+                      [disabled]="
+                        !this.formularioDocumento.valid ||
+                        this.documentoSelecionado == null
+                      "
+                      class="botao"
+                      [label]="
+                        consultandoDocumentos ? 'Consultando' : 'Consultar'
+                      "
+                      [icon]="
+                        consultandoDocumentos
+                          ? 'pi pi-spin pi-spinner'
+                          : 'pi pi-arrow-right'
+                      "
+                      iconPos="right"
+                      (onClick)="validarDocumento()"
+                    />
+                    <p-button
+                      *ngIf="consultandoDocumentos"
+                      label="Cancelar"
+                      class="botao"
+                      icon="pi pi-times"
+                      iconPos="right"
+                      (onClick)="consultandoDocumentos = false"
+                    />
+                    <p-button
+                      *ngIf="
+                        !consultandoDocumentos &&
+                        dadosClienteEncontrados &&
+                        !modoEdicaoDados
+                      "
+                      label="Editar"
+                      class="botao"
+                      icon="pi pi-pencil"
+                      iconPos="right"
+                      (onClick)="habilitarModoEdicao()"
+                    />
+                    <p-button
+                      *ngIf="
+                        !consultandoDocumentos &&
+                        dadosClienteEncontrados &&
+                        modoEdicaoDados
+                      "
+                      label="Salvar alterações"
+                      class="botao"
+                      icon="pi pi-save"
+                      iconPos="right"
+                      (onClick)="salvarAlteracoes()"
+                    />
+                  </div>
 
-            <!-- <div class="entry">
-              <label for="nome">Nome</label>
-              <input formControlName="nome" pInputText id="nome" />
-            </div>
-            <div class="entry">
-              <label for="sobrenome">Sobrenome</label>
-              <input formControlName="sobrenome" pInputText id="sobrenome" />
-            </div> -->
-            <!-- <div class="entry">
-              <label for="genero">Gênero</label>
-              <p-selectButton
-                formControlName="genero"
-                id="genero"
-                [options]="genero"
-                [multiple]="false"
-                optionLabel="name"
-                optionValue="value"
-              />
-            </div>
-            <div class="entry">
-              <label for="data-nascimento">Data de nascimento</label>
-              <p-calendar
-                formControlName="dataNascimento"
-                id="data-nascimento"
-              />
-            </div>
-            <div class="entry">
-              <label for="nome-social">Nome social</label>
-              <input formControlName="nomeSocial" pInputText id="nome-social" />
-            </div> -->
-            <!-- <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
-              <label for="rg">RG</label>
-              <p-inputMask formControlName="rg" mask="999.999.999-99" />
-            </div>
-            <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
-              <label for="incricao-estadual">Incrição estadual</label>
-              <p-inputNumber
-                formControlName="incricaoEstadual"
-                [useGrouping]="false"
-                id="incricao-estadual"
-              />
-            </div>
-            <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
-              <label for="orgao-publico">Orgão público</label>
-              <input
-                pInputText
-                formControlName="orgaoPublico"
-                id="orgao-publico"
-              />
-            </div> -->
-          </form>
-          <!-- <div class="botao-next">
-            <p-button
-              [disabled]="
-                !this.formularioInformacoesPessoais.valid ||
-                this.documentoSelecionado == null
-              "
-              class="botao-next"
-              label="Avançar"
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              (onClick)="nextCallback.emit()"
-            />
-          </div> -->
+                  <p-button
+                    [disabled]="
+                      !dadosClienteEncontrados || modoEdicaoDados
+                    "
+                    class="botao botao-next-step"
+                    label="Avançar"
+                    icon="pi pi-arrow-right"
+                    iconPos="right"
+                    (onClick)="nextCallback.emit()"
+                  />
+                </div>
+              </div>
+              <div class="skeleton" *ngIf="consultandoDocumentos">
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+              </div>
+            </form>
+            <form
+              class="formulario-informacoes-pessoais"
+              [formGroup]="formularioInformacoesPessoaisSelecionado"
+              *ngIf="cliente && dadosClienteEncontrados"
+            >
+              <div class="entry">
+                <label for="nome">Nome</label>
+                <input
+                
+                  formControlName="nome"
+                  pInputText
+                  id="nome"
+                />
+              </div>
+              <div class="entry">
+                <label for="sobrenome">Sobrenome</label>
+                <input
+                  formControlName="sobrenome"
+                  pInputText
+                  id="sobrenome"
+                />
+              </div>
+              <div class="entry">
+                <label for="data-nascimento">Data de nascimento</label>
+                <p-calendar
+                  formControlName="dataNascimento"
+                  id="data-nascimento"
+                />
+              </div>
+              <div class="entry">
+                <label for="nome-social">Nome social</label>
+                <input
+                  formControlName="nomeSocial"
+                  pInputText
+                  id="nome-social"
+                />
+              </div>
+              <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+                <label for="rg">RG</label>
+                <p-inputMask
+                  formControlName="rg"
+                  mask="999.999.999-99"
+                />
+              </div>
+              <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+                <label for="incricao-estadual">Incrição estadual</label>
+                <p-inputNumber
+                  formControlName="incricaoEstadual"
+                  [useGrouping]="false"
+                  id="incricao-estadual"
+                />
+              </div>
+              <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+                <label for="orgao-publico">Orgão público</label>
+                <input
+                  pInputText
+                  formControlName="orgaoPublico"
+                  id="orgao-publico"
+                />
+              </div>
+
+              <div class="entry entry-genero">
+                <label for="genero">Gênero</label>
+                <p-selectButton
+                  formControlName="genero"
+                  id="genero"
+                  [options]="genero"
+                  [multiple]="false"
+                  optionLabel="name"
+                  optionValue="value"
+                />
+              </div>
+            </form>
+          </div>
         </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>
         <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
           <div class="stepper">
             <span class="icone-stepper">{{ index + 1 }}</span>
-            <h3>Contato</h3>
+            <h3>Endereço</h3>
           </div>
         </ng-template>
         <ng-template
@@ -146,44 +234,6 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
-          <div class="titulo-step">
-            <h5>Passo 2</h5>
-            <h2>Contatos</h2>
-          </div>
-          <p-divider></p-divider>
-          <form
-            [formGroup]="formularioInformacoesContato"
-            class="formulario-dados-pessoais"
-          >
-            <div class="entry">
-              <label for="email">E-mail</label>
-              <input formControlName="email" pInputText id="email" />
-            </div>
-            <div class="entry">
-              <label for="telefone">Telefone</label>
-              <p-inputMask
-                formControlName="telefone"
-                id="telefone"
-                mask="(99) 99999-9999"
-              />
-            </div>
-          </form>
-          <div class="botao-next">
-            <p-button
-              class="botao-next"
-              label="Retornar"
-              icon="pi pi-arrow-left"
-              iconPos="left"
-              (onClick)="prevCallback.emit()"
-            />
-            <p-button
-              class="botao-next"
-              label="Avançar"
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              (onClick)="nextCallback.emit()"
-            />
-          </div>
         </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>

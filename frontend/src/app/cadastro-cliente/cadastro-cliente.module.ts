@@ -13,6 +13,9 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../shared/shared.module";
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,12 @@ import { SharedModule } from "../shared/shared.module";
     InputNumberModule,
     InputMaskModule,
     CalendarModule,
-    SharedModule
-]
+    SharedModule,
+    ToastModule,
+    SkeletonModule
+],
+  providers: [
+    MessageService
+  ]
 })
 export class CadastroClienteModule { }

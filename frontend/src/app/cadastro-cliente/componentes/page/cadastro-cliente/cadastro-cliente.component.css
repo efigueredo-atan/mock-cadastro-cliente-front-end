@@ -60,10 +60,16 @@
     opacity: 1;
 }
 
+.step-content {
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+}
+
 .formulario-documentos {
     display: grid;
     grid-template-columns: repeat(3, calc((100% - 2em) / 3));
-    gap: 1em;
+    gap: 2em;
 }
 
 .campo-documentos {
@@ -93,18 +99,41 @@
     font-weight: 500;
 }
 
-.button-consultar-documento { 
+.buttons-box { 
     width: 100%;
-}
-
-.botao-next {
-    margin-top: 1em;
     display: flex;
     justify-content: space-between;
+    gap: 1em;
 }
 
-::ng-deep .botao-next .p-button {
+.buttons-box-left {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-start;
+}
+
+.botao-next-step {
+    justify-self: flex-end;
+}
+
+.skeleton {
+    grid-column: 1 / span 3;
+    display: grid;
+    grid-template-columns: repeat(4, calc((100% - 3em) / 4));
+    gap: 1em;
+}
+
+.formulario-informacoes-pessoais {
+    display: grid;
+    grid-template-columns: repeat(4, calc((100% - 3em) / 4));
+    gap: 1em;
+}
+
+.entry-genero {
+    grid-column:  span 2;
+}
+
+::ng-deep .botao .p-button {
     background-color: var(--bg1);
     color: var(--text-color);
 }
-
