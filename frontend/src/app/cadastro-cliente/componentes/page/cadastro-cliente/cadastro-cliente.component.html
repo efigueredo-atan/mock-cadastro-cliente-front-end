@@ -57,6 +57,7 @@
                     mask="999.999.999-99"
                     [disabled]="consultandoDocumentos"
                   />
+                  <small *ngIf="erroFormularioDocumento.errorCPF" class="error-small">{{ erroFormularioDocumento.mensagem }}</small>
                 </div>
                 <div
                   class="entry entry-campo-documento"
@@ -68,6 +69,7 @@
                     mask="99.999.999/9999-99"
                     [disabled]="consultandoDocumentos"
                   />
+                  <small *ngIf="erroFormularioDocumento.errorCNPJ" class="error-small">{{ erroFormularioDocumento.mensagem }}</small>
                 </div>
                 <div class="buttons-box">
                   <div class="buttons-box-left">
@@ -246,7 +248,7 @@
         <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
           <div class="stepper">
             <span class="icone-stepper">{{ index + 1 }}</span>
-            <h3>Estatísticas do cliente</h3>
+            <h3>Histórico do cliente</h3>
           </div>
         </ng-template>
         <ng-template

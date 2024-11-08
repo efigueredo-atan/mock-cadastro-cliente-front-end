@@ -36,7 +36,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     CalendarModule,
     SharedModule,
     ToastModule,
-    SkeletonModule
+    SkeletonModule,
+    SharedModule
 ],
   providers: [
     MessageService

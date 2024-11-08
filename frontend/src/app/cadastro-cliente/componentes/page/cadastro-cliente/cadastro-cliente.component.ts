@@ -10,9 +10,11 @@ import { Cliente, Genero } from '../../../../shared/types/types';
 import {
   validarDocumentoCNPJ,
   validarDocumentoCPF,
+  validarDocumentoCPFValido,
 } from '../../../../shared/validators/custom-validators';
 import { MessageService } from 'primeng/api';
 import { cliente } from '../../../../shared/cliente-mock';
+import { isValidCPF, validCNPJ } from '../../../../shared/util/fuctions';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -41,11 +43,17 @@ export class CadastroClienteComponent implements OnInit {
   public formularioInformacoesPessoaisCNPJ!: FormGroup;
   public formularioDocumento!: FormGroup;
 
-  public formularioInformacoesPessoaisSelecionado: FormGroup = this.formularioInformacoesPessoaisCPF;
+  public formularioInformacoesPessoaisSelecionado: FormGroup =
+    this.formularioInformacoesPessoaisCPF;
 
   public consultandoDocumentos = false;
   public dadosClienteEncontrados = false;
   public modoEdicaoDados = false;
+  public erroFormularioDocumento = {
+    errorCPF: false,
+    errorCNPJ: false,
+    mensagem: '',
+  };
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -56,14 +64,15 @@ export class CadastroClienteComponent implements OnInit {
     this.criarFormularioTipoDocumento();
     this.criarFormularioDadosPessoaisCPF();
     this.criarFormularioDadosPessoaisCNPJ();
-    this.formularioInformacoesPessoaisSelecionado = this.formularioInformacoesPessoaisCPF;
+    this.formularioInformacoesPessoaisSelecionado =
+      this.formularioInformacoesPessoaisCPF;
     this.desabilitarCamposCPF();
     this.desabilitarCamposCNPJ();
   }
 
   public habilitarModoEdicao(): void {
     this.modoEdicaoDados = true;
-    if(this.documentoSelecionado == 'cpf') {
+    if (this.documentoSelecionado == 'cpf') {
       this.habilitarCamposCPF();
     } else {
       this.habilitarCamposCNPJ();
@@ -72,7 +81,7 @@ export class CadastroClienteComponent implements OnInit {
 
   public salvarAlteracoes(): void {
     this.modoEdicaoDados = false;
-    if(this.documentoSelecionado == 'cpf') {
+    if (this.documentoSelecionado == 'cpf') {
       this.desabilitarCamposCPF();
     } else {
       this.desabilitarCamposCNPJ();
@@ -82,37 +91,86 @@ export class CadastroClienteComponent implements OnInit {
   public validarDocumento(): void {
     // Validar no phroteus se existe usuario
     // Se nao houver obter dados na API da receita federal
+    if (this.validarAutencidadeDocumento()) {
+      this.consultandoDocumentos = true;
+      this.dadosClienteEncontrados = false;
+      setTimeout(() => {
+        this.consultandoDocumentos = false;
+        this.dadosClienteEncontrados = true;
+        this.cliente = cliente;
+        if (this.documentoSelecionado == 'cpf') {
+          this.atualizarFormularioInformacoesPessoaisCPF(this.cliente);
+        } else {
+          this.atualizarFormularioInformacoesPessoaisCNPJ(this.cliente);
+        }
+      }, 1000);
+    }
+  }
 
-    this.consultandoDocumentos = true;
-    this.dadosClienteEncontrados = false;
-    setTimeout(() => {
-      this.consultandoDocumentos = false;
-      this.dadosClienteEncontrados = true;
-      this.cliente = cliente;
-      if(this.documentoSelecionado == 'cpf') {
-        this.atualizarFormularioInformacoesPessoaisCPF(this.cliente);
-      } else {
-        this.atualizarFormularioInformacoesPessoaisCNPJ(this.cliente);
-      }
-      console.log(this.formularioInformacoesPessoaisSelecionado)
-      console.log(this.formularioInformacoesPessoaisSelecionado.valid)
-    }, 1000);
+  private validarAutencidadeDocumento(): boolean {
+    if (this.documentoSelecionado == 'cpf') {
+      return this.validarCPF(this.formularioDocumento.get('cpf').value);
+    } else {
+      return this.validarCNPJ(this.formularioDocumento.get('cnpj').value);
+    }
+  }
+
+  private validarCPF(cpf: string): boolean {
+    if (!isValidCPF(cpf)) {
+      this.erroFormularioDocumento = {
+        errorCPF: true,
+        errorCNPJ: false,
+        mensagem: '*CPF inválido',
+      };
+      this.formularioDocumento.get('cpf').reset();
+      return false;
+    }
+    this.resetarObjetoErroDocumento();
+    return true;
+  }
+
+  private validarCNPJ(cnpj: string): boolean {
+    if (!validCNPJ(cnpj)) {
+      this.erroFormularioDocumento = {
+        errorCPF: false,
+        errorCNPJ: true,
+        mensagem: '*CNPJ inválido',
+      };
+      this.formularioDocumento.get('cnpj').reset();
+      return false;
+    }
+    this.resetarObjetoErroDocumento();
+    return true;
+  }
+
+  private resetarObjetoErroDocumento(): void {
+    this.erroFormularioDocumento = {
+      errorCPF: false,
+      errorCNPJ: false,
+      mensagem: '',
+    };
   }
 
   public selecionarDocumento(event: SelectButtonChangeEvent) {
     this.documentoSelecionado = event.value;
     this.formularioDocumento.value.documentoSelecionado = event.value;
     this.cliente = null;
+    this.resetarObjetoErroDocumento();
     this.dadosClienteEncontrados = false;
-    if(this.documentoSelecionado == 'cpf') {
-      this.formularioInformacoesPessoaisSelecionado = this.formularioInformacoesPessoaisCPF;
+    if (this.documentoSelecionado == 'cpf') {
+      this.formularioInformacoesPessoaisSelecionado =
+        this.formularioInformacoesPessoaisCPF;
       this.formularioDocumento.removeControl('cnpj');
       this.formularioDocumento.addControl(
         'cpf',
-        new FormControl(null, [Validators.required, validarDocumentoCPF])
+        new FormControl(null, [
+          Validators.required,
+          validarDocumentoCPF
+        ])
       );
     } else {
-      this.formularioInformacoesPessoaisSelecionado = this.formularioInformacoesPessoaisCNPJ;
+      this.formularioInformacoesPessoaisSelecionado =
+        this.formularioInformacoesPessoaisCNPJ;
       this.formularioDocumento.removeControl('cpf');
       this.formularioDocumento.addControl(
         'cnpj',
@@ -157,7 +215,7 @@ export class CadastroClienteComponent implements OnInit {
   private criarFormularioTipoDocumento(): void {
     this.formularioDocumento = this.formBuilder.group({
       cpf: [null, [validarDocumentoCPF]],
-      documentoSelecionado: ['cpf', [Validators.required]]
+      documentoSelecionado: ['cpf', [Validators.required]],
     });
   }
 
@@ -211,7 +269,7 @@ export class CadastroClienteComponent implements OnInit {
     this.formularioInformacoesPessoaisCPF.get('email')?.enable();
   }
 
-  private atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void { 
+  private atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void {
     this.formularioInformacoesPessoaisCPF.patchValue({
       nome: cliente.nome,
       sobrenome: cliente.sobrenome,
@@ -221,7 +279,7 @@ export class CadastroClienteComponent implements OnInit {
       rg: cliente.rg,
       telefone1: cliente.contatos.telefone1,
       telefone2: cliente.contatos.telefone2,
-      email: cliente.contatos.email
+      email: cliente.contatos.email,
     });
   }
 
@@ -236,7 +294,7 @@ export class CadastroClienteComponent implements OnInit {
       orgaoPublico: cliente.orgaoPublico,
       telefone1: cliente.contatos.telefone1,
       telefone2: cliente.contatos.telefone2,
-      email: cliente.contatos.email
+      email: cliente.contatos.email,
     });
   }
 }
