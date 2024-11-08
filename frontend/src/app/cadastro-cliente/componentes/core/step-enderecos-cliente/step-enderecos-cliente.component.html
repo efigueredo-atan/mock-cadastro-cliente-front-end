@@ -17,15 +17,15 @@
       </div>
       <div class="botoes-right">
         <p-button
-        (onClick)="emitirEventoVoltarStepper()"
+          (onClick)="emitirEventoVoltarStepper()"
           label="Voltar"
           class="botao"
           icon="pi pi-arrow-left"
           iconPos="right"
         />
         <p-button
-        [disabled]="!enderecoSelecionado"
-        (onClick)="emitirEventoAvancarStepper()"
+          [disabled]="!enderecoSelecionado"
+          (onClick)="emitirEventoAvancarStepper()"
           label="Avançar"
           class="botao"
           icon="pi pi-arrow-right"
@@ -44,18 +44,7 @@
     </div>
   </div>
 </div>
-<p-dialog header="Edit Profile" [modal]="true" [(visible)]="modalAdicionarEditarEnderecoVisivel">
-    <span class="p-text-secondary block mb-5">Update your information.</span>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Username</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="modalAdicionarEditarEnderecoVisivel = false" />
-        <p-button label="Save" (onClick)="modalAdicionarEditarEnderecoVisivel = false" />
-    </div>
-</p-dialog>
+<app-modal-editar-adicionar-endereco
+  (eventoFecharDialog)="fecharDialogAdicionarEndereco()"
+  [visivel]="modalAdicionarEditarEnderecoVisivel"
+></app-modal-editar-adicionar-endereco>

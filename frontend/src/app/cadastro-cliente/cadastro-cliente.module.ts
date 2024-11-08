@@ -23,6 +23,7 @@ import { EnderecoTabelaComponent } from './componentes/core/endereco-tabela/ende
 import { TooltipModule } from 'primeng/tooltip';
 import { ModalEditarAdicionarEnderecoComponent } from './componentes/core/modal-editar-adicionar-endereco/modal-editar-adicionar-endereco.component';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DialogModule } from 'primeng/dialog';
     SkeletonModule,
     SharedModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    DropdownModule,
 ],
   providers: [
     MessageService

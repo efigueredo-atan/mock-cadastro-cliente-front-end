@@ -13,12 +13,6 @@
     gap: 1em;
 }
 
-.entry {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-
 .entry-documento {
     width: 190px;
 }

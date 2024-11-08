@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from './componentes/bread-crumb/bread-crumb.component';
 import { RodapeComponent } from './componentes/rodape/rodape.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RodapeComponent } from './componentes/rodape/rodape.component';
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()

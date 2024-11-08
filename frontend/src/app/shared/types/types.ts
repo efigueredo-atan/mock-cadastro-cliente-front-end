@@ -45,7 +45,7 @@ export enum TiposToastMensssages {
   CONTRAST = 'constrast',
 }
 
-const ufs = [
+export const ufs = [
   'AC',
   'AL',
   'AP',
@@ -74,3 +74,20 @@ const ufs = [
   'SE',
   'TO',
 ];
+
+export interface ViaCepResponse {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  unidade: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  estado: string;
+  regiao: string;
+  ibge: string;
+  gia: string;
+  ddd: string;
+  siafi: string;
+  erro: string;
+}

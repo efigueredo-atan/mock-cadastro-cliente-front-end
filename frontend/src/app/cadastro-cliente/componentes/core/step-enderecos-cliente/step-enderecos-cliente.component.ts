@@ -30,4 +30,8 @@ export class StepEnderecosClienteComponent {
   public abrirDialogAdicionarEndereco(): void {
     this.modalAdicionarEditarEnderecoVisivel = true;
   }
+
+  public fecharDialogAdicionarEndereco(): void {
+    this.modalAdicionarEditarEnderecoVisivel = false;
+  }
 }
