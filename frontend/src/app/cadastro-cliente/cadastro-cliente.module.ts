@@ -16,10 +16,16 @@ import { SharedModule } from "../shared/shared.module";
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
+import { StepInformacoesPessoaisClienteComponent } from './componentes/core/step-informacoes-pessoais-cliente/step-informacoes-pessoais-cliente.component';
+import { StepEnderecosClienteComponent } from './componentes/core/step-enderecos-cliente/step-enderecos-cliente.component';
+import { StepHistoricoClienteComponent } from './componentes/core/step-historico-cliente/step-historico-cliente.component';
 
 @NgModule({
   declarations: [
-    CadastroClienteComponent
+    CadastroClienteComponent,
+    StepInformacoesPessoaisClienteComponent,
+    StepEnderecosClienteComponent,
+    StepHistoricoClienteComponent
   ],
   imports: [
     CommonModule,
