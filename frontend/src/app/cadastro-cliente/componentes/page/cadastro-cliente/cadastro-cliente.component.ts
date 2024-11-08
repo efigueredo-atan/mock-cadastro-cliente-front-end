@@ -15,6 +15,8 @@ import {
 import { MessageService } from 'primeng/api';
 import { cliente } from '../../../../shared/cliente-mock';
 import { isValidCPF, validCNPJ } from '../../../../shared/util/fuctions';
+import { FormCadastroClienteService } from '../../../services/form.service';
+import { ValidadorDocumentosService } from '../../../services/validador-documentos.service';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -42,7 +44,6 @@ export class CadastroClienteComponent implements OnInit {
   public formularioInformacoesPessoaisCPF!: FormGroup;
   public formularioInformacoesPessoaisCNPJ!: FormGroup;
   public formularioDocumento!: FormGroup;
-
   public formularioInformacoesPessoaisSelecionado: FormGroup =
     this.formularioInformacoesPessoaisCPF;
 
@@ -56,42 +57,38 @@ export class CadastroClienteComponent implements OnInit {
   };
 
   constructor(
-    private readonly formBuilder: FormBuilder,
-    private messageService: MessageService
+    private readonly formCadastroClienteService: FormCadastroClienteService,
+    private readonly validadorDocumentosService: ValidadorDocumentosService
   ) {}
 
   public ngOnInit(): void {
-    this.criarFormularioTipoDocumento();
-    this.criarFormularioDadosPessoaisCPF();
-    this.criarFormularioDadosPessoaisCNPJ();
+    this.obterInstanciasDeFormularios();
     this.formularioInformacoesPessoaisSelecionado =
       this.formularioInformacoesPessoaisCPF;
-    this.desabilitarCamposCPF();
-    this.desabilitarCamposCNPJ();
   }
 
   public habilitarModoEdicao(): void {
     this.modoEdicaoDados = true;
     if (this.documentoSelecionado == 'cpf') {
-      this.habilitarCamposCPF();
+      this.formCadastroClienteService.habilitarCamposCPF();
     } else {
-      this.habilitarCamposCNPJ();
+      this.formCadastroClienteService.habilitarCamposCNPJ();
     }
   }
 
   public salvarAlteracoes(): void {
     this.modoEdicaoDados = false;
     if (this.documentoSelecionado == 'cpf') {
-      this.desabilitarCamposCPF();
+      this.formCadastroClienteService.desabilitarCamposCPF();
     } else {
-      this.desabilitarCamposCNPJ();
+      this.formCadastroClienteService.desabilitarCamposCNPJ();
     }
   }
 
   public validarDocumento(): void {
     // Validar no phroteus se existe usuario
     // Se nao houver obter dados na API da receita federal
-    if (this.validarAutencidadeDocumento()) {
+    if (!this.houveErroValidacaoDocumentos()) {
       this.consultandoDocumentos = true;
       this.dadosClienteEncontrados = false;
       setTimeout(() => {
@@ -99,56 +96,30 @@ export class CadastroClienteComponent implements OnInit {
         this.dadosClienteEncontrados = true;
         this.cliente = cliente;
         if (this.documentoSelecionado == 'cpf') {
-          this.atualizarFormularioInformacoesPessoaisCPF(this.cliente);
+          this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCPF(
+            this.cliente
+          );
         } else {
-          this.atualizarFormularioInformacoesPessoaisCNPJ(this.cliente);
+          this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCNPJ(
+            this.cliente
+          );
         }
       }, 1000);
-    }
-  }
-
-  private validarAutencidadeDocumento(): boolean {
-    if (this.documentoSelecionado == 'cpf') {
-      return this.validarCPF(this.formularioDocumento.get('cpf').value);
     } else {
-      return this.validarCNPJ(this.formularioDocumento.get('cnpj').value);
-    }
-  }
-
-  private validarCPF(cpf: string): boolean {
-    if (!isValidCPF(cpf)) {
-      this.erroFormularioDocumento = {
-        errorCPF: true,
-        errorCNPJ: false,
-        mensagem: '*CPF inválido',
-      };
       this.formularioDocumento.get('cpf').reset();
-      return false;
-    }
-    this.resetarObjetoErroDocumento();
-    return true;
-  }
-
-  private validarCNPJ(cnpj: string): boolean {
-    if (!validCNPJ(cnpj)) {
-      this.erroFormularioDocumento = {
-        errorCPF: false,
-        errorCNPJ: true,
-        mensagem: '*CNPJ inválido',
-      };
       this.formularioDocumento.get('cnpj').reset();
-      return false;
     }
-    this.resetarObjetoErroDocumento();
-    return true;
   }
 
-  private resetarObjetoErroDocumento(): void {
-    this.erroFormularioDocumento = {
-      errorCPF: false,
-      errorCNPJ: false,
-      mensagem: '',
-    };
+  public removerInformacoesClienteSeInputForAlteradoEClienteEncontrado(event: any): void {
+    if(this.dadosClienteEncontrados) {
+      this.resetarCliente();
+    }
+  }
+
+  private resetarCliente(): void {
+    this.cliente = null;
+    this.dadosClienteEncontrados = false;
   }
 
   public selecionarDocumento(event: SelectButtonChangeEvent) {
@@ -163,10 +134,7 @@ export class CadastroClienteComponent implements OnInit {
       this.formularioDocumento.removeControl('cnpj');
       this.formularioDocumento.addControl(
         'cpf',
-        new FormControl(null, [
-          Validators.required,
-          validarDocumentoCPF
-        ])
+        new FormControl(null, [Validators.required, validarDocumentoCPF])
       );
     } else {
       this.formularioInformacoesPessoaisSelecionado =
@@ -183,119 +151,33 @@ export class CadastroClienteComponent implements OnInit {
     this.generoSelecionado = event.value;
   }
 
-  private criarFormularioDadosPessoaisCPF(): void {
-    this.formularioInformacoesPessoaisCPF = this.formBuilder.group({
-      nome: [null, [Validators.required]],
-      sobrenome: [null, [Validators.required]],
-      genero: [null, [Validators.required]],
-      dataNascimento: [null, [Validators.required]],
-      nomeSocial: [null],
-      rg: [null, [Validators.required, validarDocumentoCPF]],
-      telefone1: [null, [Validators.required]],
-      telefone2: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-    });
+  private resetarObjetoErroDocumento(): void {
+    this.erroFormularioDocumento =
+      this.validadorDocumentosService.objetoErroFormularioDocumentoVazio();
   }
 
-  private criarFormularioDadosPessoaisCNPJ(): void {
-    this.formularioInformacoesPessoaisCNPJ = this.formBuilder.group({
-      nome: [null, [Validators.required]],
-      sobrenome: [null, [Validators.required]],
-      genero: [null, [Validators.required]],
-      dataNascimento: [null, [Validators.required]],
-      nomeSocial: [null],
-      incricaoEstadual: [null, [Validators.required]],
-      orgaoPublico: [null, Validators.required],
-      telefone1: [null, [Validators.required]],
-      telefone2: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-    });
+  private obterInstanciasDeFormularios(): void {
+    this.formularioDocumento =
+      this.formCadastroClienteService.formularioDocumento;
+    this.formularioInformacoesPessoaisCPF =
+      this.formCadastroClienteService.formularioInformacoesPessoaisCPF;
+    this.formularioInformacoesPessoaisCNPJ =
+      this.formCadastroClienteService.formularioInformacoesPessoaisCNPJ;
   }
 
-  private criarFormularioTipoDocumento(): void {
-    this.formularioDocumento = this.formBuilder.group({
-      cpf: [null, [validarDocumentoCPF]],
-      documentoSelecionado: ['cpf', [Validators.required]],
-    });
-  }
-
-  private desabilitarCamposCPF(): void {
-    this.formularioInformacoesPessoaisCPF.get('nome')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('sobrenome')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('rg')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('dataNascimento')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('genero')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('nomeSocial')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('email')?.disable();
-  }
-
-  private desabilitarCamposCNPJ(): void {
-    this.formularioInformacoesPessoaisCNPJ.get('nome')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('sobrenome')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('dataNascimento')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('genero')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.disable();
-    this.formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
-    this.formularioInformacoesPessoaisCPF.get('email')?.disable();
-  }
-
-  private habilitarCamposCPF(): void {
-    this.formularioInformacoesPessoaisCPF.get('nome')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('sobrenome')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('rg')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('dataNascimento')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('genero')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('nomeSocial')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('email')?.enable();
-  }
-
-  private habilitarCamposCNPJ(): void {
-    this.formularioInformacoesPessoaisCNPJ.get('nome')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('sobrenome')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('dataNascimento')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('genero')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.enable();
-    this.formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
-    this.formularioInformacoesPessoaisCPF.get('email')?.enable();
-  }
-
-  private atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void {
-    this.formularioInformacoesPessoaisCPF.patchValue({
-      nome: cliente.nome,
-      sobrenome: cliente.sobrenome,
-      dataNascimento: cliente.dataNascimento,
-      genero: cliente.genero,
-      nomeSocial: cliente.nomeSocial,
-      rg: cliente.rg,
-      telefone1: cliente.contatos.telefone1,
-      telefone2: cliente.contatos.telefone2,
-      email: cliente.contatos.email,
-    });
-  }
-
-  private atualizarFormularioInformacoesPessoaisCNPJ(cliente: Cliente): void {
-    this.formularioInformacoesPessoaisCNPJ.patchValue({
-      nome: cliente.nome,
-      sobrenome: cliente.sobrenome,
-      dataNascimento: cliente.dataNascimento,
-      genero: cliente.genero,
-      nomeSocial: cliente.nomeSocial,
-      incricaoEstadual: cliente.incricaoEstadual,
-      orgaoPublico: cliente.orgaoPublico,
-      telefone1: cliente.contatos.telefone1,
-      telefone2: cliente.contatos.telefone2,
-      email: cliente.contatos.email,
-    });
+  private houveErroValidacaoDocumentos(): boolean {
+    if (this.documentoSelecionado == 'cpf') {
+      this.erroFormularioDocumento = this.validadorDocumentosService.validarCPF(
+        this.formularioDocumento.get('cpf').value
+      );
+      return this.erroFormularioDocumento.errorCPF;
+    } else {
+      this.erroFormularioDocumento =
+        this.validadorDocumentosService.validarCNPJ(
+          this.formularioDocumento.get('cnpj').value
+        );
+      return this.erroFormularioDocumento.errorCNPJ;
+    }
   }
 }
 

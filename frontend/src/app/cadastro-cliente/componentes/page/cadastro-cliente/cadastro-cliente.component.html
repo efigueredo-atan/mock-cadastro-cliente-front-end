@@ -52,6 +52,11 @@
                 >
                   <label for="cpf">CPF</label>
                   <p-inputMask
+                    (onInput)="
+                      removerInformacoesClienteSeInputForAlteradoEClienteEncontrado(
+                        $event
+                      )
+                    "
                     [autoClear]="false"
                     formControlName="cpf"
                     mask="999.999.999-99"
@@ -69,6 +74,11 @@
                 >
                   <label for="cnpj">CNPJ</label>
                   <p-inputMask
+                  (onInput)="
+                    removerInformacoesClienteSeInputForAlteradoEClienteEncontrado(
+                      $event
+                    )
+                  "
                     formControlName="cnpj"
                     mask="99.999.999/9999-99"
                     [disabled]="consultandoDocumentos"
@@ -155,9 +165,9 @@
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
-                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
-                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
-                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
               </div>
             </form>
             <form
