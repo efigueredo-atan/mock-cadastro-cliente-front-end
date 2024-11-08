@@ -68,12 +68,13 @@
 
 .formulario-documentos {
     display: grid;
-    grid-template-columns: repeat(3, calc((100% - 2em) / 3));
+    grid-template-columns: repeat(3, calc((100% - 4em) / 3));
     gap: 2em;
 }
 
 .campo-documentos {
-    grid-column: 1 / span 3;
+    max-width: 100%;
+    grid-column: span 3;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -111,6 +112,11 @@
     display: flex;
     gap: 1em;
     justify-content: flex-start;
+}
+
+.buttons-box-right {
+    display: flex;
+    gap: 1em;
 }
 
 .botao-next-step {

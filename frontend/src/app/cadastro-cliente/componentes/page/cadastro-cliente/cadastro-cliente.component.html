@@ -57,7 +57,11 @@
                     mask="999.999.999-99"
                     [disabled]="consultandoDocumentos"
                   />
-                  <small *ngIf="erroFormularioDocumento.errorCPF" class="error-small">{{ erroFormularioDocumento.mensagem }}</small>
+                  <small
+                    *ngIf="erroFormularioDocumento.errorCPF"
+                    class="error-small"
+                    >{{ erroFormularioDocumento.mensagem }}</small
+                  >
                 </div>
                 <div
                   class="entry entry-campo-documento"
@@ -69,7 +73,11 @@
                     mask="99.999.999/9999-99"
                     [disabled]="consultandoDocumentos"
                   />
-                  <small *ngIf="erroFormularioDocumento.errorCNPJ" class="error-small">{{ erroFormularioDocumento.mensagem }}</small>
+                  <small
+                    *ngIf="erroFormularioDocumento.errorCNPJ"
+                    class="error-small"
+                    >{{ erroFormularioDocumento.mensagem }}</small
+                  >
                 </div>
                 <div class="buttons-box">
                   <div class="buttons-box-left">
@@ -110,28 +118,31 @@
                       iconPos="right"
                       (onClick)="habilitarModoEdicao()"
                     />
+                  </div>
+
+                  <div class="buttons-box-right">
                     <p-button
                       *ngIf="
                         !consultandoDocumentos &&
                         dadosClienteEncontrados &&
                         modoEdicaoDados
                       "
-                      label="Salvar alterações"
+                      label="Salvar e avançar"
                       class="botao"
                       icon="pi pi-save"
                       iconPos="right"
-                      (onClick)="salvarAlteracoes()"
+                      (onClick)="nextCallback.emit(); salvarAlteracoes()"
+                    />
+                    <p-button
+                      *ngIf="!modoEdicaoDados"
+                      [disabled]="!dadosClienteEncontrados || modoEdicaoDados"
+                      class="botao botao-next-step"
+                      label="Avançar"
+                      icon="pi pi-arrow-right"
+                      iconPos="right"
+                      (onClick)="nextCallback.emit()"
                     />
                   </div>
-
-                  <p-button
-                    [disabled]="!dadosClienteEncontrados || modoEdicaoDados"
-                    class="botao botao-next-step"
-                    label="Avançar"
-                    icon="pi pi-arrow-right"
-                    iconPos="right"
-                    (onClick)="nextCallback.emit()"
-                  />
                 </div>
               </div>
               <div class="skeleton" *ngIf="consultandoDocumentos">
@@ -143,6 +154,10 @@
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
                 <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" />
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
+                <p-skeleton height="3em" width="100%" styleClass="mb-2" /> 
               </div>
             </form>
             <form
