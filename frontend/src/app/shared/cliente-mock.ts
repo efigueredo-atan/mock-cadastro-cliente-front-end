@@ -15,5 +15,37 @@ export let cliente: Cliente = {
         telefone1: '(11) 97625-6212',
         telefone2: '(87) 99999-9999',
         email: 'email@atan.com.br'
-    }
+    },
+    enderecos: [
+        {
+            cep: "56640000",
+            endereco: "Rua Ademar Bezerra de Lima",
+            numero: 2020,
+            complemento: "Casa",
+            uf: "PE",
+            cidade: "Custódia",
+            bairro: "Rodoviária",
+            referencia: "Próximo a estação de energia"
+        },
+        {
+            cep: "56640000",
+            endereco: "Rua Ademar Bezerra de Lima1",
+            numero: 2020,
+            complemento: "Casa",
+            uf: "PE",
+            cidade: "Custódia",
+            bairro: "Rodoviária",
+            referencia: "Próximo a estação de energia"
+        },
+        {
+            cep: "56640000",
+            endereco: "Rua Ademar Bezerra de Lima2",
+            numero: 2020,
+            complemento: "Casa",
+            uf: "PE",
+            cidade: "Custódia",
+            bairro: "Rodoviária",
+            referencia: "Próximo a estação de energia"
+        },
+    ]
 }

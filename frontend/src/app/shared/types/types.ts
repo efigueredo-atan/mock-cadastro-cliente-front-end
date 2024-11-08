@@ -16,6 +16,7 @@ export interface Cliente {
   dataNascimento: Date | null;
   contatos: Contato | null;
   nomeSocial: string | null;
+  enderecos: Endereco[] | null;
 }
 
 export interface Endereco {

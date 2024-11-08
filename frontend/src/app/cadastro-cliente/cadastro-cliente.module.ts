@@ -19,13 +19,19 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { StepInformacoesPessoaisClienteComponent } from './componentes/core/step-informacoes-pessoais-cliente/step-informacoes-pessoais-cliente.component';
 import { StepEnderecosClienteComponent } from './componentes/core/step-enderecos-cliente/step-enderecos-cliente.component';
 import { StepHistoricoClienteComponent } from './componentes/core/step-historico-cliente/step-historico-cliente.component';
+import { EnderecoTabelaComponent } from './componentes/core/endereco-tabela/endereco-tabela.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { ModalEditarAdicionarEnderecoComponent } from './componentes/core/modal-editar-adicionar-endereco/modal-editar-adicionar-endereco.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
     CadastroClienteComponent,
     StepInformacoesPessoaisClienteComponent,
     StepEnderecosClienteComponent,
-    StepHistoricoClienteComponent
+    StepHistoricoClienteComponent,
+    EnderecoTabelaComponent,
+    ModalEditarAdicionarEnderecoComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +49,9 @@ import { StepHistoricoClienteComponent } from './componentes/core/step-historico
     SharedModule,
     ToastModule,
     SkeletonModule,
-    SharedModule
+    SharedModule,
+    TooltipModule,
+    DialogModule
 ],
   providers: [
     MessageService

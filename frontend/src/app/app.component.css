@@ -1,29 +1,34 @@
-::ng-deep p-inputNumber, 
-::ng-deep p-inputMask, 
-::ng-deep .p-inputmask, 
-::ng-deep .p-inputnumber, 
+::ng-deep p-inputNumber,
+::ng-deep p-inputMask,
+::ng-deep .p-inputmask,
+::ng-deep .p-inputnumber,
 ::ng-deep .p-calendar,
 ::ng-deep p-divider {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep .p-breadcrumb {
-    border: none;
+  border: none;
 }
 
 ::ng-deep .p-highlight {
-    background-color: var(--bg1);
-    color: var(--text-color);
+  background-color: var(--bg1);
+  color: var(--text-color);
 }
 
 ::ng-deep .p-stepper-header {
-    background-color: transparent;
-    display: flex;
-    align-items: center;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .botao .p-button {
+  background-color: var(--bg1);
+  color: var(--text-color);
 }
 
 .content {
-    position: absolute;
-    top: 91px;
-    bottom: 44;
+  position: absolute;
+  top: 91px;
+  bottom: 44;
 }

@@ -1,1 +1,61 @@
-<p>step-enderecos-cliente works!</p>
+<div class="step-content">
+  <div class="titulo-step">
+    <h5>Passo 2</h5>
+    <h2>Selecione o endereço do cliente</h2>
+    <p-divider></p-divider>
+  </div>
+  <div class="box-selecionar-endereco">
+    <div class="box-selecionar-endereco-botoes">
+      <div class="botoes-left">
+        <p-button
+          label="Adicionar endereço"
+          (onClick)="abrirDialogAdicionarEndereco()"
+          class="botao"
+          icon="pi pi-plus"
+          iconPos="right"
+        />
+      </div>
+      <div class="botoes-right">
+        <p-button
+        (onClick)="emitirEventoVoltarStepper()"
+          label="Voltar"
+          class="botao"
+          icon="pi pi-arrow-left"
+          iconPos="right"
+        />
+        <p-button
+        [disabled]="!enderecoSelecionado"
+        (onClick)="emitirEventoAvancarStepper()"
+          label="Avançar"
+          class="botao"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+        />
+      </div>
+    </div>
+    <div class="box-tabela-enderecos">
+      <app-endereco-tabela [titulo]="true"></app-endereco-tabela>
+      <app-endereco-tabela
+        *ngFor="let endereco of cliente.enderecos"
+        [endereco]="endereco"
+        [enderecoSelecionado]="this.enderecoSelecionado"
+        (eventoEnderecoSelecionado)="trocarEnderecoSelecionado($event)"
+      ></app-endereco-tabela>
+    </div>
+  </div>
+</div>
+<p-dialog header="Edit Profile" [modal]="true" [(visible)]="modalAdicionarEditarEnderecoVisivel">
+    <span class="p-text-secondary block mb-5">Update your information.</span>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">Email</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="modalAdicionarEditarEnderecoVisivel = false" />
+        <p-button label="Save" (onClick)="modalAdicionarEditarEnderecoVisivel = false" />
+    </div>
+</p-dialog>

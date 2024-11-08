@@ -39,6 +39,13 @@
           let-index="index"
         >
         </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <app-step-enderecos-cliente (avancarStepperEvent)="avancarStep($event)" (voltarStepperEvent)="voltarStep($event)"></app-step-enderecos-cliente>
+        </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>
         <ng-template pTemplate="header" let-onClick="onClick" let-index="index">

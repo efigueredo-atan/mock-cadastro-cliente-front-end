@@ -9,7 +9,7 @@ import { Cliente } from '../../../../shared/types/types';
 })
 export class CadastroClienteComponent {
   public cliente: Cliente = null;
-  public stepAtivo: number = 0;
+  public stepAtivo: number = 1;
 
   public avancarStep(event: any) {
     this.stepAtivo++;

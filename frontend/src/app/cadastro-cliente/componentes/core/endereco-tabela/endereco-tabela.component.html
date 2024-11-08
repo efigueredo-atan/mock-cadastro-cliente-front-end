@@ -1,0 +1,60 @@
+<li
+  (click)="definirEsseEnderecoComoSelecionado()"
+  [class]="
+    endereco === enderecoSelecionado
+      ? 'endereco-tabela item-tabela endereco-selecionado'
+      : 'endereco-tabela item-tabela'
+  "
+  *ngIf="!titulo"
+>
+  <ul>
+    {{
+      formatarEndereco()
+    }}
+  </ul>
+  <ul>
+    {{
+      endereco.bairro
+    }}
+  </ul>
+  <ul>
+    {{
+      endereco.cidade
+    }}
+  </ul>
+  <ul>
+    {{
+      endereco.cep
+    }}
+  </ul>
+  <ul>
+    {{
+      endereco.uf
+    }}
+  </ul>
+  <ul>
+    <p-button
+      pTooltip="Editar endereço"
+      tooltipPosition="bottom"
+      icon="pi pi-pen-to-square"
+      size="small"
+    />
+  </ul>
+</li>
+<li class="endereco-tabela titulo" *ngIf="titulo">
+  <ul>
+    Endereço
+  </ul>
+  <ul>
+    Bairro
+  </ul>
+  <ul>
+    Cidade
+  </ul>
+  <ul>
+    CEP
+  </ul>
+  <ul>
+    UF
+  </ul>
+</li>
