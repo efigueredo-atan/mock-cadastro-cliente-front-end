@@ -21,3 +21,7 @@
     width: 100%;
     gap: 1em;
 }
+
+::ng-deep .p-toast-message {
+    background-color: white;
+}

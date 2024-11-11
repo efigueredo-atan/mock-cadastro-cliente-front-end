@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ufs } from '../../../../shared/types/types';
 import { FormEnderecoService } from '../../../services/form-endereco.service';
 import { FormGroup } from '@angular/forms';
@@ -13,25 +20,32 @@ import { EventEmitter } from '@angular/core';
 export class ModalEditarAdicionarEnderecoComponent implements OnInit {
   @Input() public visivel: boolean;
   @Output() public eventoFecharDialog = new EventEmitter();
+  @Output() public eventoEnderecoRegistrado = new EventEmitter();
   public ufs: string[] = ufs;
   public formularioEndereco: FormGroup;
   public cepConsultadoComSucesso = false;
   public erroCEP = false;
+  public registrandoEndereco = false;
 
-  constructor(private readonly formularioEnderecoService: FormEnderecoService,
+  @ViewChild('inputEnderecoRua') inputEnderecoRua: ElementRef;
+
+  constructor(
+    private readonly formularioEnderecoService: FormEnderecoService,
     private readonly viaCepService: ViaCepService
   ) {}
-  
+
   public ngOnInit(): void {
     this.formularioEndereco = this.formularioEnderecoService.formularioEndereco;
   }
-  
+
   public consultarCep(): void {
-    const valorCEP = this.formatarCEP(this.formularioEndereco.value.cep as string);
-    if(valorCEP.length == 8) {
+    const valorCEP = this.formatarCEP(
+      this.formularioEndereco.value.cep as string
+    );
+    if (valorCEP.length == 8) {
       this.viaCepService.obterDadosViaCep(valorCEP).subscribe({
-        next: response => {
-          if(response.erro == 'true') {
+        next: (response) => {
+          if (response.erro == 'true') {
             this.erroCEP = true;
             this.cepConsultadoComSucesso = false;
             this.formularioEndereco.reset();
@@ -39,23 +53,50 @@ export class ModalEditarAdicionarEnderecoComponent implements OnInit {
             this.erroCEP = false;
             this.cepConsultadoComSucesso = true;
             this.formularioEnderecoService.habilitarCampos();
-            this.formularioEnderecoService.inserirDadosVIACEPNoFormulario(response);
+            this.focarInputRua();
+            this.formularioEnderecoService.inserirDadosVIACEPNoFormulario(
+              response
+            );
           }
-        }
+        },
       });
+    } else {
+      this.erroCEP = true;
+    }
+  }
 
-      }
+  public registrarEndereco(): void {
+    this.registrandoEndereco = true;
+    this.formularioEnderecoService.desabilitarCampos(true);
+    setTimeout(() => {
+      this.fecharDialog()
+      this.eventoEnderecoRegistrado.emit(this.formularioEnderecoService.obterObjetoEndereco());
+    }, 1000)
   }
 
   public fecharDialog(): void {
     this.visivel = false;
-    this.eventoFecharDialog.emit("");
+    this.eventoFecharDialog.emit('');
   }
 
   private formatarCEP(cep: string): string {
-    cep = cep.replaceAll(".", "");
-    cep = cep.replaceAll("-", "");
-    cep = cep.replaceAll("_", "");
+    cep = cep.replaceAll('.', '');
+    cep = cep.replaceAll('-', '');
+    cep = cep.replaceAll('_', '');
     return cep;
+  }
+
+  public enterPressionado(): void {
+    if (!this.cepConsultadoComSucesso) {
+      this.consultarCep();
+    } else {
+      if (this.formularioEndereco.valid) {
+        this.registrarEndereco();
+      }
+    }
+  }
+
+  private focarInputRua(): void {
+    this.inputEnderecoRua.nativeElement.focus();
   }
 }

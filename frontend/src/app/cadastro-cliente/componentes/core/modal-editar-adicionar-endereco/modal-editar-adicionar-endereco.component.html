@@ -1,4 +1,10 @@
-<p-dialog header="Adicionar endereço" closable="false" [modal]="true" [(visible)]="visivel">
+<p-dialog
+  (keyup.enter)="enterPressionado()"
+  header="Adicionar endereço"
+  closable="false"
+  [modal]="true"
+  [(visible)]="visivel"
+>
   <ng-template pTemplate="header">
     <div class="haeader-dialog">
       <i class="pi pi-address-book" style="font-size: 2rem"></i>
@@ -18,12 +24,23 @@
           />
           <small *ngIf="erroCEP">*CEP inválido</small>
         </div>
-        <p-button label="Consultar" class="botao botao-consultar-cep" (onClick)="consultarCep()"/>
+        <p-button
+          [disabled]="registrandoEndereco"
+          label="Consultar"
+          class="botao botao-consultar-cep"
+          (onClick)="consultarCep()"
+        />
       </div>
 
-      <div class="entry">
+      <div class="entry entry-rua">
         <label for="rua">Rua</label>
-        <input formControlName="rua" id="rua" type="text" pInputText />
+        <input
+          #inputEnderecoRua
+          formControlName="rua"
+          id="rua"
+          type="text"
+          pInputText
+        />
       </div>
       <div class="entry">
         <label for="numero">Número</label>
@@ -34,6 +51,16 @@
           [max]="100000"
           inputId="integeronly"
           [useGrouping]="false"
+        />
+      </div>
+
+      <div class="entry entry-referencia">
+        <label for="referencia">Referência</label>
+        <input
+          formControlName="referencia"
+          id="referencia"
+          type="text"
+          pInputText
         />
       </div>
       <div class="entry">
@@ -65,6 +92,7 @@
     </form>
     <div class="buttons">
       <p-button
+        [disabled]="registrandoEndereco"
         label="Cancelar"
         class="botao"
         icon="pi pi-times"
@@ -72,11 +100,16 @@
         (click)="fecharDialog()"
       />
       <p-button
-        [disabled]="!formularioEndereco.valid || !cepConsultadoComSucesso || erroCEP"
-        label="Registrar endereço"
+        [disabled]="
+          !formularioEndereco.valid || !cepConsultadoComSucesso || erroCEP
+        "
+        [label]="
+          !registrandoEndereco ? 'Registrar endereço' : 'Registrando endereço'
+        "
         class="botao"
-        icon="pi pi-check"
+        [icon]="!registrandoEndereco ? 'pi pi-check' : 'pi pi-spin pi-spinner'"
         iconPos="right"
+        (click)="registrarEndereco()"
       />
     </div>
   </div>

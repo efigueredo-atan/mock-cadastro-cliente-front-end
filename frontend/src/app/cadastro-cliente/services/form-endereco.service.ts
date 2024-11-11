@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ufs, ViaCepResponse } from '../../shared/types/types';
+import { Endereco, ufs, ViaCepResponse } from '../../shared/types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class FormEnderecoService {
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.criarFormulario();
-    this.desabilitarCampos();
+    this.desabilitarCampos(false);
   }
 
   public get formularioEndereco(): FormGroup {
@@ -27,13 +27,17 @@ export class FormEnderecoService {
     })
   }
 
-  public desabilitarCampos(): void {
+  public desabilitarCampos(cep: boolean): void {
+    if(cep) {
+      this._formularioEndereco.get("cep")?.disable();
+    }
     this._formularioEndereco.get('rua')?.disable();
     this._formularioEndereco.get('numero')?.disable();
     this._formularioEndereco.get('complemento')?.disable();
     this._formularioEndereco.get('bairro')?.disable();
     this._formularioEndereco.get('cidade')?.disable();
     this._formularioEndereco.get('uf')?.disable();
+    this._formularioEndereco.get('referencia').disable();
   }
 
   public habilitarCampos(): void {
@@ -43,6 +47,20 @@ export class FormEnderecoService {
     this._formularioEndereco.get('bairro')?.enable();
     this._formularioEndereco.get('cidade')?.enable();
     this._formularioEndereco.get('uf')?.enable();
+    this._formularioEndereco.get('referencia').enable();
+  }
+
+  public obterObjetoEndereco(): Endereco {
+    return {
+      cep: this._formularioEndereco.get('cep').value,
+      endereco: this._formularioEndereco.get('rua').value,
+      numero: this._formularioEndereco.get('numero').value,
+      complemento: this._formularioEndereco.get('complemento').value,
+      bairro: this._formularioEndereco.get('bairro').value,
+      cidade: this._formularioEndereco.get('cidade').value,
+      uf: this._formularioEndereco.get('uf').value,
+      referencia: this._formularioEndereco.get("referencia").value
+    };
   }
 
   private criarFormulario(): void {
@@ -54,6 +72,7 @@ export class FormEnderecoService {
       bairro: [null, [Validators.required]],
       cidade: [null, [Validators.required]],
       uf: [null, [Validators.required]],
+      referencia: [null]
     });
   }
 }

@@ -1,3 +1,4 @@
+<p-toast />
 <div class="step-content">
   <div class="titulo-step">
     <h5>Passo 2</h5>
@@ -46,5 +47,6 @@
 </div>
 <app-modal-editar-adicionar-endereco
   (eventoFecharDialog)="fecharDialogAdicionarEndereco()"
+  (eventoEnderecoRegistrado)="processarEnderecoRegistradoRecebido($event)"
   [visivel]="modalAdicionarEditarEnderecoVisivel"
 ></app-modal-editar-adicionar-endereco>

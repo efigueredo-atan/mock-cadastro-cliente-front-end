@@ -38,3 +38,7 @@
 .botao-consultar-cep {
     margin-top: 25px;
 }
+
+.entry-referencia, .entry-rua {
+    grid-column: span 2;
+}
