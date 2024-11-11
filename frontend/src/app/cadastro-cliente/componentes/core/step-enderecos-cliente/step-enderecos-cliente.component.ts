@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Cliente, Endereco } from '../../../../shared/types/types';
 import { cliente } from '../../../../shared/cliente-mock';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
@@ -19,7 +19,10 @@ export class StepEnderecosClienteComponent {
   public modalAdicionarEnderecoVisivel = false;
   public modalEditarEnderecoVisivel = false;
 
-  constructor(private readonly messageService: MessageService) {
+  constructor(
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService
+  ) {
     this.mostrarMensagemEndereçoRegistrado();
   }
 
@@ -53,10 +56,38 @@ export class StepEnderecosClienteComponent {
     this.cliente.enderecos.push(endereco);
   }
 
-  public processarEnderecoAlteradoRecebido(endereco: Endereco): void {{
-    this.mostrarMensagemEndereçoAlterado();
-    
-  }}
+  public processarEnderecoAlteradoRecebido(endereco: Endereco): void {
+    {
+      this.mostrarMensagemEndereçoAlterado();
+    }
+  }
+
+  public excluirEndereco(endereco: Endereco): void {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Tem certeza que quer excluir o endereço?',
+      header: 'Excluir endereço',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass:"p-button-danger p-button-text",
+      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptIcon:"none",
+      rejectIcon:"none",
+
+      accept: () => {
+        const index = this.cliente.enderecos.indexOf(endereco);
+        this.cliente.enderecos.splice(index, 1);
+        this.mostrarMensagemEnderecoExcluido();   
+      }
+  });
+  }
+
+  private mostrarMensagemEnderecoExcluido(): void {
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Confirmado',
+      detail: 'Endereço excluído do sistema!',
+    });
+  }
 
   private mostrarMensagemEndereçoRegistrado() {
     this.messageService.add({

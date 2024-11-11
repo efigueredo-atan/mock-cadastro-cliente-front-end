@@ -14,6 +14,8 @@ export class EnderecoTabelaComponent {
   @Input() public enderecoSelecionado: Endereco;
   @Output() public eventoEnderecoSelecionado: EventEmitter<Endereco> =
     new EventEmitter();
+  @Output() public eventoExcluirEndereco: EventEmitter<Endereco> =
+    new EventEmitter();
   public modalEditarEnderecoVisivel = false;
 
   public formatarEndereco(): string {
@@ -25,6 +27,10 @@ export class EnderecoTabelaComponent {
   }
 
   public emitirEventoEditarEndereco(): void {
-    EventEmitterService.get("editarEndereco").emit(this.endereco);
+    EventEmitterService.get('editarEndereco').emit(this.endereco);
+  }
+
+  public excluirEndereco(): void {
+    this.eventoExcluirEndereco.emit(this.endereco);
   }
 }

@@ -1,7 +1,7 @@
 .endereco-tabela {
   display: grid;
-  grid-template-columns: 35% 18% 18% 18% 8% 3%;
-  padding: 1em 2em;
+  grid-template-columns: 33% 17% 17% 17% 8% 8%;
+  padding: 0.75em 1.5em;
   border-radius: 4px;
   align-items: center;
   border: 1px solid transparent;
@@ -25,6 +25,11 @@
   background-color: var(--bg1);
   color: var(--text-color);
   font-weight: 700;
+}
+
+.buttons {
+  display: flex;
+  gap: 1em;
 }
 
 ::ng-deep .p-button {

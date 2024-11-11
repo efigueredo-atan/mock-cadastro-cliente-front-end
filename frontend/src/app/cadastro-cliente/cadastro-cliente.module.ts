@@ -14,7 +14,6 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../shared/shared.module";
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
 import { StepInformacoesPessoaisClienteComponent } from './componentes/core/step-informacoes-pessoais-cliente/step-informacoes-pessoais-cliente.component';
 import { StepEnderecosClienteComponent } from './componentes/core/step-enderecos-cliente/step-enderecos-cliente.component';
@@ -25,6 +24,8 @@ import { ModalEditarAdicionarEnderecoComponent } from './componentes/core/modal-
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ModalEditarEnderecoComponent } from './componentes/core/modal-editar-endereco/modal-editar-endereco.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -56,9 +57,11 @@ import { ModalEditarEnderecoComponent } from './componentes/core/modal-editar-en
     TooltipModule,
     DialogModule,
     DropdownModule,
+    ConfirmDialogModule
 ],
   providers: [
-    MessageService
+    MessageService,
+    ConfirmationService
   ]
 })
 export class CadastroClienteModule { }

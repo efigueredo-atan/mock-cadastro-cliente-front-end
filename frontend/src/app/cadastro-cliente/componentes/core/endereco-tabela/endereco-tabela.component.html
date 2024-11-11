@@ -32,13 +32,20 @@
       endereco.uf
     }}
   </ul>
-  <ul>
+  <ul class="buttons">
     <p-button
       pTooltip="Editar endereço"
       tooltipPosition="bottom"
       icon="pi pi-pen-to-square"
       size="small"
       (click)="emitirEventoEditarEndereco()"
+    />
+    <p-button
+      pTooltip="Excluir endereço"
+      tooltipPosition="bottom"
+      icon="pi pi-trash"
+      size="small"
+      (click)="excluirEndereco()"
     />
   </ul>
 </li>

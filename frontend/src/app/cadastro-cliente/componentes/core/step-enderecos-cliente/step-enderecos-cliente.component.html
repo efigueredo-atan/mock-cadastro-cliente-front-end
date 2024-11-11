@@ -1,4 +1,5 @@
 <p-toast />
+<p-confirmDialog />
 <div class="step-content">
   <div class="titulo-step">
     <h5>Passo 2</h5>
@@ -41,6 +42,7 @@
         [endereco]="endereco"
         [enderecoSelecionado]="this.enderecoSelecionado"
         (eventoEnderecoSelecionado)="trocarEnderecoSelecionado($event)"
+        (eventoExcluirEndereco)="excluirEndereco($event)"
       ></app-endereco-tabela>
     </div>
   </div>

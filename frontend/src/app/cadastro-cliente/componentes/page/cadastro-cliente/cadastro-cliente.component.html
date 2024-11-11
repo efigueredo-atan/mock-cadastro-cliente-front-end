@@ -60,6 +60,7 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
+        <app-step-historico-cliente (voltarStepperEvent)="voltarStep($event)"></app-step-historico-cliente>
         </ng-template>
       </p-stepperPanel>
     </p-stepper>
