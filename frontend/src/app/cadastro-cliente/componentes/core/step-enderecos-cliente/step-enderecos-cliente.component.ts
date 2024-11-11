@@ -3,6 +3,7 @@ import { EventEmitter } from '@angular/core';
 import { Cliente, Endereco } from '../../../../shared/types/types';
 import { cliente } from '../../../../shared/cliente-mock';
 import { MessageService } from 'primeng/api';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-step-enderecos-cliente',
@@ -14,6 +15,7 @@ export class StepEnderecosClienteComponent {
   @Output() public avancarStepperEvent = new EventEmitter();
   @Input() public cliente: Cliente = cliente;
   public enderecoSelecionado: Endereco;
+  public enderecoSelecionadoEditar: Endereco;
   public modalAdicionarEnderecoVisivel = false;
   public modalEditarEnderecoVisivel = false;
 
@@ -35,14 +37,11 @@ export class StepEnderecosClienteComponent {
 
   public abrirDialogAdicionarEndereco(): void {
     this.modalAdicionarEnderecoVisivel = true;
+    EventEmitterService.get('cadastrarEndereco').emit();
   }
 
   public fecharDialogAdicionarEndereco(): void {
     this.modalAdicionarEnderecoVisivel = false;
-  }
-
-  public abrirDialogEditarEnderecoEndereco(endereco: Endereco): void {
-    this.modalEditarEnderecoVisivel = true;
   }
 
   public fecharDialogEditarEndereco(): void {
@@ -54,11 +53,24 @@ export class StepEnderecosClienteComponent {
     this.cliente.enderecos.push(endereco);
   }
 
+  public processarEnderecoAlteradoRecebido(endereco: Endereco): void {{
+    this.mostrarMensagemEndereçoAlterado();
+    
+  }}
+
   private mostrarMensagemEndereçoRegistrado() {
     this.messageService.add({
       severity: 'success',
       summary: 'Sucesso',
       detail: 'Endereço registrado no sistema!',
+    });
+  }
+
+  private mostrarMensagemEndereçoAlterado() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Sucesso',
+      detail: 'Endereço alterado no sistema!',
     });
   }
 }

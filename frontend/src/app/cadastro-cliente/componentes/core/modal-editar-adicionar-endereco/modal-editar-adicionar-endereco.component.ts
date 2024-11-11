@@ -1,23 +1,17 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { ufs } from '../../../../shared/types/types';
 import { FormEnderecoService } from '../../../services/form-endereco.service';
 import { FormGroup } from '@angular/forms';
 import { ViaCepService } from '../../../services/via-cep.service';
 import { EventEmitter } from '@angular/core';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-modal-editar-adicionar-endereco',
   templateUrl: './modal-editar-adicionar-endereco.component.html',
   styleUrl: './modal-editar-adicionar-endereco.component.css',
 })
-export class ModalEditarAdicionarEnderecoComponent implements OnInit {
+export class ModalEditarAdicionarEnderecoComponent implements OnDestroy {
   @Input() public visivel: boolean;
   @Output() public eventoFecharDialog = new EventEmitter();
   @Output() public eventoEnderecoRegistrado = new EventEmitter();
@@ -26,16 +20,28 @@ export class ModalEditarAdicionarEnderecoComponent implements OnInit {
   public cepConsultadoComSucesso = false;
   public erroCEP = false;
   public registrandoEndereco = false;
+  public $subscribeEventoCadastrarEndereco: any;
 
   @ViewChild('inputEnderecoRua') inputEnderecoRua: ElementRef;
 
   constructor(
     private readonly formularioEnderecoService: FormEnderecoService,
     private readonly viaCepService: ViaCepService
-  ) {}
+  ) {
+    this.formularioEndereco =
+      this.formularioEnderecoService.formularioEndereco;
+    this.$subscribeEventoCadastrarEndereco = EventEmitterService.get(
+      'cadastrarEndereco'
+    ).subscribe(() => {
+      this.visivel = true;
+        this.formularioEndereco.reset();
+      this.formularioEnderecoService.desabilitarCampos(false);
+    });
+  }
 
-  public ngOnInit(): void {
-    this.formularioEndereco = this.formularioEnderecoService.formularioEndereco;
+  public ngOnDestroy(): void {
+    if(this.$subscribeEventoCadastrarEndereco)
+    this.$subscribeEventoCadastrarEndereco.unsubscribe();
   }
 
   public consultarCep(): void {
@@ -69,9 +75,11 @@ export class ModalEditarAdicionarEnderecoComponent implements OnInit {
     this.registrandoEndereco = true;
     this.formularioEnderecoService.desabilitarCampos(true);
     setTimeout(() => {
-      this.fecharDialog()
-      this.eventoEnderecoRegistrado.emit(this.formularioEnderecoService.obterObjetoEndereco());
-    }, 1000)
+      this.fecharDialog();
+      this.eventoEnderecoRegistrado.emit(
+        this.formularioEnderecoService.obterObjetoEndereco()
+      );
+    }, 1000);
   }
 
   public fecharDialog(): void {

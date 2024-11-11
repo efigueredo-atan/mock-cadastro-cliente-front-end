@@ -24,6 +24,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ModalEditarAdicionarEnderecoComponent } from './componentes/core/modal-editar-adicionar-endereco/modal-editar-adicionar-endereco.component';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { ModalEditarEnderecoComponent } from './componentes/core/modal-editar-endereco/modal-editar-endereco.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DropdownModule } from 'primeng/dropdown';
     StepEnderecosClienteComponent,
     StepHistoricoClienteComponent,
     EnderecoTabelaComponent,
-    ModalEditarAdicionarEnderecoComponent
+    ModalEditarAdicionarEnderecoComponent,
+    ModalEditarEnderecoComponent
   ],
   imports: [
     CommonModule,

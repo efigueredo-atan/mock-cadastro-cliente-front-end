@@ -10,7 +10,6 @@ export class FormEnderecoService {
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.criarFormulario();
-    this.desabilitarCampos(false);
   }
 
   public get formularioEndereco(): FormGroup {
@@ -50,17 +49,31 @@ export class FormEnderecoService {
     this._formularioEndereco.get('referencia').enable();
   }
 
-  public obterObjetoEndereco(): Endereco {
+  public obterObjetoEndereco(id?: string): Endereco {
     return {
       cep: this._formularioEndereco.get('cep').value,
-      endereco: this._formularioEndereco.get('rua').value,
+      rua: this._formularioEndereco.get('rua').value,
       numero: this._formularioEndereco.get('numero').value,
       complemento: this._formularioEndereco.get('complemento').value,
       bairro: this._formularioEndereco.get('bairro').value,
       cidade: this._formularioEndereco.get('cidade').value,
       uf: this._formularioEndereco.get('uf').value,
-      referencia: this._formularioEndereco.get("referencia").value
+      referencia: this._formularioEndereco.get("referencia").value,
+      id: id
     };
+  }
+
+  public preencherFormularioComEndereco(endereco: Endereco): void {
+    this._formularioEndereco.patchValue({
+      cep: endereco.cep,
+      rua: endereco.rua,
+      numero: endereco.numero,
+      complemento: endereco.complemento,
+      bairro: endereco.bairro,
+      cidade: endereco.cidade,
+      uf: endereco.uf,
+      referencia: endereco.referencia
+    })
   }
 
   private criarFormulario(): void {

@@ -48,5 +48,12 @@
 <app-modal-editar-adicionar-endereco
   (eventoFecharDialog)="fecharDialogAdicionarEndereco()"
   (eventoEnderecoRegistrado)="processarEnderecoRegistradoRecebido($event)"
-  [visivel]="modalAdicionarEditarEnderecoVisivel"
+  [visivel]="modalAdicionarEnderecoVisivel"
 ></app-modal-editar-adicionar-endereco>
+
+<app-modal-editar-endereco
+  [visivel]="this.modalEditarEnderecoVisivel"
+  (eventoFecharDialog)="fecharDialogEditarEndereco()"
+  (eventoEnderecoAlterado)="processarEnderecoAlteradoRecebido($event)"
+></app-modal-editar-endereco>
+

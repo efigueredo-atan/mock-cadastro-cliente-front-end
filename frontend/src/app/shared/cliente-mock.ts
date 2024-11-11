@@ -18,8 +18,9 @@ export let cliente: Cliente = {
     },
     enderecos: [
         {
+            id: "1",
             cep: "56640000",
-            endereco: "Rua Ademar Bezerra de Lima",
+            rua: "Rua Ademar Bezerra de Lima",
             numero: 2020,
             complemento: "Casa",
             uf: "PE",
@@ -28,8 +29,9 @@ export let cliente: Cliente = {
             referencia: "Próximo a estação de energia"
         },
         {
+            id: "2",
             cep: "56640000",
-            endereco: "Rua Ademar Bezerra de Lima1",
+            rua: "Rua Ademar Bezerra de Lima1",
             numero: 2020,
             complemento: "Casa",
             uf: "PE",
@@ -38,8 +40,9 @@ export let cliente: Cliente = {
             referencia: "Próximo a estação de energia"
         },
         {
+            id: "3",
             cep: "56640000",
-            endereco: "Rua Ademar Bezerra de Lima2",
+            rua: "Rua Ademar Bezerra de Lima2",
             numero: 2020,
             complemento: "Casa",
             uf: "PE",

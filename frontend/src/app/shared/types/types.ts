@@ -20,8 +20,9 @@ export interface Cliente {
 }
 
 export interface Endereco {
+  id: string | null;
   cep: string;
-  endereco: string;
+  rua: string;
   numero: number;
   complemento: string;
   uf: string;
