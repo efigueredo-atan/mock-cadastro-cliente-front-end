@@ -1,0 +1,27 @@
+.box-selecionar-endereco {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.box-selecionar-endereco-botoes {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.botoes-left, .botoes-right {
+    display: flex;
+    gap: 1em;
+}
+
+.box-tabela-enderecos {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+}
+
+::ng-deep .p-toast-message {
+    background-color: white;
+}

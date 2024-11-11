@@ -1,0 +1,47 @@
+.cadastro-cliente-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    width: 100vw;
+    height: 100vh;
+}
+
+.cadastro-cliente-box {
+    padding: 2.5em 2em;
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    margin-top: var(--soma-height-header);
+    margin-bottom: 2em;
+}
+
+.titulo-page {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.titulo-page h4 {
+    opacity: 0.5;
+}
+
+.stepper {
+    display: flex;
+    gap: 0.5em;
+    color: var(--text-color2);
+    opacity: 1;
+}
+
+.icone-stepper {
+    background-color: var(--bg1);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

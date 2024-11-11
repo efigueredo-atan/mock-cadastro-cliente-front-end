@@ -1,0 +1,68 @@
+<section class="cadastro-cliente-section">
+  <div class="cadastro-cliente-box">
+    <div class="titulo-page">
+      <h1>Cadastro de cliente</h1>
+      <h4>Preencha o formulário de cadastro de cliente</h4>
+    </div>
+    <p-stepper [linear]="true" [(activeStep)]="stepAtivo">
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span *ngIf="index == stepAtivo" class="icone-stepper">{{
+              index + 1
+            }}</span>
+            <span *ngIf="index < stepAtivo" class="icone-stepper"
+              ><i class="pi pi-check"></i
+            ></span>
+            <h3>Buscar documento</h3>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <app-step-informacoes-pessoais-cliente (avancarStepperEvent)="avancarStep($event)"></app-step-informacoes-pessoais-cliente>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span class="icone-stepper">{{ index + 1 }}</span>
+            <h3>Endereço</h3>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <app-step-enderecos-cliente (avancarStepperEvent)="avancarStep($event)" (voltarStepperEvent)="voltarStep($event)"></app-step-enderecos-cliente>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span class="icone-stepper">{{ index + 1 }}</span>
+            <h3>Histórico do cliente</h3>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+        <app-step-historico-cliente (voltarStepperEvent)="voltarStep($event)"></app-step-historico-cliente>
+        </ng-template>
+      </p-stepperPanel>
+    </p-stepper>
+  </div>
+</section>

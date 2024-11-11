@@ -1,0 +1,61 @@
+<p-toast />
+<p-confirmDialog />
+<div class="step-content">
+  <div class="titulo-step">
+    <h5>Passo 2</h5>
+    <h2>Selecione o endereço do cliente</h2>
+    <p-divider></p-divider>
+  </div>
+  <div class="box-selecionar-endereco">
+    <div class="box-selecionar-endereco-botoes">
+      <div class="botoes-left">
+        <p-button
+          label="Adicionar endereço"
+          (onClick)="abrirDialogAdicionarEndereco()"
+          class="botao"
+          icon="pi pi-plus"
+          iconPos="right"
+        />
+      </div>
+      <div class="botoes-right">
+        <p-button
+          (onClick)="emitirEventoVoltarStepper()"
+          label="Voltar"
+          class="botao"
+          icon="pi pi-arrow-left"
+          iconPos="right"
+        />
+        <p-button
+          [disabled]="!enderecoSelecionado"
+          (onClick)="emitirEventoAvancarStepper()"
+          label="Avançar"
+          class="botao"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+        />
+      </div>
+    </div>
+    <div class="box-tabela-enderecos">
+      <app-endereco-tabela [titulo]="true"></app-endereco-tabela>
+      <app-endereco-tabela
+        *ngFor="let endereco of cliente.enderecos"
+        [endereco]="endereco"
+        [enderecoSelecionado]="this.enderecoSelecionado"
+        (eventoEnderecoSelecionado)="trocarEnderecoSelecionado($event)"
+        (eventoExcluirEndereco)="excluirEndereco($event)"
+      ></app-endereco-tabela>
+    </div>
+  </div>
+</div>
+<app-modal-editar-adicionar-endereco
+  (eventoFecharDialog)="fecharDialogAdicionarEndereco()"
+  (eventoEnderecoRegistrado)="processarEnderecoRegistradoRecebido($event)"
+  [visivel]="modalAdicionarEnderecoVisivel"
+></app-modal-editar-adicionar-endereco>
+
+<app-modal-editar-endereco
+  [visivel]="this.modalEditarEnderecoVisivel"
+  (eventoFecharDialog)="fecharDialogEditarEndereco()"
+  (eventoEnderecoAlterado)="processarEnderecoAlteradoRecebido($event)"
+></app-modal-editar-endereco>
+

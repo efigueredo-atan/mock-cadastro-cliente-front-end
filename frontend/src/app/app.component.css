@@ -1,0 +1,56 @@
+::ng-deep p-inputNumber,
+::ng-deep p-inputMask,
+::ng-deep .p-inputmask,
+::ng-deep .p-inputnumber,
+::ng-deep .p-calendar,
+::ng-deep p-divider {
+  width: 100%;
+}
+
+::ng-deep .p-breadcrumb {
+  border: none;
+}
+
+::ng-deep .p-highlight {
+  background-color: var(--bg1);
+  color: var(--text-color);
+}
+
+::ng-deep .p-stepper-header {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .botao .p-button {
+  background-color: var(--bg1);
+  color: var(--text-color);
+}
+
+.content {
+  width: 100vw;
+  max-width: 100vw;
+}
+
+::ng-deep .p-stepper .p-stepper-panels {
+  padding: 0;
+}
+
+::ng-deep .p-stepper .p-stepper-nav {
+  overflow: hidden;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+::ng-deep h3 {
+  margin-top: 3px;
+}
+
+::ng-deep .icone-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

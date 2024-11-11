@@ -1,0 +1,116 @@
+<p-dialog
+  (keyup.enter)="enterPressionado()"
+  header="Adicionar endereço"
+  closable="false"
+  [modal]="true"
+  [(visible)]="visivel"
+>
+  <ng-template pTemplate="header">
+    <div class="haeader-dialog">
+      <i class="pi pi-address-book" style="font-size: 2rem"></i>
+      <h1>Registrar endereço</h1>
+    </div>
+  </ng-template>
+  <div class="adicionar-endereco-dialog">
+    <form [formGroup]="formularioEndereco" class="formulario-endereco">
+      <div class="entry-cep">
+        <div class="entry">
+          <label for="cpf">CEP</label>
+          <p-inputMask
+            formControlName="cep"
+            autoFocus=""
+            [autoClear]="false"
+            mask="99.999-999"
+          />
+          <small *ngIf="erroCEP">*CEP inválido</small>
+        </div>
+        <p-button
+          [disabled]="registrandoEndereco"
+          label="Consultar"
+          class="botao botao-consultar-cep"
+          (onClick)="consultarCep()"
+        />
+      </div>
+
+      <div class="entry entry-rua">
+        <label for="rua">Rua</label>
+        <input
+          #inputEnderecoRua
+          formControlName="rua"
+          id="rua"
+          type="text"
+          pInputText
+        />
+      </div>
+      <div class="entry">
+        <label for="numero">Número</label>
+        <p-inputNumber
+          formControlName="numero"
+          id="numero"
+          [min]="0"
+          [max]="100000"
+          inputId="integeronly"
+          [useGrouping]="false"
+        />
+      </div>
+
+      <div class="entry entry-referencia">
+        <label for="referencia">Referência</label>
+        <input
+          formControlName="referencia"
+          id="referencia"
+          type="text"
+          pInputText
+        />
+      </div>
+      <div class="entry">
+        <label for="complemento">Complemento</label>
+        <input
+          formControlName="complemento"
+          id="complemento"
+          type="text"
+          pInputText
+        />
+      </div>
+      <div class="entry">
+        <label for="Bairro">Bairro</label>
+        <input formControlName="bairro" id="Bairro" type="text" pInputText />
+      </div>
+      <div class="entry">
+        <label for="cidade">Cidade</label>
+        <input formControlName="cidade" id="cidade" type="text" pInputText />
+      </div>
+      <div class="entry">
+        <label for="uf">UF</label>
+        <p-dropdown
+          formControlName="uf"
+          [showClear]="true"
+          id="uf"
+          [options]="ufs"
+        />
+      </div>
+    </form>
+    <div class="buttons">
+      <p-button
+        [disabled]="registrandoEndereco"
+        label="Cancelar"
+        class="botao"
+        icon="pi pi-times"
+        iconPos="right"
+        (click)="fecharDialog()"
+      />
+      <p-button
+        [disabled]="
+          !formularioEndereco.valid || !cepConsultadoComSucesso || erroCEP
+        "
+        [label]="
+          !registrandoEndereco ? 'Registrar endereço' : 'Registrando endereço'
+        "
+        class="botao"
+        [icon]="!registrandoEndereco ? 'pi pi-check' : 'pi pi-spin pi-spinner'"
+        iconPos="right"
+        (click)="registrarEndereco()"
+      />
+    </div>
+  </div>
+</p-dialog>

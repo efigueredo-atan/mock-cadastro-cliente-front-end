@@ -1,0 +1,23 @@
+header {
+    background-color: var(--header-bg);
+    position: fixed;
+    z-index: 1000;
+}
+
+.logo-options {
+    display: flex;
+    align-items: center;
+    padding: 0em 1.5em;
+    gap: 2em;
+    color: white;
+}
+
+.logo-options i {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.logo-options img {
+    height: 55px;
+    cursor: pointer;
+}
