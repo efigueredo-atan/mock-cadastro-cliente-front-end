@@ -48,6 +48,7 @@ export class ModalEditarAdicionarEnderecoComponent implements OnInit {
   }
 
   public fecharDialog(): void {
+    this.visivel = false;
     this.eventoFecharDialog.emit("");
   }
 
