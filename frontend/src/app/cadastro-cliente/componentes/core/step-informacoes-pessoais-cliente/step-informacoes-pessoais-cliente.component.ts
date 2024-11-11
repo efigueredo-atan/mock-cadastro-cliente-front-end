@@ -129,7 +129,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
       this.formularioDocumento.removeControl('cnpj');
       this.formularioDocumento.addControl(
         'cpf',
-        new FormControl(null, [Validators.required, validarDocumentoCPF])
+        new FormControl(null, [Validators.required])
       );
     } else {
       this.formularioInformacoesPessoaisSelecionado =
