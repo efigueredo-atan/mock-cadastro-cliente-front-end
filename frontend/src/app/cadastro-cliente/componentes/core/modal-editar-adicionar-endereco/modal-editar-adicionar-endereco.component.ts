@@ -35,6 +35,7 @@ export class ModalEditarAdicionarEnderecoComponent implements OnDestroy {
     ).subscribe(() => {
       this.visivel = true;
         this.formularioEndereco.reset();
+        this.resetarCompontente();
       this.formularioEnderecoService.desabilitarCampos(false);
     });
   }
@@ -106,5 +107,12 @@ export class ModalEditarAdicionarEnderecoComponent implements OnDestroy {
 
   private focarInputRua(): void {
     this.inputEnderecoRua.nativeElement.focus();
+  }
+
+  private resetarCompontente(): void {
+    this.erroCEP = false;
+    this.registrandoEndereco = false;
+    this.cepConsultadoComSucesso = false;
+    this.formularioEnderecoService.desabilitarCampos(false);
   }
 }

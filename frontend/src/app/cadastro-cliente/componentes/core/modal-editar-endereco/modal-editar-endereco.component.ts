@@ -50,7 +50,9 @@ export class ModalEditarEnderecoComponent implements OnDestroy {
     this.eventoFecharDialog.emit('');
   }
 
-  public enterPressionado(): void {}
+  public enterPressionado(): void {
+    this.salvarAlteracoes();
+  }
 
   public salvarAlteracoes(): void {
     this.salvandoAlteracoesEndereco = true;

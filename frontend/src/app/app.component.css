@@ -28,7 +28,29 @@
 }
 
 .content {
-  position: absolute;
-  top: 91px;
-  bottom: 44;
+  width: 100vw;
+  max-width: 100vw;
+}
+
+::ng-deep .p-stepper .p-stepper-panels {
+  padding: 0;
+}
+
+::ng-deep .p-stepper .p-stepper-nav {
+  overflow: hidden;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+::ng-deep h3 {
+  margin-top: 3px;
+}
+
+::ng-deep .icone-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

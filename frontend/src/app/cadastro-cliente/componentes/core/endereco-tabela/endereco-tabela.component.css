@@ -18,7 +18,7 @@
 .endereco-selecionado {
     border-color: var(--bg1);
     color: var(--bg1);
-    font-weight: 700;
+    background-color: #f4f4f4;
 }
 
 .titulo {

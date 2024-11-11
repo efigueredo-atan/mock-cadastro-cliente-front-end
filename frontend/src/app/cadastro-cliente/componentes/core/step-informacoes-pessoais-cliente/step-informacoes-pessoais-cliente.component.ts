@@ -1,9 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
 import {
@@ -21,7 +17,6 @@ import { EventEmitter } from '@angular/core';
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
 export class StepInformacoesPessoaisClienteComponent implements OnInit {
-
   @Output() public avancarStepperEvent = new EventEmitter();
 
   public cliente: Cliente = null;
@@ -62,6 +57,12 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     this.obterInstanciasDeFormularios();
     this.formularioInformacoesPessoaisSelecionado =
       this.formularioInformacoesPessoaisCPF;
+  }
+
+  public enterPressionado(): void {
+    if (!this.consultandoDocumentos && !this.dadosClienteEncontrados) {
+      this.validarDocumento();
+    } 
   }
 
   public habilitarModoEdicao(): void {
@@ -180,6 +181,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
   }
 
   public emitirEventoAvancarStep(): void {
-    this.avancarStepperEvent.emit("");
+    this.avancarStepperEvent.emit('');
   }
 }

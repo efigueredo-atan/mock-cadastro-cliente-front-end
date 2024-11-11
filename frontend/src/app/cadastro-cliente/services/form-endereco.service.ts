@@ -29,6 +29,8 @@ export class FormEnderecoService {
   public desabilitarCampos(cep: boolean): void {
     if(cep) {
       this._formularioEndereco.get("cep")?.disable();
+    } else {
+      this._formularioEndereco.get("cep")?.enable();
     }
     this._formularioEndereco.get('rua')?.disable();
     this._formularioEndereco.get('numero')?.disable();

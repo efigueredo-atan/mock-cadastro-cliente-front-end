@@ -11,6 +11,7 @@
   --text-color3: #ddd;
   --header-bg: #9a0008;
   --bg2: #70340f;
+  --soma-height-header: calc(39px + 55px);
 }
 
 * {
