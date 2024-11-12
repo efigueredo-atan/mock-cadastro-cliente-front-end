@@ -11,11 +11,13 @@ export class CadastroClienteComponent {
   public cliente: Cliente = null;
   public stepAtivo: number = 0;
 
-  public avancarStep(event: any) {
+  public avancarStep(cliente: Cliente) {
+    this.cliente = cliente;
     this.stepAtivo++;
   }
 
-  public voltarStep(event: any) {
+  public voltarStep(cliente: Cliente) {
+    this.cliente = cliente;
     this.stepAtivo--;
   }
 }

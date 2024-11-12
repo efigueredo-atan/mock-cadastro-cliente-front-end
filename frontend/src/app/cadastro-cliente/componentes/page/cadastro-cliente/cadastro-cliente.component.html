@@ -22,7 +22,10 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
-          <app-step-informacoes-pessoais-cliente (avancarStepperEvent)="avancarStep($event)"></app-step-informacoes-pessoais-cliente>
+          <app-step-informacoes-pessoais-cliente
+            (avancarStepperEvent)="avancarStep($event)"
+            [cliente]="cliente"
+          ></app-step-informacoes-pessoais-cliente>
         </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>
@@ -44,7 +47,11 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
-          <app-step-enderecos-cliente (avancarStepperEvent)="avancarStep($event)" (voltarStepperEvent)="voltarStep($event)"></app-step-enderecos-cliente>
+          <app-step-enderecos-cliente
+            (avancarStepperEvent)="avancarStep($event)"
+            (voltarStepperEvent)="voltarStep($event)"
+            [cliente]="cliente"
+          ></app-step-enderecos-cliente>
         </ng-template>
       </p-stepperPanel>
       <p-stepperPanel>
@@ -60,7 +67,10 @@
           let-nextCallback="nextCallback"
           let-index="index"
         >
-        <app-step-historico-cliente (voltarStepperEvent)="voltarStep($event)"></app-step-historico-cliente>
+          <app-step-historico-cliente
+            (voltarStepperEvent)="voltarStep($event)"
+            [cliente]="cliente"
+          ></app-step-historico-cliente>
         </ng-template>
       </p-stepperPanel>
     </p-stepper>

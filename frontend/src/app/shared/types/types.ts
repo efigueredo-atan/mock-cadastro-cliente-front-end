@@ -23,7 +23,7 @@ export interface Endereco {
   id: string | null;
   cep: string;
   rua: string;
-  numero: number;
+  numero: number | string;
   complemento: string;
   uf: string;
   cidade: string;
@@ -92,3 +92,4 @@ export interface ViaCepResponse {
   siafi: string;
   erro: string;
 }
+

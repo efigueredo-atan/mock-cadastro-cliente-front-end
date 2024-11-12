@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  frontend-cadastro-cliente-angular:
+    image:  efigueredo-atan/frontend-cadastro-cliente-angular
+    build: .
+    ports:
+      - 8080:80

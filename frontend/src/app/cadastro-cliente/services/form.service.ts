@@ -41,13 +41,13 @@ export class FormCadastroClienteService {
   public criarFormularioDadosPessoaisCPF(): void {
     this._formularioInformacoesPessoaisCPF = this.formBuilder.group({
       nome: [null, [Validators.required]],
-      sobrenome: [null, [Validators.required]],
+      sobrenome: [null],
       genero: [null, [Validators.required]],
       dataNascimento: [null, [Validators.required]],
       nomeSocial: [null],
       rg: [null, [Validators.required, validarDocumentoCPF]],
       telefone1: [null, [Validators.required]],
-      telefone2: [null, [Validators.required]],
+      telefone2: [null],
       email: [null, [Validators.required, Validators.email]],
     });
   }
@@ -55,14 +55,14 @@ export class FormCadastroClienteService {
   public criarFormularioDadosPessoaisCNPJ(): void {
     this._formularioInformacoesPessoaisCNPJ = this.formBuilder.group({
       nome: [null, [Validators.required]],
-      sobrenome: [null, [Validators.required]],
+      sobrenome: [null],
       genero: [null, [Validators.required]],
       dataNascimento: [null, [Validators.required]],
       nomeSocial: [null],
       incricaoEstadual: [null, [Validators.required]],
       orgaoPublico: [null, Validators.required],
       telefone1: [null, [Validators.required]],
-      telefone2: [null, [Validators.required]],
+      telefone2: [null],
       email: [null, [Validators.required, Validators.email]],
     });
   }
@@ -87,9 +87,9 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.disable();
-    this._formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
-    this._formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
-    this._formularioInformacoesPessoaisCPF.get('email')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('telefone1')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('telefone2')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('email')?.disable();
   }
 
   public habilitarCamposCPF(): void {
@@ -112,9 +112,9 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.enable();
-    this._formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
-    this._formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
-    this._formularioInformacoesPessoaisCPF.get('email')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('telefone1')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('telefone2')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('email')?.enable();
   }
 
   public atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void {

@@ -8,11 +8,11 @@ import { cliente } from '../../../../shared/cliente-mock';
   styleUrl: './step-historico-cliente.component.css'
 })
 export class StepHistoricoClienteComponent {
-  @Output() public voltarStepperEvent = new EventEmitter();
+  @Output() public voltarStepperEvent: EventEmitter<Cliente> = new EventEmitter();
   @Input() public cliente: Cliente = cliente;
 
   public emitirEventoVoltarStepper(): void {
-    this.voltarStepperEvent.emit('');
+    this.voltarStepperEvent.emit(this.cliente);
   }
 
 }
