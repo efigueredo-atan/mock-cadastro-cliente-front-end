@@ -19,7 +19,18 @@ export class EnderecoTabelaComponent {
   public modalEditarEnderecoVisivel = false;
 
   public formatarEndereco(): string {
-    return `${this.endereco.rua}, n° ${this.endereco.numero}, ${this.endereco.complemento}`;
+    var endereco = '';
+    if (this.endereco.rua) {
+      endereco += this.endereco.rua;
+
+      if (this.endereco.numero) {
+        endereco += `, n° ${this.endereco.numero}`;
+      }
+      if(this.endereco.complemento) {
+        endereco += `, ${this.endereco.complemento}`
+      }
+    }
+    return endereco;
   }
 
   public definirEsseEnderecoComoSelecionado(): void {

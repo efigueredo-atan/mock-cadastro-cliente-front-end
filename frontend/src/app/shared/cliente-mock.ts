@@ -6,7 +6,7 @@ export let cliente: Cliente = {
     cpf: "12345678910",
     genero: Genero.FEMININO,
     rg: "123.456.789-10",
-    dataNascimento: new Date(),
+    dataNascimento: "28/06/2003",
     cnpj: "2311321311",
     incricaoEstadual: "1231",
     orgaoPublico: "12313",

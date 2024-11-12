@@ -15,8 +15,6 @@ export class FormCadastroClienteService {
     this.criarFormularioTipoDocumento();
     this.criarFormularioDadosPessoaisCPF();
     this.criarFormularioDadosPessoaisCNPJ();
-    this.desabilitarCamposCPF();
-    this.desabilitarCamposCNPJ();
   }
 
   public get formularioInformacoesPessoaisCPF(): FormGroup {

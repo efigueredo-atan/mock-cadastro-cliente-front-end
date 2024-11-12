@@ -35,7 +35,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
 
   public consultandoDocumentos = false;
   public dadosClienteEncontrados = false;
-  public modoEdicaoDados = false;
   public erroFormularioDocumento = {
     errorCPF: false,
     errorCNPJ: false,
@@ -66,36 +65,16 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     }
   }
 
-  public habilitarModoEdicao(): void {
-    this.modoEdicaoDados = true;
-    if (this.documentoSelecionado == 'cpf') {
-      this.formCadastroClienteService.habilitarCamposCPF();
-    } else {
-      this.formCadastroClienteService.habilitarCamposCNPJ();
-    }
-  }
-
-  public salvarAlteracoes(): void {
-    this.modoEdicaoDados = false;
-    if (this.documentoSelecionado == 'cpf') {
-      this.formCadastroClienteService.desabilitarCamposCPF();
-    } else {
-      this.formCadastroClienteService.desabilitarCamposCNPJ();
-    }
-  }
-
   public validarDocumento(): void {
     // Validar no phroteus se existe usuario
     // Se nao houver obter dados na API da receita federal
     if (!this.houveErroValidacaoDocumentos()) {
       this.consultandoDocumentos = true;
       this.dadosClienteEncontrados = false;
-
       console.log(this.documentoSelecionado);
 
       if (this.documentoSelecionado == 'cpf') {
         // Consultar CPF
-
         setTimeout(() => {
           this.consultandoDocumentos = false;
           this.dadosClienteEncontrados = true;
@@ -176,7 +155,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     }
   }
   public selecionarDocumento(event: SelectButtonChangeEvent) {
-    this.modoEdicaoDados = false;
     this.documentoSelecionado = event.value;
     this.formularioDocumento.value.documentoSelecionado = event.value;
     this.cliente = null;
