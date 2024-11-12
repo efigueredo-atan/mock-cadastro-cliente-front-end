@@ -7,6 +7,10 @@ const routes: Routes = [
     "path": "cadastro",
     component: CadastroClienteComponent,
     pathMatch: "full"
+  },
+  {
+    path: "**",
+    redirectTo: 'cadastro'
   }
 ];
 
