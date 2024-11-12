@@ -1,15 +1,16 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
 import {
   validarDocumentoCNPJ,
-  validarDocumentoCPF,
 } from '../../../../shared/validators/custom-validators';
 import { cliente } from '../../../../shared/cliente-mock';
 import { FormCadastroClienteService } from '../../../services/form.service';
 import { ValidadorDocumentosService } from '../../../services/validador-documentos.service';
 import { EventEmitter } from '@angular/core';
+import { ApiCnpjService } from '../../../services/api-cnpj.service';
+import { ResponseApiCnpj } from '../../../../shared/types/api-cnpj';
 
 @Component({
   selector: 'app-step-informacoes-pessoais-cliente',
@@ -17,9 +18,9 @@ import { EventEmitter } from '@angular/core';
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
 export class StepInformacoesPessoaisClienteComponent implements OnInit {
-  @Output() public avancarStepperEvent = new EventEmitter();
+  @Output() public avancarStepperEvent: EventEmitter<Cliente> = new EventEmitter();
+  @Input() public cliente: Cliente = null;
 
-  public cliente: Cliente = null;
   public tipoDocumento: any[] = [
     { label: 'CPF', documentoSelecionado: 'cpf' },
     { label: 'CNPJ', documentoSelecionado: 'cnpj' },
@@ -50,7 +51,8 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
 
   constructor(
     private readonly formCadastroClienteService: FormCadastroClienteService,
-    private readonly validadorDocumentosService: ValidadorDocumentosService
+    private readonly validadorDocumentosService: ValidadorDocumentosService,
+    private readonly apiCnpjService: ApiCnpjService
   ) {}
 
   public ngOnInit(): void {
@@ -62,7 +64,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
   public enterPressionado(): void {
     if (!this.consultandoDocumentos && !this.dadosClienteEncontrados) {
       this.validarDocumento();
-    } 
+    }
   }
 
   public habilitarModoEdicao(): void {
@@ -89,24 +91,79 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     if (!this.houveErroValidacaoDocumentos()) {
       this.consultandoDocumentos = true;
       this.dadosClienteEncontrados = false;
-      setTimeout(() => {
-        this.consultandoDocumentos = false;
-        this.dadosClienteEncontrados = true;
-        this.cliente = cliente;
-        if (this.documentoSelecionado == 'cpf') {
+
+      console.log(this.documentoSelecionado);
+
+      if (this.documentoSelecionado == 'cpf') {
+        // Consultar CPF
+
+        setTimeout(() => {
+          this.consultandoDocumentos = false;
+          this.dadosClienteEncontrados = true;
+          this.cliente = cliente;
           this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCPF(
             this.cliente
           );
-        } else {
+        }, 1000);
+      } else {
+        // Consultar CNPJ
+        var cnpj = this.formularioDocumento.get('cnpj').value;
+        cnpj = this.formatarCnpjECpf(cnpj);
+        this.apiCnpjService.consultarCNPJ(cnpj).subscribe((resposta) => {
+          this.consultandoDocumentos = false;
+          this.dadosClienteEncontrados = true;
+          this.cliente = this.obterClientePelaRespostaApiCnpj(resposta);
           this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCNPJ(
             this.cliente
           );
-        }
-      }, 1000);
+          console.log(this.cliente)
+          console.log(this.formularioInformacoesPessoaisCNPJ)
+        });
+      }
     } else {
       this.formularioDocumento.get('cpf').reset();
       this.formularioDocumento.get('cnpj').reset();
     }
+  }
+
+  private obterClientePelaRespostaApiCnpj(resposta: ResponseApiCnpj): Cliente {
+    return {
+      nome: resposta.company.name,
+      contatos: {
+        telefone1: `${resposta.phones[0].area}${resposta.phones[0].number}`,
+        telefone2: null,
+        email: resposta.emails[0].address,
+      },
+      sobrenome: null,
+      cpf: null,
+      genero: null,
+      rg: null,
+      cnpj: resposta.taxId,
+      incricaoEstadual: null,
+      orgaoPublico: null,
+      dataNascimento: null,
+      nomeSocial: null,
+      enderecos: [
+        {
+          id: null,
+          uf: resposta.address.state,
+          cep: resposta.address.zip,
+          cidade: resposta.address.city,
+          bairro: resposta.address.district,
+          rua: resposta.address.street,
+          numero: resposta.address.number,
+          complemento: null,
+          referencia: null,
+        },
+      ],
+    };
+  }
+
+  private formatarCnpjECpf(dado: string): string {
+    var dadoFormatado = dado.replaceAll('.', ''),
+      dadoFormatado = dadoFormatado.replaceAll('/', '');
+    dadoFormatado = dadoFormatado.replaceAll('-', '');
+    return dadoFormatado;
   }
 
   public removerInformacoesClienteSeInputForAlteradoEClienteEncontrado(
@@ -181,6 +238,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
   }
 
   public emitirEventoAvancarStep(): void {
-    this.avancarStepperEvent.emit('');
+    this.avancarStepperEvent.emit(this.cliente);
   }
 }

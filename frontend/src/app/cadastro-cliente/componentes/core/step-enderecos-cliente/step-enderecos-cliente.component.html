@@ -19,13 +19,6 @@
       </div>
       <div class="botoes-right">
         <p-button
-          (onClick)="emitirEventoVoltarStepper()"
-          label="Voltar"
-          class="botao"
-          icon="pi pi-arrow-left"
-          iconPos="right"
-        />
-        <p-button
           [disabled]="!enderecoSelecionado"
           (onClick)="emitirEventoAvancarStepper()"
           label="Avançar"
@@ -58,4 +51,3 @@
   (eventoFecharDialog)="fecharDialogEditarEndereco()"
   (eventoEnderecoAlterado)="processarEnderecoAlteradoRecebido($event)"
 ></app-modal-editar-endereco>
-

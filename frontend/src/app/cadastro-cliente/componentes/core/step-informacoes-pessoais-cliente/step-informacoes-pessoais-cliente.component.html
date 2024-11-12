@@ -99,6 +99,7 @@
 
         <div class="buttons-box-right">
           <p-button
+            [disabled]="!formularioInformacoesPessoaisSelecionado.valid"
             *ngIf="
               !consultandoDocumentos &&
               dadosClienteEncontrados &&
@@ -112,7 +113,11 @@
           />
           <p-button
             *ngIf="!modoEdicaoDados"
-            [disabled]="!dadosClienteEncontrados || modoEdicaoDados"
+            [disabled]="
+              !dadosClienteEncontrados ||
+              modoEdicaoDados ||
+              !formularioInformacoesPessoaisSelecionado.valid
+            "
             class="botao botao-next-step"
             label="Avançar"
             icon="pi pi-arrow-right"
@@ -143,7 +148,7 @@
     *ngIf="cliente && dadosClienteEncontrados"
   >
     <div class="entry">
-      <label for="nome">Nome</label>
+      <label for="nome">*Nome</label>
       <input formControlName="nome" pInputText id="nome" />
     </div>
     <div class="entry">
@@ -151,7 +156,7 @@
       <input formControlName="sobrenome" pInputText id="sobrenome" />
     </div>
     <div class="entry">
-      <label for="data-nascimento">Data de nascimento</label>
+      <label for="data-nascimento">*Data de nascimento</label>
       <p-calendar formControlName="dataNascimento" id="data-nascimento" />
     </div>
     <div class="entry">
@@ -163,7 +168,7 @@
       <p-inputMask formControlName="rg" mask="999.999.999-99" />
     </div>
     <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
-      <label for="incricao-estadual">Incrição estadual</label>
+      <label for="incricao-estadual">*Incrição estadual</label>
       <p-inputNumber
         formControlName="incricaoEstadual"
         [useGrouping]="false"
@@ -171,15 +176,15 @@
       />
     </div>
     <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
-      <label for="orgao-publico">Orgão público</label>
+      <label for="orgao-publico">*Orgão público</label>
       <input pInputText formControlName="orgaoPublico" id="orgao-publico" />
     </div>
     <div class="entry">
-      <label for="email">E-mail</label>
+      <label for="email">*E-mail</label>
       <input pInputText formControlName="email" id="email" />
     </div>
     <div class="entry">
-      <label for="telefone1">Telefone 1</label>
+      <label for="telefone1">*Telefone 1</label>
       <p-inputMask
         mask="(99) 99999-9999"
         formControlName="telefone1"
@@ -196,7 +201,7 @@
     </div>
 
     <div class="entry entry-genero">
-      <label for="genero">Gênero</label>
+      <label for="genero">*Gênero</label>
       <p-selectButton
         formControlName="genero"
         id="genero"
