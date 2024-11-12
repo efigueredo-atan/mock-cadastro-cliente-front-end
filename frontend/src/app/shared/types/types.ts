@@ -13,7 +13,7 @@ export interface Cliente {
   cnpj: string | null;
   incricaoEstadual: string | null;
   orgaoPublico: string | null;
-  dataNascimento: Date | null;
+  dataNascimento: string | null;
   contatos: Contato | null;
   nomeSocial: string | null;
   enderecos: Endereco[] | null;

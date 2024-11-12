@@ -2,9 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
-import {
-  validarDocumentoCNPJ,
-} from '../../../../shared/validators/custom-validators';
+import { validarDocumentoCNPJ } from '../../../../shared/validators/custom-validators';
 import { cliente } from '../../../../shared/cliente-mock';
 import { FormCadastroClienteService } from '../../../services/form.service';
 import { ValidadorDocumentosService } from '../../../services/validador-documentos.service';
@@ -18,7 +16,8 @@ import { ResponseApiCnpj } from '../../../../shared/types/api-cnpj';
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
 export class StepInformacoesPessoaisClienteComponent implements OnInit {
-  @Output() public avancarStepperEvent: EventEmitter<Cliente> = new EventEmitter();
+  @Output() public avancarStepperEvent: EventEmitter<Cliente> =
+    new EventEmitter();
   @Input() public cliente: Cliente = null;
 
   public tipoDocumento: any[] = [
@@ -36,7 +35,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
 
   public consultandoDocumentos = false;
   public dadosClienteEncontrados = false;
-  public modoEdicaoDados = false;
   public erroFormularioDocumento = {
     errorCPF: false,
     errorCNPJ: false,
@@ -67,36 +65,16 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     }
   }
 
-  public habilitarModoEdicao(): void {
-    this.modoEdicaoDados = true;
-    if (this.documentoSelecionado == 'cpf') {
-      this.formCadastroClienteService.habilitarCamposCPF();
-    } else {
-      this.formCadastroClienteService.habilitarCamposCNPJ();
-    }
-  }
-
-  public salvarAlteracoes(): void {
-    this.modoEdicaoDados = false;
-    if (this.documentoSelecionado == 'cpf') {
-      this.formCadastroClienteService.desabilitarCamposCPF();
-    } else {
-      this.formCadastroClienteService.desabilitarCamposCNPJ();
-    }
-  }
-
   public validarDocumento(): void {
     // Validar no phroteus se existe usuario
     // Se nao houver obter dados na API da receita federal
     if (!this.houveErroValidacaoDocumentos()) {
       this.consultandoDocumentos = true;
       this.dadosClienteEncontrados = false;
-
       console.log(this.documentoSelecionado);
 
       if (this.documentoSelecionado == 'cpf') {
         // Consultar CPF
-
         setTimeout(() => {
           this.consultandoDocumentos = false;
           this.dadosClienteEncontrados = true;
@@ -116,8 +94,8 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
           this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCNPJ(
             this.cliente
           );
-          console.log(this.cliente)
-          console.log(this.formularioInformacoesPessoaisCNPJ)
+          console.log(this.cliente);
+          console.log(this.formularioInformacoesPessoaisCNPJ);
         });
       }
     } else {
@@ -130,9 +108,12 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     return {
       nome: resposta.company.name,
       contatos: {
-        telefone1: `${resposta.phones[0].area}${resposta.phones[0].number}`,
+        telefone1:
+          resposta.phones.length > 0
+            ? `${resposta.phones[0].area}${resposta.phones[0].number}`
+            : null,
         telefone2: null,
-        email: resposta.emails[0].address,
+        email: resposta.emails.length > 0 ? resposta.emails[0].address : null,
       },
       sobrenome: null,
       cpf: null,
@@ -174,7 +155,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     }
   }
   public selecionarDocumento(event: SelectButtonChangeEvent) {
-    this.modoEdicaoDados = false;
     this.documentoSelecionado = event.value;
     this.formularioDocumento.value.documentoSelecionado = event.value;
     this.cliente = null;

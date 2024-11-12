@@ -83,39 +83,12 @@
             iconPos="right"
             (onClick)="consultandoDocumentos = false"
           />
-          <p-button
-            *ngIf="
-              !consultandoDocumentos &&
-              dadosClienteEncontrados &&
-              !modoEdicaoDados
-            "
-            label="Editar"
-            class="botao"
-            icon="pi pi-pencil"
-            iconPos="right"
-            (onClick)="habilitarModoEdicao()"
-          />
         </div>
 
         <div class="buttons-box-right">
           <p-button
-            [disabled]="!formularioInformacoesPessoaisSelecionado.valid"
-            *ngIf="
-              !consultandoDocumentos &&
-              dadosClienteEncontrados &&
-              modoEdicaoDados
-            "
-            label="Salvar e avançar"
-            class="botao"
-            icon="pi pi-save"
-            iconPos="right"
-            (onClick)="emitirEventoAvancarStep(); salvarAlteracoes()"
-          />
-          <p-button
-            *ngIf="!modoEdicaoDados"
             [disabled]="
               !dadosClienteEncontrados ||
-              modoEdicaoDados ||
               !formularioInformacoesPessoaisSelecionado.valid
             "
             class="botao botao-next-step"
@@ -157,7 +130,7 @@
     </div>
     <div class="entry">
       <label for="data-nascimento">*Data de nascimento</label>
-      <p-calendar formControlName="dataNascimento" id="data-nascimento" />
+      <p-inputMask formControlName="dataNascimento" id="data-nascimento" mask="99/99/9999" />
     </div>
     <div class="entry">
       <label for="nome-social">Nome social</label>
