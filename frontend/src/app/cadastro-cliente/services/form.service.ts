@@ -48,6 +48,8 @@ export class FormCadastroClienteService {
       telefone2: [null],
       email: [null, [Validators.required, Validators.email]],
       orgaoPublico: [null, Validators.required],
+      funcionario: [false],
+      ativo: [false]
     });
   }
 
@@ -75,6 +77,8 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
     this._formularioInformacoesPessoaisCPF.get('email')?.disable();
     this._formularioInformacoesPessoaisCPF.get('orgaoPublico')?.disable();
+    this._formularioInformacoesPessoaisCPF.get('funcionario')?.disable();
+    this._formularioInformacoesPessoaisCPF.get('ativo')?.disable();
   }
 
   public desabilitarCamposCNPJ(): void {
@@ -99,6 +103,8 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
     this._formularioInformacoesPessoaisCPF.get('email')?.enable();
     this._formularioInformacoesPessoaisCPF.get('orgaoPublico')?.enable();
+    this._formularioInformacoesPessoaisCPF.get('funcionario')?.enable();
+    this._formularioInformacoesPessoaisCPF.get('ativo')?.enable();
   }
 
   public habilitarCamposCNPJ(): void {
@@ -123,6 +129,8 @@ export class FormCadastroClienteService {
       telefone1: cliente.contatos.telefone1,
       telefone2: cliente.contatos.telefone2,
       email: cliente.contatos.email,
+      funcionario: cliente.funcionario,
+      ativo: cliente.ativo,
     });
   }
 

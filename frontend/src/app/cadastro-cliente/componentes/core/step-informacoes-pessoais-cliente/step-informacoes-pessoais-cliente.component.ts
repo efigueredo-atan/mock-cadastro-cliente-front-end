@@ -136,7 +136,9 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
       nome: null,
       orgaoPublico: null,
       dataNascimento: null,
-      nomeSocial: null
+      nomeSocial: null,
+      ativo: null,
+      funcionario: null,
     };
   }
 

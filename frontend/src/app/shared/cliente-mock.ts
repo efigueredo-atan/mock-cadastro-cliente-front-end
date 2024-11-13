@@ -9,6 +9,8 @@ export let tiposEnderecosMock: string[] = [
 ];
 
 export let cliente: Cliente = {
+  funcionario: true,
+  ativo: true,
   nome: 'Maria',
   sobrenome: 'Silva',
   cpf: '12345678910',

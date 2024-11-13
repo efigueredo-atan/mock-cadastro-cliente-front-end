@@ -20,6 +20,8 @@ export interface Cliente {
   contatos: Contato | null;
   nomeSocial: string | null;
   enderecos: Endereco[] | null;
+  funcionario: boolean | null;
+  ativo: boolean | null;
 }
 
 export interface Endereco {
