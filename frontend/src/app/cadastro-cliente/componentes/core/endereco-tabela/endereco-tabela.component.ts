@@ -26,7 +26,7 @@ export class EnderecoTabelaComponent {
         label: 'Editar',
         icon: 'pi pi-pen-to-square',
         command: () => {
-          this.excluirEndereco();
+          this.emitirEventoEditarEndereco();
         },
       },
       {
