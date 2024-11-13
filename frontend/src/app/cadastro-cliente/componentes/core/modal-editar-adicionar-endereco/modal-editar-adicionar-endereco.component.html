@@ -88,6 +88,22 @@
           [options]="ufs"
         />
       </div>
+      <div class="entry">
+        <label for="tipoEndereco">Tipo de endereço</label>
+        <p-dropdown
+          formControlName="tipoEndereco"
+          id="tipoEndereco"
+          [options]="tiposEnderecos"
+        />
+      </div>
+      <div class="entry-checkbutton">
+        <p-checkbox
+          formControlName="enderecoPrincipal"
+          [binary]="true"
+          inputId="enderecoPrincipal"
+        />
+        <label for="enderecoPrincipal">Endereço principal</label>
+      </div>
     </form>
     <div class="buttons">
       <p-button

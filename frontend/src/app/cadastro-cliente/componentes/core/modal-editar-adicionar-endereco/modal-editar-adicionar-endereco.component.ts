@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { ViaCepService } from '../../../services/via-cep.service';
 import { EventEmitter } from '@angular/core';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { tiposEnderecosMock } from '../../../../shared/cliente-mock';
 
 @Component({
   selector: 'app-modal-editar-adicionar-endereco',
@@ -21,6 +22,7 @@ export class ModalEditarAdicionarEnderecoComponent implements OnDestroy {
   public erroCEP = false;
   public registrandoEndereco = false;
   public $subscribeEventoCadastrarEndereco: any;
+  public tiposEnderecos: string[] = tiposEnderecosMock;
 
   @ViewChild('inputEnderecoRua') inputEnderecoRua: ElementRef;
 

@@ -44,7 +44,6 @@ export class FormEnderecoService {
   }
 
   public habilitarCampos(): void {
-    console.log(this._formularioEndereco)
     this._formularioEndereco.get('rua')?.enable();
     this._formularioEndereco.get('numero')?.enable();
     this._formularioEndereco.get('complemento')?.enable();

@@ -71,7 +71,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
     if (!this.houveErroValidacaoDocumentos()) {
       this.consultandoDocumentos = true;
       this.dadosClienteEncontrados = false;
-      console.log(this.documentoSelecionado);
 
       if (this.documentoSelecionado == 'cpf') {
         // Consultar CPF
@@ -94,8 +93,6 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
           this.formCadastroClienteService.atualizarFormularioInformacoesPessoaisCNPJ(
             this.cliente
           );
-          console.log(this.cliente);
-          console.log(this.formularioInformacoesPessoaisCNPJ);
         });
       }
     } else {

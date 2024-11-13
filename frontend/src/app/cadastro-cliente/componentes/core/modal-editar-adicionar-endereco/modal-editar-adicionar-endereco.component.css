@@ -42,3 +42,15 @@
 .entry-referencia, .entry-rua {
     grid-column: span 2;
 }
+
+.entry-checkbutton {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    gap: 0.5em;
+  }
+  
+  ::ng-deep .p-dropdown {
+    width: 100%;
+  }
+  
