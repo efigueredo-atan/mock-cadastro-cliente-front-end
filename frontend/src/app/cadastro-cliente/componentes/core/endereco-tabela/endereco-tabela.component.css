@@ -67,16 +67,27 @@
   background-color: var(--bg1)
 }
 
+.ul-botao {
+  position: relative;
+}
+
+::ng-deep .p-splitbutton .p-splitbutton-defaultbutton, .p-splitbutton.p-button-rounded>.p-splitbutton-defaultbutton.p-button, .p-splitbutton.p-button-outlined>.p-splitbutton-defaultbutton.p-button {
+  display: none;
+}
+
+::ng-deep .p-button.p-button-icon-only {
+  border-radius: 4px;
+}
 
 ::ng-deep .p-button.p-button-sm .p-button-icon {
   font-size: 0.8em;
 }
 
-::ng-deep .p-menuitem-text, .p-menuitem-icon, .p-menuitem-separator {
+::ng-deep .ul-botao .p-menuitem-text, .p-menuitem-icon, .p-menuitem-separator {
   color: black
 }
 
-::ng-deep .p-menuitem-icon {
+::ng-deep .ul-botao .p-menuitem-icon {
   color: #000;
 }
 

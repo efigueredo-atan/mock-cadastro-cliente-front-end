@@ -37,11 +37,8 @@
     </ul>
     <ul class="ul-botao">
       <p-splitButton
-        label="Editar"
-        (onClick)="emitirEventoEditarEndereco()"
-        icon="pi pi-pen-to-square"
+      size="small"
         [model]="itemsBotao"
-        size="small"
       />
     </ul>
   </li>
@@ -70,9 +67,7 @@
     />
     <p-tag
       icon="pi pi-clipboard"
-      [value]="
-        'Tipo de endereço: ' +  endereco.tipoEndereco
-      "
+      [value]="'Tipo de endereço: ' + endereco.tipoEndereco"
     />
   </div>
 </div>

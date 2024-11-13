@@ -8,13 +8,20 @@
 }
 
 ::ng-deep .p-breadcrumb {
-    width: 100vw;
-    border: none;
-    border-radius: 0;
-    background-color: var(--bg2);
+  width: 100vw;
+  border: none;
+  border-radius: 0;
+  background-color: var(--bg2);
 }
 
-::ng-deep .p-menuitem-text, ::ng-deep .p-menuitem-icon, ::ng-deep .p-menuitem-separator {
-    color: var(--text-color3);
+::ng-deep .page-header .p-breadcrumb-list {
+  display: flex;
+  gap: 0.5em;
+}
 
+::ng-deep .page-header .p-menuitem-text,
+::ng-deep .page-header .p-menuitem-icon,
+::ng-deep .page-header .p-menuitem-separator {
+  color: var(--text-color);
+  font-weight: 700;
 }

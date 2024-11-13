@@ -27,8 +27,8 @@ import { ModalEditarEnderecoComponent } from './componentes/core/modal-editar-en
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
-import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -62,8 +62,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     DropdownModule,
     ConfirmDialogModule,
     TagModule,
-    SplitButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    SplitButtonModule
 ],
   providers: [
     MessageService,

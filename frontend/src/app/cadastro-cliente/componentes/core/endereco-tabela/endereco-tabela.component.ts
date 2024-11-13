@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Endereco } from '../../../../shared/types/types';
 import { EventEmitter } from '@angular/core';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
@@ -22,6 +22,13 @@ export class EnderecoTabelaComponent {
 
   constructor() {
     this.itemsBotao = [
+      {
+        label: 'Editar',
+        icon: 'pi pi-pen-to-square',
+        command: () => {
+          this.excluirEndereco();
+        },
+      },
       {
         label: 'Excluir',
         icon: 'pi pi-trash',
