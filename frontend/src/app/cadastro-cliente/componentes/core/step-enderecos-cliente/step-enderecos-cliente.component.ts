@@ -13,7 +13,11 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
 export class StepEnderecosClienteComponent {
   @Output() public voltarStepperEvent = new EventEmitter();
   @Output() public avancarStepperEvent = new EventEmitter();
-  @Input() public cliente: Cliente = cliente;
+  
+  // @Input() public cliente: Cliente;
+  // Inserir input no html apos alteração
+  public cliente = cliente;
+
   public enderecoSelecionado: Endereco;
   public enderecoSelecionadoEditar: Endereco;
   public modalAdicionarEnderecoVisivel = false;
@@ -24,6 +28,12 @@ export class StepEnderecosClienteComponent {
     private readonly confirmationService: ConfirmationService
   ) {
     this.mostrarMensagemEndereçoRegistrado();
+
+
+    this.cliente = cliente;
+
+
+
   }
 
   public emitirEventoAvancarStepper(): void {

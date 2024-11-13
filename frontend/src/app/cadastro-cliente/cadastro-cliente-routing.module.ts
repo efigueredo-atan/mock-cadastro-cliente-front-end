@@ -4,7 +4,8 @@ import { CadastroClienteComponent } from './componentes/page/cadastro-cliente/ca
 
 const routes: Routes = [
   {
-    "path": "cadastro",
+    title: "Cadastro de cliente",
+    path: "cadastro",
     component: CadastroClienteComponent,
     pathMatch: "full"
   },

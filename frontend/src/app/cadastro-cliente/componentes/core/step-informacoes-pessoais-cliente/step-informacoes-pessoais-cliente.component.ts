@@ -135,6 +135,8 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
           numero: resposta.address.number,
           complemento: null,
           referencia: null,
+          tipoEndereco: null,
+          principal: false
         },
       ],
     };

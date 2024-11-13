@@ -1,68 +1,78 @@
-<li
-  (click)="definirEsseEnderecoComoSelecionado()"
+<div
   [class]="
     endereco === enderecoSelecionado
-      ? 'endereco-tabela item-tabela endereco-selecionado'
-      : 'endereco-tabela item-tabela'
+      ? 'endereco endereco-selecionado'
+      : 'endereco'
   "
-  *ngIf="!titulo"
 >
-  <ul>
-    {{
-      formatarEndereco()
-    }}
-  </ul>
-  <ul>
-    {{
-      endereco.bairro
-    }}
-  </ul>
-  <ul>
-    {{
-      endereco.cidade
-    }}
-  </ul>
-  <ul>
-    {{
-      endereco.cep
-    }}
-  </ul>
-  <ul>
-    {{
-      endereco.uf
-    }}
-  </ul>
-  <ul class="buttons">
-    <p-button
-      pTooltip="Editar endereço"
-      tooltipPosition="bottom"
-      icon="pi pi-pen-to-square"
-      size="small"
-      (click)="emitirEventoEditarEndereco()"
+  <li
+    (click)="definirEsseEnderecoComoSelecionado()"
+    class="endereco-tabela item-tabela"
+    *ngIf="!titulo"
+  >
+    <ul>
+      {{
+        formatarEndereco()
+      }}
+    </ul>
+    <ul>
+      {{
+        endereco.bairro
+      }}
+    </ul>
+    <ul>
+      {{
+        endereco.cidade
+      }}
+    </ul>
+    <ul>
+      {{
+        endereco.cep
+      }}
+    </ul>
+    <ul>
+      {{
+        endereco.uf
+      }}
+    </ul>
+    <ul class="ul-botao">
+      <p-splitButton
+        label="Editar"
+        (onClick)="emitirEventoEditarEndereco()"
+        icon="pi pi-pen-to-square"
+        [model]="itemsBotao"
+        size="small"
+      />
+    </ul>
+  </li>
+  <li class="titulo" *ngIf="titulo">
+    <ul>
+      Endereço
+    </ul>
+    <ul>
+      Bairro
+    </ul>
+    <ul>
+      Cidade
+    </ul>
+    <ul>
+      CEP
+    </ul>
+    <ul>
+      UF
+    </ul>
+  </li>
+  <div *ngIf="!titulo" class="tags">
+    <p-tag
+      *ngIf="endereco.principal"
+      icon="pi pi-star"
+      value="Endereço principal"
     />
-    <p-button
-      pTooltip="Excluir endereço"
-      tooltipPosition="bottom"
-      icon="pi pi-trash"
-      size="small"
-      (click)="excluirEndereco()"
+    <p-tag
+      icon="pi pi-clipboard"
+      [value]="
+        'Tipo de endereço: ' +  endereco.tipoEndereco
+      "
     />
-  </ul>
-</li>
-<li class="endereco-tabela titulo" *ngIf="titulo">
-  <ul>
-    Endereço
-  </ul>
-  <ul>
-    Bairro
-  </ul>
-  <ul>
-    Cidade
-  </ul>
-  <ul>
-    CEP
-  </ul>
-  <ul>
-    UF
-  </ul>
-</li>
+  </div>
+</div>

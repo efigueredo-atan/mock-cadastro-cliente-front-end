@@ -39,9 +39,12 @@ export class FormEnderecoService {
     this._formularioEndereco.get('cidade')?.disable();
     this._formularioEndereco.get('uf')?.disable();
     this._formularioEndereco.get('referencia').disable();
+    this._formularioEndereco.get('enderecoPrincipal').disable();
+    this._formularioEndereco.get('tipoEndereco').disable();
   }
 
   public habilitarCampos(): void {
+    console.log(this._formularioEndereco)
     this._formularioEndereco.get('rua')?.enable();
     this._formularioEndereco.get('numero')?.enable();
     this._formularioEndereco.get('complemento')?.enable();
@@ -49,6 +52,8 @@ export class FormEnderecoService {
     this._formularioEndereco.get('cidade')?.enable();
     this._formularioEndereco.get('uf')?.enable();
     this._formularioEndereco.get('referencia').enable();
+    this._formularioEndereco.get('enderecoPrincipal').enable();
+    this._formularioEndereco.get('tipoEndereco').enable();
   }
 
   public obterObjetoEndereco(id?: string): Endereco {
@@ -61,7 +66,9 @@ export class FormEnderecoService {
       cidade: this._formularioEndereco.get('cidade').value,
       uf: this._formularioEndereco.get('uf').value,
       referencia: this._formularioEndereco.get("referencia").value,
-      id: id
+      id: id,
+      principal: this._formularioEndereco.get("enderecoPrincipal").value,
+      tipoEndereco: this._formularioEndereco.get("tipoEndereco").value,
     };
   }
 
@@ -74,7 +81,9 @@ export class FormEnderecoService {
       bairro: endereco.bairro,
       cidade: endereco.cidade,
       uf: endereco.uf,
-      referencia: endereco.referencia
+      referencia: endereco.referencia,
+      enderecoPrincipal: endereco.principal,
+      tipoEndereco: endereco.tipoEndereco
     })
   }
 
@@ -87,7 +96,9 @@ export class FormEnderecoService {
       bairro: [null, [Validators.required]],
       cidade: [null, [Validators.required]],
       uf: [null, [Validators.required]],
-      referencia: [null]
+      referencia: [null],
+      enderecoPrincipal: [null],
+      tipoEndereco: [null, [Validators.required]]
     });
   }
 }

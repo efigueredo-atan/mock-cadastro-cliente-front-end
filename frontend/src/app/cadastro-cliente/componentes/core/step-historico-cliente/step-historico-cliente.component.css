@@ -22,7 +22,7 @@
 }   
 
 .card .card-titulo  {
-    background-color: #f5f5f5;
+    background-color: var(--branco-fantasma);
     border-radius: 4px 4px 0 0;
     padding: 1em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);

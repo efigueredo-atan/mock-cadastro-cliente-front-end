@@ -18,7 +18,6 @@
           <label for="cpf">CEP</label>
           <p-inputMask
             formControlName="cep"
-            autoFocus=""
             [autoClear]="false"
             mask="99.999-999"
           />
@@ -82,6 +81,22 @@
           [options]="ufs"
         />
       </div>
+      <div class="entry">
+        <label for="tipoEndereco">Tipo de endereço</label>
+        <p-dropdown
+          formControlName="tipoEndereco"
+          id="tipoEndereco"
+          [options]="tiposEnderecos"
+        />
+      </div>
+      <div class="entry-checkbutton">
+        <p-checkbox
+          formControlName="enderecoPrincipal"
+          [binary]="true"
+          inputId="enderecoPrincipal"
+        />
+        <label for="enderecoPrincipal">Endereço principal</label>
+      </div>
     </form>
     <div class="buttons">
       <p-button
@@ -93,14 +108,16 @@
         (click)="fecharDialog()"
       />
       <p-button
-        [disabled]="
-          !formularioEndereco.valid || salvandoAlteracoesEndereco
-        "
+        [disabled]="!formularioEndereco.valid || salvandoAlteracoesEndereco"
         [label]="
-          !salvandoAlteracoesEndereco ? 'Salvar alterações' : 'Salvando alterações'
+          !salvandoAlteracoesEndereco
+            ? 'Salvar alterações'
+            : 'Salvando alterações'
         "
         class="botao"
-        [icon]="!salvandoAlteracoesEndereco ? 'pi pi-check' : 'pi pi-spin pi-spinner'"
+        [icon]="
+          !salvandoAlteracoesEndereco ? 'pi pi-check' : 'pi pi-spin pi-spinner'
+        "
         iconPos="right"
         (click)="salvarAlteracoes()"
       />

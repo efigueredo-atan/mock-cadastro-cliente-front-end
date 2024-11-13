@@ -29,6 +29,8 @@ export interface Endereco {
   cidade: string;
   bairro: string;
   referencia: string;
+  tipoEndereco: string | null;
+  principal: boolean;
 }
 
 export interface Contato {
