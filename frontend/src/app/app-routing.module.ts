@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFound404Component } from './shared/componentes/page/not-found-404/not-found-404.component';
 
 const routes: Routes = [
   {
@@ -8,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'cliente'
+    component: NotFound404Component,
   }
 ];
 

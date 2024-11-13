@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HeaderComponent,
     BreadCrumbComponent,
-    RodapeComponent,
+    RodapeComponent
   ],
   imports: [
     BrowserModule,
