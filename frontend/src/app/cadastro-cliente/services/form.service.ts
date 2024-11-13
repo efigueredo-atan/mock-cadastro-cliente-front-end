@@ -47,21 +47,20 @@ export class FormCadastroClienteService {
       telefone1: [null, [Validators.required]],
       telefone2: [null],
       email: [null, [Validators.required, Validators.email]],
+      orgaoPublico: [null, Validators.required],
     });
   }
 
   public criarFormularioDadosPessoaisCNPJ(): void {
     this._formularioInformacoesPessoaisCNPJ = this.formBuilder.group({
-      nome: [null, [Validators.required]],
-      sobrenome: [null],
       genero: [null, [Validators.required]],
-      dataNascimento: [null, [Validators.required]],
-      nomeSocial: [null],
       incricaoEstadual: [null, [Validators.required]],
-      orgaoPublico: [null, Validators.required],
       telefone1: [null, [Validators.required]],
       telefone2: [null],
       email: [null, [Validators.required, Validators.email]],
+      razaoSocial: [null, [Validators.required]],
+      nomeFantasia: [null, [Validators.required]],
+      dataFundacao: [null, [Validators.required]],
     });
   }
 
@@ -75,19 +74,18 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCPF.get('telefone1')?.disable();
     this._formularioInformacoesPessoaisCPF.get('telefone2')?.disable();
     this._formularioInformacoesPessoaisCPF.get('email')?.disable();
+    this._formularioInformacoesPessoaisCPF.get('orgaoPublico')?.disable();
   }
 
   public desabilitarCamposCNPJ(): void {
-    this._formularioInformacoesPessoaisCNPJ.get('nome')?.disable();
-    this._formularioInformacoesPessoaisCNPJ.get('sobrenome')?.disable();
-    this._formularioInformacoesPessoaisCNPJ.get('dataNascimento')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('genero')?.disable();
-    this._formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.disable();
-    this._formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('telefone1')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('telefone2')?.disable();
     this._formularioInformacoesPessoaisCNPJ.get('email')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('razaoSocial')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('nomeFantasia')?.disable();
+    this._formularioInformacoesPessoaisCNPJ.get('dataFundacao')?.disable();
   }
 
   public habilitarCamposCPF(): void {
@@ -100,19 +98,18 @@ export class FormCadastroClienteService {
     this._formularioInformacoesPessoaisCPF.get('telefone1')?.enable();
     this._formularioInformacoesPessoaisCPF.get('telefone2')?.enable();
     this._formularioInformacoesPessoaisCPF.get('email')?.enable();
+    this._formularioInformacoesPessoaisCPF.get('orgaoPublico')?.enable();
   }
 
   public habilitarCamposCNPJ(): void {
-    this._formularioInformacoesPessoaisCNPJ.get('nome')?.enable();
-    this._formularioInformacoesPessoaisCNPJ.get('sobrenome')?.enable();
-    this._formularioInformacoesPessoaisCNPJ.get('dataNascimento')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('genero')?.enable();
-    this._formularioInformacoesPessoaisCNPJ.get('nomeSocial')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('incricaoEstadual')?.enable();
-    this._formularioInformacoesPessoaisCNPJ.get('orgaoPublico')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('telefone1')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('telefone2')?.enable();
     this._formularioInformacoesPessoaisCNPJ.get('email')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('razaoSocial')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('nomeFantasia')?.enable();
+    this._formularioInformacoesPessoaisCNPJ.get('dataFundacao')?.enable();
   }
 
   public atualizarFormularioInformacoesPessoaisCPF(cliente: Cliente): void {
@@ -131,16 +128,14 @@ export class FormCadastroClienteService {
 
   public atualizarFormularioInformacoesPessoaisCNPJ(cliente: Cliente): void {
     this._formularioInformacoesPessoaisCNPJ.patchValue({
-      nome: cliente.nome,
-      sobrenome: cliente.sobrenome,
-      dataNascimento: cliente.dataNascimento,
+      razaoSocial: cliente.razaoSocial,
+      dataFundacao: cliente.dataFundacao,
       genero: cliente.genero,
-      nomeSocial: cliente.nomeSocial,
       incricaoEstadual: cliente.incricaoEstadual,
-      orgaoPublico: cliente.orgaoPublico,
       telefone1: cliente.contatos.telefone1,
       telefone2: cliente.contatos.telefone2,
       email: cliente.contatos.email,
+      nomeFatasia: cliente.nomeFantasia
     });
   }
 }

@@ -87,6 +87,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
         var cnpj = this.formularioDocumento.get('cnpj').value;
         cnpj = this.formatarCnpjECpf(cnpj);
         this.apiCnpjService.consultarCNPJ(cnpj).subscribe((resposta) => {
+          console.log(resposta)
           this.consultandoDocumentos = false;
           this.dadosClienteEncontrados = true;
           this.cliente = this.obterClientePelaRespostaApiCnpj(resposta);
@@ -103,39 +104,39 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
 
   private obterClientePelaRespostaApiCnpj(resposta: ResponseApiCnpj): Cliente {
     return {
-      nome: resposta.company.name,
+      razaoSocial: resposta.nome,
       contatos: {
-        telefone1:
-          resposta.phones.length > 0
-            ? `${resposta.phones[0].area}${resposta.phones[0].number}`
-            : null,
+        telefone1: resposta.telefone,
         telefone2: null,
-        email: resposta.emails.length > 0 ? resposta.emails[0].address : null,
+        email: resposta.email
       },
       sobrenome: null,
       cpf: null,
       genero: null,
       rg: null,
-      cnpj: resposta.taxId,
+      cnpj: resposta.cnpj,
       incricaoEstadual: null,
-      orgaoPublico: null,
-      dataNascimento: null,
-      nomeSocial: null,
+      nomeFantasia: resposta.fantasia,
+      dataFundacao: resposta.abertura,
       enderecos: [
         {
           id: null,
-          uf: resposta.address.state,
-          cep: resposta.address.zip,
-          cidade: resposta.address.city,
-          bairro: resposta.address.district,
-          rua: resposta.address.street,
-          numero: resposta.address.number,
+          uf: resposta.uf,
+          cep: resposta.cep,
+          cidade: resposta.municipio,
+          bairro: resposta.bairro,
+          rua: resposta.logradouro,
+          numero: resposta.numero,
           complemento: null,
           referencia: null,
           tipoEndereco: null,
           principal: false
         },
       ],
+      nome: null,
+      orgaoPublico: null,
+      dataNascimento: null,
+      nomeSocial: null
     };
   }
 

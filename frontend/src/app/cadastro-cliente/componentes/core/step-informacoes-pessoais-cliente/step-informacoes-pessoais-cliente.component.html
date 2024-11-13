@@ -120,22 +120,37 @@
     [formGroup]="formularioInformacoesPessoaisSelecionado"
     *ngIf="cliente && dadosClienteEncontrados"
   >
-    <div class="entry">
+    <div class="entry"  *ngIf="documentoSelecionado == 'cpf'">
       <label for="nome">*Nome</label>
       <input formControlName="nome" pInputText id="nome" />
     </div>
-    <div class="entry">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="sobrenome">Sobrenome</label>
       <input formControlName="sobrenome" pInputText id="sobrenome" />
     </div>
-    <div class="entry">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="data-nascimento">*Data de nascimento</label>
       <p-inputMask formControlName="dataNascimento" id="data-nascimento" mask="99/99/9999" />
     </div>
-    <div class="entry">
-      <label for="nome-social">Nome social</label>
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+      <label for="nome-social" >Nome social</label>
       <input formControlName="nomeSocial" pInputText id="nome-social" />
     </div>
+
+
+    <div class="entry"*ngIf="documentoSelecionado == 'cnpj'">
+      <label for="razaoSocial">*Razão social</label>
+      <input formControlName="razaoSocial" pInputText id="razaoSocial" />
+    </div>
+    <div class="entry"*ngIf="documentoSelecionado == 'cnpj'">
+      <label for="nomeFantasia">*Nome fantasia</label>
+      <input formControlName="nomeFantasia" pInputText id="nomeFantasia" />
+    </div>
+    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+      <label for="dataFundacao">*Data de fundação</label>
+      <p-inputMask formControlName="dataFundacao" id="data-dataFundacao" mask="99/99/9999" />
+    </div>
+
     <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="rg">RG</label>
       <p-inputMask formControlName="rg" mask="999.999.999-99" />
@@ -148,7 +163,7 @@
         id="incricao-estadual"
       />
     </div>
-    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="orgao-publico">*Orgão público</label>
       <input pInputText formControlName="orgaoPublico" id="orgao-publico" />
     </div>

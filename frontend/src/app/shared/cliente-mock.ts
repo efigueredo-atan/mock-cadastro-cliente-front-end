@@ -65,4 +65,7 @@ export let cliente: Cliente = {
       principal: false
     },
   ],
+  nomeFantasia: null,
+  razaoSocial: null,
+  dataFundacao: null
 };
