@@ -19,7 +19,7 @@ export let cliente: Cliente = {
   dataNascimento: '28/06/2003',
   cnpj: '2311321311',
   incricaoEstadual: '1231',
-  orgaoPublico: '12313',
+  orgaoPublico: 'SSP-PE',
   nomeSocial: 'Maria Silva',
   contatos: {
     telefone1: '(11) 97625-6212',

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
@@ -6,19 +6,18 @@ import { validarDocumentoCNPJ } from '../../../../shared/validators/custom-valid
 import { cliente } from '../../../../shared/cliente-mock';
 import { FormCadastroClienteService } from '../../../services/form.service';
 import { ValidadorDocumentosService } from '../../../services/validador-documentos.service';
-import { EventEmitter } from '@angular/core';
 import { ApiCnpjService } from '../../../services/api-cnpj.service';
 import { ResponseApiCnpj } from '../../../../shared/types/api-cnpj';
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
+import { Step } from '../step.inteface';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-step-informacoes-pessoais-cliente',
   templateUrl: './step-informacoes-pessoais-cliente.component.html',
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
-export class StepInformacoesPessoaisClienteComponent implements OnInit {
-  @Output() public avancarStepperEvent: EventEmitter<Cliente> =
-    new EventEmitter();
+export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
   @Input() public cliente: Cliente = null;
 
   public tipoDocumento: any[] = [
@@ -48,16 +47,43 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
   public formularioInformacoesPessoaisSelecionado: FormGroup =
     this.formularioInformacoesPessoaisCPF;
 
+  public indexStep = 0;
+
   constructor(
     private readonly formCadastroClienteService: FormCadastroClienteService,
     private readonly validadorDocumentosService: ValidadorDocumentosService,
     private readonly apiCnpjService: ApiCnpjService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public ngOnInit(): void {
     this.obterInstanciasDeFormularios();
     this.formularioInformacoesPessoaisSelecionado =
       this.formularioInformacoesPessoaisCPF;
+    this.escutarEventoTrocarStep();
+  }
+
+  public escutarEventoTrocarStep(): void {
+    EventEmitterService.get('eventoTrocarStep').subscribe((resposta) => {
+      if (resposta.index == this.indexStep) {
+        
+      }
+    });
+  }
+
+  public voltarStep(): void {
+    this.emitirEventoTrocarStep(this.indexStep - 1);
+  }
+
+  public avancarStep(): void {
+    this.emitirEventoTrocarStep(this.indexStep + 1);
+  }
+
+  public emitirEventoTrocarStep(index: number): void {
+    EventEmitterService.get('eventoTrocarStep').emit({
+      index: index,
+      cliente: this.cliente
+    });
   }
 
   public enterPressionado(): void {
@@ -88,7 +114,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
         var cnpj = this.formularioDocumento.get('cnpj').value;
         cnpj = this.formatarCnpjECpf(cnpj);
         this.apiCnpjService.consultarCNPJ(cnpj).subscribe((resposta) => {
-          console.log(resposta)
+          console.log(resposta);
           this.consultandoDocumentos = false;
           this.dadosClienteEncontrados = true;
           this.cliente = this.obterClientePelaRespostaApiCnpj(resposta);
@@ -109,7 +135,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
       contatos: {
         telefone1: resposta.telefone,
         telefone2: null,
-        email: resposta.email
+        email: resposta.email,
       },
       sobrenome: null,
       cpf: null,
@@ -131,7 +157,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
           complemento: null,
           referencia: null,
           tipoEndereco: null,
-          principal: false
+          principal: false,
         },
       ],
       nome: null,
@@ -218,9 +244,5 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
         );
       return this.erroFormularioDocumento.errorCNPJ;
     }
-  }
-
-  public emitirEventoAvancarStep(): void {
-    this.avancarStepperEvent.emit(this.cliente);
   }
 }
