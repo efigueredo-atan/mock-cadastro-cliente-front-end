@@ -18,7 +18,7 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
 export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
-  @Input() public cliente: Cliente = null;
+  @Input() public cliente: Cliente;
 
   public tipoDocumento: any[] = [
     { label: 'CPF', documentoSelecionado: 'cpf' },
