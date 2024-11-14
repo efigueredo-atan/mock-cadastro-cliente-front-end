@@ -1,9 +1,5 @@
 {
     "rewrites": [
-      {
-        "source": "/v1/:path*",
-        "destination": "https://receitaws.com.br/:path*"
-      }
-
+      { "source": "/api/proxy/(.*)", "destination": "/api/proxy.js" }
     ]
   }
