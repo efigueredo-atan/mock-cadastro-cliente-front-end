@@ -4,5 +4,6 @@
         "source": "/v1/cnpj/**",
         "destination": "https://receitaws.com.br/"
       }
+      
     ]
   }
