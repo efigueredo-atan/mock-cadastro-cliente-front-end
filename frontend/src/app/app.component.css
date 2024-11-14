@@ -55,3 +55,29 @@
   justify-content: center;
 }
 
+/* NAVBAR */
+
+::ng-deep .p-highlight {
+  background-color: transparent;
+}
+
+.navbar-header {
+  width: 100%;
+}
+
+::ng-deep .p-sidebar-header {
+  padding: 0.5em 1em;
+  background-color: var(--bg1);
+}
+
+::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close, .p-sidebar .p-sidebar-header .p-sidebar-icon {
+  color: var(--text-color)
+}
+
+::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close, .p-sidebar .p-sidebar-header .p-sidebar-icon:hover {
+  background-color: transparent;
+}
+
+::ng-deep .p-sidebar-content {
+  margin-top: 1.5em;
+}

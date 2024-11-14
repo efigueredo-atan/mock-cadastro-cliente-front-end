@@ -16,13 +16,15 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from './componentes/bread-crumb/bread-crumb.component';
 import { RodapeComponent } from './componentes/rodape/rodape.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BreadCrumbComponent,
-    RodapeComponent
+    RodapeComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,11 +35,11 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     ButtonModule,
     BreadcrumbModule,
-    HttpClientModule
+    HttpClientModule,
+    SidebarModule,
+    PanelMenuModule
   ],
-  providers: [
-    provideClientHydration(),
-  ],
+  providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

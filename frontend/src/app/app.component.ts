@@ -1,18 +1,48 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
-import { TranslateService } from '@ngx-translate/core';
+import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class AppComponent {
-  title = 'Cadastro de cliente';
-  constructor(private primengConfig: PrimeNGConfig, private config: PrimeNGConfig) {}
+  public title = 'Cadastro de cliente';
+  public sidebarVisivel: boolean = false;
+  public items: MenuItem[];
 
-    public ngOnInit() {
-        this.primengConfig.ripple = true;
-    }
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private router: Router
+  ) {}
+
+  public ngOnInit() {
+    this.primengConfig.ripple = true;
+    this.carregarItens();
+  }
+
+  public mostrarSideBar(): void {
+    this.sidebarVisivel = this.sidebarVisivel = true;
+  }
+
+  public carregarItens(): void {
+    this.items = [
+      {
+        label: 'Clientes',
+        icon: 'pi pi-user',
+        items: [
+          {
+            label: 'Cadastrar',
+            icon: 'pi pi-plus',
+            command: () => {
+              this.router.navigate(['/cliente/cadastro']);
+              this.sidebarVisivel = false;
+          }
+          },
+        ],
+      },
+    ];
+  }
 }
