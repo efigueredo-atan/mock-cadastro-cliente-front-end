@@ -13,7 +13,7 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
 export class StepEnderecosClienteComponent {
   @Output() public voltarStepperEvent = new EventEmitter();
   @Output() public avancarStepperEvent = new EventEmitter();
-  
+
   // @Input() public cliente: Cliente;
   // Inserir input no html apos alteração
   public cliente = cliente;
@@ -28,12 +28,9 @@ export class StepEnderecosClienteComponent {
     private readonly confirmationService: ConfirmationService
   ) {
     this.mostrarMensagemEndereçoRegistrado();
-
-
     this.cliente = cliente;
-
-
-
+    this.ordenarEnderecosPorPrincipal();
+    this.definirEnderecoPrincipalComoSelecionado();
   }
 
   public emitirEventoAvancarStepper(): void {
@@ -63,32 +60,67 @@ export class StepEnderecosClienteComponent {
 
   public processarEnderecoRegistradoRecebido(endereco: Endereco): void {
     this.mostrarMensagemEndereçoRegistrado();
+    if (endereco.principal) {
+      this.trocarEnderecoPrincipalSeEleJaExistir();
+    }
     this.cliente.enderecos.push(endereco);
+    this.ordenarEnderecosPorPrincipal();
+    this.enderecoSelecionado = endereco;
   }
 
   public processarEnderecoAlteradoRecebido(endereco: Endereco): void {
-    {
-      this.mostrarMensagemEndereçoAlterado();
+    this.mostrarMensagemEndereçoAlterado();
+    if (endereco.principal) {
+      this.trocarEnderecoPrincipalSeEleJaExistir();
     }
+    const indexEndereco = this.cliente.enderecos.findIndex(
+      (enderecoLista) => enderecoLista.id == endereco.id
+    );
+    this.cliente.enderecos.splice(indexEndereco, 1);
+    this.cliente.enderecos.push(endereco);
+    this.ordenarEnderecosPorPrincipal();
+    this.enderecoSelecionado = endereco;
   }
 
+  private definirEnderecoPrincipalComoSelecionado(): void {
+    this.cliente.enderecos.find(endereco => {
+      if(endereco.principal) {
+        this.enderecoSelecionado = endereco;
+      }
+    })
+  }
+
+  private trocarEnderecoPrincipalSeEleJaExistir(): void {
+    this.cliente.enderecos.map((endereco) => {
+      const enderecoEhPrincipal = endereco.principal == true
+      if(enderecoEhPrincipal) {
+        endereco.principal = false;
+      }
+    });
+  }
+
+  private ordenarEnderecosPorPrincipal(): void {
+    this.cliente.enderecos.sort(
+      (a, b) => Number(b.principal) - Number(a.principal)
+    );
+  }
   public excluirEndereco(endereco: Endereco): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Tem certeza que quer excluir o endereço?',
       header: 'Excluir endereço',
       icon: 'pi pi-info-circle',
-      acceptButtonStyleClass:"p-button-danger p-button-text",
-      rejectButtonStyleClass:"p-button-text p-button-text",
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text p-button-text',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
 
       accept: () => {
         const index = this.cliente.enderecos.indexOf(endereco);
         this.cliente.enderecos.splice(index, 1);
-        this.mostrarMensagemEnderecoExcluido();   
-      }
-  });
+        this.mostrarMensagemEnderecoExcluido();
+      },
+    });
   }
 
   private mostrarMensagemEnderecoExcluido(): void {

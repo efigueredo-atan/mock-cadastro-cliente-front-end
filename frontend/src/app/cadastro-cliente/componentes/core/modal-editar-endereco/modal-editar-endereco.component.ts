@@ -62,7 +62,7 @@ export class ModalEditarEnderecoComponent implements OnDestroy {
     setTimeout(() => {
       this.fecharDialog();
       this.eventoEnderecoAlterado.emit(
-        this.formularioEnderecoService.obterObjetoEndereco()
+        this.formularioEnderecoService.obterObjetoEndereco(this.endereco.id)
       );
     }, 1000);
   }
