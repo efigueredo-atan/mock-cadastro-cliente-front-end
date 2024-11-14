@@ -24,7 +24,6 @@
           let-index="index"
         >
           <app-step-informacoes-pessoais-cliente
-            (avancarStepperEvent)="avancarStep($event)"
             [cliente]="cliente"
           ></app-step-informacoes-pessoais-cliente>
         </ng-template>
@@ -50,8 +49,6 @@
         >
           <app-step-enderecos-cliente
             [cliente]="cliente"
-            (avancarStepperEvent)="avancarStep($event)"
-            (voltarStepperEvent)="voltarStep($event)"
           ></app-step-enderecos-cliente>
         </ng-template>
       </p-stepperPanel>
@@ -69,7 +66,6 @@
           let-index="index"
         >
           <app-step-historico-cliente
-            (voltarStepperEvent)="voltarStep($event)"
             [cliente]="cliente"
           ></app-step-historico-cliente>
         </ng-template>

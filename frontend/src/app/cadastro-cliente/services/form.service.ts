@@ -131,6 +131,7 @@ export class FormCadastroClienteService {
       email: cliente.contatos.email,
       funcionario: cliente.funcionario,
       ativo: cliente.ativo,
+      orgaoPublico: cliente.orgaoPublico
     });
   }
 

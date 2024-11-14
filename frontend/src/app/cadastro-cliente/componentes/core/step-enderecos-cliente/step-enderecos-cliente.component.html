@@ -19,8 +19,15 @@
       </div>
       <div class="botoes-right">
         <p-button
+          (onClick)="voltarStep()"
+          label="Voltar"
+          class="botao"
+          icon="pi pi-arrow-left"
+          iconPos="right"
+        />
+        <p-button
           [disabled]="!enderecoSelecionado || !this.enderecoValido()"
-          (onClick)="emitirEventoAvancarStepper()"
+          (onClick)="avancarStep()"
           label="Avançar"
           class="botao"
           icon="pi pi-arrow-right"

@@ -8,18 +8,19 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
   styleUrl: './cadastro-cliente.component.css',
   encapsulation: ViewEncapsulation.Emulated,
 })
-export class CadastroClienteComponent {
+export class CadastroClienteComponent implements OnInit {
   public cliente: Cliente = null;
   public stepAtivo: number = 0;
 
-  public avancarStep(cliente: Cliente) {
-    this.cliente = cliente;
-    this.stepAtivo++;
-    EventEmitterService.get("trocarStep").emit(this.cliente);
+  
+  public ngOnInit(): void {
+    this.escutarEventoTrocarStep();
   }
-
-  public voltarStep(cliente: Cliente) {
-    this.cliente = cliente;
-    this.stepAtivo--;
+  
+  public escutarEventoTrocarStep(): void {
+    EventEmitterService.get("eventoTrocarStep").subscribe(obj => {
+      this.stepAtivo = obj.index;
+      this.cliente = obj.cliente;
+    })
   }
 }

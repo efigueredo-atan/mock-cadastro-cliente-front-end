@@ -6,16 +6,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 import { FormEnderecoService } from '../../../services/form-endereco.service';
 import { FormGroup } from '@angular/forms';
+import { Step } from '../step.inteface';
 
 @Component({
   selector: 'app-step-enderecos-cliente',
   templateUrl: './step-enderecos-cliente.component.html',
   styleUrl: './step-enderecos-cliente.component.css',
 })
-export class StepEnderecosClienteComponent {
-  @Output() public voltarStepperEvent = new EventEmitter();
-  @Output() public avancarStepperEvent = new EventEmitter();
-
+export class StepEnderecosClienteComponent implements Step {
   @Input() public cliente: Cliente = {
     nome: null,
     nomeFantasia: null,
@@ -37,7 +35,7 @@ export class StepEnderecosClienteComponent {
   };
   // Inserir input no html apos alteração
   // public cliente = cliente;
-
+  public indexStep = 1;
   public enderecoSelecionado: Endereco;
   public enderecoSelecionadoEditar: Endereco;
   public modalAdicionarEnderecoVisivel = false;
@@ -53,14 +51,30 @@ export class StepEnderecosClienteComponent {
     this.mostrarMensagemEndereçoRegistrado();
     this.ordenarEnderecosPorPrincipal();
     this.definirEnderecoPrincipalComoSelecionado();
+    this.escutarEventoTrocarStep();
   }
 
-  public emitirEventoAvancarStepper(): void {
-    this.avancarStepperEvent.emit('');
+  public escutarEventoTrocarStep(): void {
+    EventEmitterService.get('eventoTrocarStep').subscribe((resposta) => {
+      if (resposta.index == this.indexStep) {
+        
+      }
+    });
   }
 
-  public emitirEventoVoltarStepper(): void {
-    this.voltarStepperEvent.emit('');
+  public voltarStep(): void {
+    this.emitirEventoTrocarStep(this.indexStep - 1);
+  }
+
+  public avancarStep(): void {
+    this.emitirEventoTrocarStep(this.indexStep + 1);
+  }
+
+  public emitirEventoTrocarStep(index: number): void {
+    EventEmitterService.get('eventoTrocarStep').emit({
+      index: index,
+      cliente: this.cliente,
+    });
   }
 
   public trocarEnderecoSelecionado(endereco: Endereco): void {
@@ -81,15 +95,15 @@ export class StepEnderecosClienteComponent {
     this.modalAdicionarEnderecoVisivel = false;
   }
   public enderecoValido(): boolean {
-    var erros = []
+    var erros = [];
     for (let el in this.formularioEndereco.controls) {
       if (this.formularioEndereco.controls[el].errors) {
         erros.push(el);
       }
     }
-    if(erros.length > 0) {
+    if (erros.length > 0) {
       return false;
-    } 
+    }
     return true;
   }
 
@@ -139,7 +153,7 @@ export class StepEnderecosClienteComponent {
   }
 
   private ordenarEnderecosPorPrincipal(): void {
-    if(this.cliente.enderecos) {
+    if (this.cliente.enderecos) {
       this.cliente.enderecos.sort(
         (a, b) => Number(b.principal) - Number(a.principal)
       );
