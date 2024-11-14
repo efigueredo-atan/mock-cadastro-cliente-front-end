@@ -1,9 +1,9 @@
 {
     "rewrites": [
       {
-        "source": "/v1/cnpj/**",
-        "destination": "https://receitaws.com.br/"
+        "source": "/v1/cnpj/:match*",
+        "destination": "https://receitaws.com.br/:match*"
       }
-      
+
     ]
   }
