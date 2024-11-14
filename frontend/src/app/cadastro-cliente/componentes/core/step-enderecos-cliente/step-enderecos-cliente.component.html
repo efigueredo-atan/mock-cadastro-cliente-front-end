@@ -19,7 +19,7 @@
       </div>
       <div class="botoes-right">
         <p-button
-          [disabled]="!enderecoSelecionado"
+          [disabled]="!enderecoSelecionado || !this.enderecoValido()"
           (onClick)="emitirEventoAvancarStepper()"
           label="Avançar"
           class="botao"

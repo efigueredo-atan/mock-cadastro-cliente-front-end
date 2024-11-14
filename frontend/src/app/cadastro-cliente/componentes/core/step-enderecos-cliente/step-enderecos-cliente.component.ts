@@ -4,6 +4,8 @@ import { Cliente, Endereco } from '../../../../shared/types/types';
 import { cliente } from '../../../../shared/cliente-mock';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { FormEnderecoService } from '../../../services/form-endereco.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-step-enderecos-cliente',
@@ -14,21 +16,41 @@ export class StepEnderecosClienteComponent {
   @Output() public voltarStepperEvent = new EventEmitter();
   @Output() public avancarStepperEvent = new EventEmitter();
 
-  // @Input() public cliente: Cliente;
+  @Input() public cliente: Cliente = {
+    nome: null,
+    nomeFantasia: null,
+    razaoSocial: null,
+    dataFundacao: null,
+    sobrenome: null,
+    cpf: null,
+    genero: null,
+    rg: null,
+    cnpj: null,
+    incricaoEstadual: null,
+    orgaoPublico: null,
+    dataNascimento: null,
+    contatos: null,
+    nomeSocial: null,
+    enderecos: [],
+    funcionario: null,
+    ativo: null,
+  };
   // Inserir input no html apos alteração
-  public cliente = cliente;
+  // public cliente = cliente;
 
   public enderecoSelecionado: Endereco;
   public enderecoSelecionadoEditar: Endereco;
   public modalAdicionarEnderecoVisivel = false;
   public modalEditarEnderecoVisivel = false;
+  public formularioEndereco: FormGroup;
 
   constructor(
     private readonly messageService: MessageService,
-    private readonly confirmationService: ConfirmationService
+    private readonly confirmationService: ConfirmationService,
+    private readonly formEnderecoService: FormEnderecoService
   ) {
+    this.formularioEndereco = this.formEnderecoService.formularioEndereco;
     this.mostrarMensagemEndereçoRegistrado();
-    this.cliente = cliente;
     this.ordenarEnderecosPorPrincipal();
     this.definirEnderecoPrincipalComoSelecionado();
   }
@@ -42,7 +64,12 @@ export class StepEnderecosClienteComponent {
   }
 
   public trocarEnderecoSelecionado(endereco: Endereco): void {
-    this.enderecoSelecionado = endereco;
+    if (endereco) {
+      this.enderecoSelecionado = endereco;
+      this.formEnderecoService.preencherFormularioComEndereco(endereco);
+    } else {
+      this.formEnderecoService.preencherFormularioComEndereco(null);
+    }
   }
 
   public abrirDialogAdicionarEndereco(): void {
@@ -52,6 +79,18 @@ export class StepEnderecosClienteComponent {
 
   public fecharDialogAdicionarEndereco(): void {
     this.modalAdicionarEnderecoVisivel = false;
+  }
+  public enderecoValido(): boolean {
+    var erros = []
+    for (let el in this.formularioEndereco.controls) {
+      if (this.formularioEndereco.controls[el].errors) {
+        erros.push(el);
+      }
+    }
+    if(erros.length > 0) {
+      return false;
+    } 
+    return true;
   }
 
   public fecharDialogEditarEndereco(): void {
@@ -65,7 +104,7 @@ export class StepEnderecosClienteComponent {
     }
     this.cliente.enderecos.push(endereco);
     this.ordenarEnderecosPorPrincipal();
-    this.enderecoSelecionado = endereco;
+    this.trocarEnderecoSelecionado(endereco);
   }
 
   public processarEnderecoAlteradoRecebido(endereco: Endereco): void {
@@ -79,30 +118,32 @@ export class StepEnderecosClienteComponent {
     this.cliente.enderecos.splice(indexEndereco, 1);
     this.cliente.enderecos.push(endereco);
     this.ordenarEnderecosPorPrincipal();
-    this.enderecoSelecionado = endereco;
+    this.trocarEnderecoSelecionado(endereco);
   }
 
   private definirEnderecoPrincipalComoSelecionado(): void {
-    this.cliente.enderecos.find(endereco => {
-      if(endereco.principal) {
-        this.enderecoSelecionado = endereco;
+    this.cliente.enderecos.find((endereco) => {
+      if (endereco.principal) {
+        this.trocarEnderecoSelecionado(endereco);
       }
-    })
+    });
   }
 
   private trocarEnderecoPrincipalSeEleJaExistir(): void {
     this.cliente.enderecos.map((endereco) => {
-      const enderecoEhPrincipal = endereco.principal == true
-      if(enderecoEhPrincipal) {
+      const enderecoEhPrincipal = endereco.principal == true;
+      if (enderecoEhPrincipal) {
         endereco.principal = false;
       }
     });
   }
 
   private ordenarEnderecosPorPrincipal(): void {
-    this.cliente.enderecos.sort(
-      (a, b) => Number(b.principal) - Number(a.principal)
-    );
+    if(this.cliente.enderecos) {
+      this.cliente.enderecos.sort(
+        (a, b) => Number(b.principal) - Number(a.principal)
+      );
+    }
   }
   public excluirEndereco(endereco: Endereco): void {
     this.confirmationService.confirm({

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "primeicons": "^7.0.0",
-    "primeng": "^17.18.11"
+    "primeng": "^17.18.11",
+    "uuid": "^11.0.3"
   }
 }

@@ -66,6 +66,7 @@
       value="Endereço principal"
     />
     <p-tag
+      *ngIf="endereco.tipoEndereco"
       icon="pi pi-clipboard"
       [value]="'Tipo de endereço: ' + endereco.tipoEndereco"
     />

@@ -9,6 +9,7 @@ import { ValidadorDocumentosService } from '../../../services/validador-document
 import { EventEmitter } from '@angular/core';
 import { ApiCnpjService } from '../../../services/api-cnpj.service';
 import { ResponseApiCnpj } from '../../../../shared/types/api-cnpj';
+import { v4 as uuidv4 } from 'uuid'
 
 @Component({
   selector: 'app-step-informacoes-pessoais-cliente',
@@ -50,7 +51,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
   constructor(
     private readonly formCadastroClienteService: FormCadastroClienteService,
     private readonly validadorDocumentosService: ValidadorDocumentosService,
-    private readonly apiCnpjService: ApiCnpjService
+    private readonly apiCnpjService: ApiCnpjService,
   ) {}
 
   public ngOnInit(): void {
@@ -120,7 +121,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit {
       dataFundacao: resposta.abertura,
       enderecos: [
         {
-          id: null,
+          id: uuidv4(),
           uf: resposta.uf,
           cep: resposta.cep,
           cidade: resposta.municipio,

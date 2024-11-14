@@ -88,7 +88,7 @@ export class FormEnderecoService {
 
   private criarFormulario(): void {
     this._formularioEndereco = this.formBuilder.group({
-      cep: [null, [Validators.minLength(10), Validators.required]],
+      cep: [null, [Validators.required]],
       rua: [null, [Validators.required]],
       numero: [null, [Validators.required]],
       complemento: [null, [Validators.required]],
