@@ -2,6 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { Endereco } from '../../../../shared/types/types';
 import { EventEmitter } from '@angular/core';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-endereco-tabela',
@@ -17,6 +18,26 @@ export class EnderecoTabelaComponent {
   @Output() public eventoExcluirEndereco: EventEmitter<Endereco> =
     new EventEmitter();
   public modalEditarEnderecoVisivel = false;
+  public itemsBotao: MenuItem[];
+
+  constructor() {
+    this.itemsBotao = [
+      {
+        label: 'Editar',
+        icon: 'pi pi-pen-to-square',
+        command: () => {
+          this.emitirEventoEditarEndereco();
+        },
+      },
+      {
+        label: 'Excluir',
+        icon: 'pi pi-trash',
+        command: () => {
+          this.excluirEndereco();
+        },
+      },
+    ];
+  }
 
   public formatarEndereco(): string {
     var endereco = '';
@@ -26,8 +47,8 @@ export class EnderecoTabelaComponent {
       if (this.endereco.numero) {
         endereco += `, n° ${this.endereco.numero}`;
       }
-      if(this.endereco.complemento) {
-        endereco += `, ${this.endereco.complemento}`
+      if (this.endereco.complemento) {
+        endereco += `, ${this.endereco.complemento}`;
       }
     }
     return endereco;

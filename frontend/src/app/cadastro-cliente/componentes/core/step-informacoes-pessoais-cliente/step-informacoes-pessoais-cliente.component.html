@@ -120,26 +120,49 @@
     [formGroup]="formularioInformacoesPessoaisSelecionado"
     *ngIf="cliente && dadosClienteEncontrados"
   >
-    <div class="entry">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="nome">*Nome</label>
       <input formControlName="nome" pInputText id="nome" />
     </div>
-    <div class="entry">
-      <label for="sobrenome">Sobrenome</label>
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
+      <label for="sobrenome">*Sobrenome</label>
       <input formControlName="sobrenome" pInputText id="sobrenome" />
     </div>
-    <div class="entry">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="data-nascimento">*Data de nascimento</label>
-      <p-inputMask formControlName="dataNascimento" id="data-nascimento" mask="99/99/9999" />
+      <p-inputMask
+        formControlName="dataNascimento"
+        id="data-nascimento"
+        mask="99/99/9999"
+      />
     </div>
-    <div class="entry">
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="nome-social">Nome social</label>
       <input formControlName="nomeSocial" pInputText id="nome-social" />
     </div>
+
+    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+      <label for="razaoSocial">*Razão social</label>
+      <input formControlName="razaoSocial" pInputText id="razaoSocial" />
+    </div>
+    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+      <label for="nomeFantasia">*Nome fantasia</label>
+      <input formControlName="nomeFantasia" pInputText id="nomeFantasia" />
+    </div>
+    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+      <label for="dataFundacao">*Data de fundação</label>
+      <p-inputMask
+        formControlName="dataFundacao"
+        id="data-dataFundacao"
+        mask="99/99/9999"
+      />
+    </div>
+
     <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
-      <label for="rg">RG</label>
+      <label for="rg">*RG</label>
       <p-inputMask formControlName="rg" mask="999.999.999-99" />
     </div>
+
     <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
       <label for="incricao-estadual">*Incrição estadual</label>
       <p-inputNumber
@@ -148,7 +171,8 @@
         id="incricao-estadual"
       />
     </div>
-    <div class="entry" *ngIf="documentoSelecionado == 'cnpj'">
+
+    <div class="entry" *ngIf="documentoSelecionado == 'cpf'">
       <label for="orgao-publico">*Orgão público</label>
       <input pInputText formControlName="orgaoPublico" id="orgao-publico" />
     </div>
@@ -183,6 +207,20 @@
         optionLabel="name"
         optionValue="value"
       />
+    </div>
+    <div class="checkbuttons" *ngIf="documentoSelecionado == 'cpf'">
+      <div class="entry-checkbutton">
+        <p-checkbox
+          formControlName="funcionario"
+          [binary]="true"
+          inputId="funcionario"
+        />
+        <label for="funcionario">Funcionário</label>
+      </div>
+      <div class="entry-checkbutton">
+        <p-checkbox formControlName="ativo" [binary]="true" inputId="ativo" />
+        <label for="ativo">Ativo</label>
+      </div>
     </div>
   </form>
 </div>

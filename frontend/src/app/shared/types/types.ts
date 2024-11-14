@@ -5,8 +5,11 @@ export enum Genero {
 }
 
 export interface Cliente {
-  nome: string;
-  sobrenome: string;
+  nome: string | null; 
+  nomeFantasia: string | null; 
+  razaoSocial: string | null; 
+  dataFundacao: string | null; 
+  sobrenome: string | null; 
   cpf: string | null;
   genero: string | null;
   rg: string | null;
@@ -17,24 +20,28 @@ export interface Cliente {
   contatos: Contato | null;
   nomeSocial: string | null;
   enderecos: Endereco[] | null;
+  funcionario: boolean | null;
+  ativo: boolean | null;
 }
 
 export interface Endereco {
   id: string | null;
-  cep: string;
-  rua: string;
-  numero: number | string;
-  complemento: string;
-  uf: string;
-  cidade: string;
-  bairro: string;
-  referencia: string;
+  cep: string | null;
+  rua: string | null;
+  numero: number | string | null;
+  complemento: string | null;
+  uf: string | null;
+  cidade: string | null;
+  bairro: string | null;
+  referencia: string | null;
+  tipoEndereco: string | null;
+  principal: boolean | null;
 }
 
 export interface Contato {
-  telefone1: string;
-  telefone2: string;
-  email: string;
+  telefone1: string | null;
+  telefone2: string | null;
+  email: string | null;
 }
 
 export enum TiposToastMensssages {

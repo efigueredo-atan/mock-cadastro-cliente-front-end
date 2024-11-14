@@ -1,4 +1,17 @@
-<app-header></app-header>
+<app-header (eventoMostrarSideBar)="mostrarSideBar()"></app-header>
 <section class="content">
   <router-outlet></router-outlet>
 </section>
+<p-sidebar [(visible)]="sidebarVisivel">
+  <ng-template pTemplate="header">
+    <div class="navbar-header">
+      <img src="../assets/img/logo/logo.png" alt="Logo do Atantec">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p-panelMenu
+      [model]="items"
+      [multiple]="true"
+    />
+  </ng-template>
+</p-sidebar>

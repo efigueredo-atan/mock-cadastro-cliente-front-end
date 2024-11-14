@@ -1,0 +1,27 @@
+.page-header {
+  width: 100vw;
+  height: 45px;
+  border-bottom: 1px solid #ccc;
+  background-color: var(--bg2);
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .p-breadcrumb {
+  width: 100vw;
+  border: none;
+  border-radius: 0;
+  background-color: var(--bg2);
+}
+
+::ng-deep .page-header .p-breadcrumb-list {
+  display: flex;
+  gap: 0.5em;
+}
+
+::ng-deep .page-header .p-menuitem-text,
+::ng-deep .page-header .p-menuitem-icon,
+::ng-deep .page-header .p-menuitem-separator {
+  color: var(--text-color);
+  font-weight: 700;
+}

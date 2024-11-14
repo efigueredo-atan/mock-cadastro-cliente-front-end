@@ -12,16 +12,16 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './componentes/header/header.component';
 import { ButtonModule } from 'primeng/button';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { BreadCrumbComponent } from './componentes/bread-crumb/bread-crumb.component';
 import { RodapeComponent } from './componentes/rodape/rodape.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    BreadCrumbComponent,
     RodapeComponent,
   ],
   imports: [
@@ -32,12 +32,12 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
-    BreadcrumbModule,
-    HttpClientModule
-  ],
-  providers: [
-    provideClientHydration(),
-  ],
+    HttpClientModule,
+    SidebarModule,
+    PanelMenuModule,
+    SharedModule
+],
+  providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

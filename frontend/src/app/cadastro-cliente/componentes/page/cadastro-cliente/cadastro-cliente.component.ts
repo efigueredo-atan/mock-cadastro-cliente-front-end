@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Cliente } from '../../../../shared/types/types';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -14,6 +15,7 @@ export class CadastroClienteComponent {
   public avancarStep(cliente: Cliente) {
     this.cliente = cliente;
     this.stepAtivo++;
+    EventEmitterService.get("trocarStep").emit(this.cliente);
   }
 
   public voltarStep(cliente: Cliente) {

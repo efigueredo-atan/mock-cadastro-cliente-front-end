@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { Endereco, ufs } from '../../../../shared/types/types';
 import { FormEnderecoService } from '../../../services/form-endereco.service';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { tiposEnderecosMock } from '../../../../shared/cliente-mock';
 
 @Component({
   selector: 'app-modal-editar-endereco',
@@ -24,6 +25,7 @@ export class ModalEditarEnderecoComponent implements OnDestroy {
   public formularioEndereco: FormGroup;
   public salvandoAlteracoesEndereco: boolean;
   public $subscribeEventoEditarEndereco: any;
+  public tiposEnderecos: string[] = tiposEnderecosMock;
 
   constructor(private readonly formularioEnderecoService: FormEnderecoService) {
     this.formularioEndereco = this.formularioEnderecoService.formularioEndereco;
@@ -60,7 +62,7 @@ export class ModalEditarEnderecoComponent implements OnDestroy {
     setTimeout(() => {
       this.fecharDialog();
       this.eventoEnderecoAlterado.emit(
-        this.formularioEnderecoService.obterObjetoEndereco()
+        this.formularioEnderecoService.obterObjetoEndereco(this.endereco.id)
       );
     }, 1000);
   }
