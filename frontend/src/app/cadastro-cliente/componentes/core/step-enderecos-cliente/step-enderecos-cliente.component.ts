@@ -174,6 +174,7 @@ export class StepEnderecosClienteComponent implements Step {
         const index = this.cliente.enderecos.indexOf(endereco);
         this.cliente.enderecos.splice(index, 1);
         this.mostrarMensagemEnderecoExcluido();
+        this.enderecoSelecionado = null;
       },
     });
   }

@@ -9,7 +9,25 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class CadastroClienteComponent implements OnInit {
-  public cliente: Cliente = null;
+  public cliente: Cliente = {
+    nome: null,
+    nomeFantasia: null,
+    razaoSocial: null,
+    dataFundacao: null,
+    sobrenome: null,
+    cpf: null,
+    genero: null,
+    rg: null,
+    cnpj: null,
+    incricaoEstadual: null,
+    orgaoPublico: null,
+    dataNascimento: null,
+    contatos: null,
+    nomeSocial: null,
+    enderecos: [],
+    funcionario: null,
+    ativo: null,
+  };
   public stepAtivo: number = 0;
 
   
