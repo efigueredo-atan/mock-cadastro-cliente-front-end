@@ -30,6 +30,8 @@
 .content {
   width: 100vw;
   max-width: 100vw;
+  position: absolute;
+  top: 55px;
 }
 
 ::ng-deep .p-stepper .p-stepper-panels {

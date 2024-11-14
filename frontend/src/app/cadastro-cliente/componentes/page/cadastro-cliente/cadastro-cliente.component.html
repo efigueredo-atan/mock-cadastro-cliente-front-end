@@ -1,4 +1,5 @@
 <section class="cadastro-cliente-section">
+  <app-bread-crumb></app-bread-crumb>
   <div class="cadastro-cliente-box">
     <div class="titulo-page">
       <h1>Cadastro de cliente</h1>
@@ -48,10 +49,9 @@
           let-index="index"
         >
           <app-step-enderecos-cliente
-          [cliente]="cliente"
+            [cliente]="cliente"
             (avancarStepperEvent)="avancarStep($event)"
             (voltarStepperEvent)="voltarStep($event)"
-            
           ></app-step-enderecos-cliente>
         </ng-template>
       </p-stepperPanel>
