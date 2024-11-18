@@ -13,7 +13,7 @@
 
 .card {
     width: auto;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+    box-shadow: var(--box-shadow-card);
     display: flex;
     flex-direction: column;
     border-radius: 4px;

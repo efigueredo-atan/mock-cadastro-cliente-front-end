@@ -1,0 +1,14 @@
+<div class="produto-card">
+  <div class="imagem" [style]="'background-image: url(' + produto.urlImagem + ')' ">
+    <span class="tag">
+        <p>Estoque: {{ produto.estoque }}</p>
+    </span>
+  </div>
+  <div class="informacoes">
+    <p class="nome-produto">{{ produto.nome }}</p>
+    <p class="valor-produto">R$ {{ produto.valor }}</p>
+  </div>
+  <div class="buttons">
+    <p-button label="Adicionar" size="small" icon="pi pi-shopping-cart"/>
+  </div>
+</div>

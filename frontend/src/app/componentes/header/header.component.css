@@ -11,6 +11,8 @@ header {
     padding: 0em 1.5em;
     gap: 2em;
     color: white;
+    padding: 0.5em 1em;
+    height: 53px;
 }
 
 .logo-options i {
@@ -19,6 +21,5 @@ header {
 }
 
 .logo-options img {
-    height: 55px;
     cursor: pointer;
 }

@@ -11,6 +11,7 @@ const routes: Routes = [
     pathMatch: "full"
   },
   {
+    title: 'Página não encontrada',
     path: '**',
     component: NotFound404Component,
   }

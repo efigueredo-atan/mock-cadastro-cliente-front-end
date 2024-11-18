@@ -1,0 +1,36 @@
+.produtos-view {
+    min-height: 100vh;
+    padding: 1.5em;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+    border-radius: 4px; 
+    display: flex;
+    flex-direction: column;  
+    gap: 1.5em;
+}
+
+.toolbar {
+    display: grid;
+    grid-template-columns: 50% auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+    border-radius: 4px;
+    gap: 1em;
+}
+
+.filtro {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+::ng-deep .produtos-view .p-icon-field-left > .p-inputtext {
+    width: 100%;
+}
+
+.produtos-table {
+    display: grid;
+    gap: 1.5em;
+    grid-template-columns: repeat(4, calc((100% - 4.5em) / 4));
+}

@@ -1,0 +1,66 @@
+.produto-card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--box-shadow-card);
+  border-radius: 4px;
+}
+
+.produto-card .imagem {
+  width: 100%;
+  height: 180px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  cursor: pointer;
+}
+
+.produto-card .imagem .tag {
+  position: absolute;
+  background-color: var(--bg1);
+  color: var(--text-color);
+  padding: 0.5em;
+  border-radius: 4px 0 4px 0;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.produto-card .informacoes {    
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--branco-fantasma);
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  gap: 0.5em;
+}
+
+.produto-card .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1em 1em 1em;
+}
+
+::ng-deep .produto-card .p-button {
+  background-color: var(--bg1);
+  width: 100%;
+}
+
+.nome-produto {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;  /* Limita a 3 linhas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.valor-produto {
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+::ng-deep .produto-card .p-element {
+  width: 100%;
+}
