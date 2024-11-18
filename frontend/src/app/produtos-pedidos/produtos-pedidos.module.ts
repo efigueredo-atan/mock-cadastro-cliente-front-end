@@ -13,6 +13,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProdutoCardComponent } from './componentes/core/produto-card/produto-card.component';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { ProdutoCardSmallComponent } from './componentes/core/produto-card-small/produto-card-small.component';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { TabViewModule } from 'primeng/tabview';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -20,6 +26,7 @@ import { ButtonModule } from 'primeng/button';
     ViewProdutosComponent,
     ViewPedidoComponent,
     ProdutoCardComponent,
+    ProdutoCardSmallComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +38,12 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     SelectButtonModule,
     DropdownModule,
-    ButtonModule
+    ButtonModule,
+    DividerModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    TabViewModule,
+    InputNumberModule
   ],
 })
 export class ProdutosPedidosModule {}

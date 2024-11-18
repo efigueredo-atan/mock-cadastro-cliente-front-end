@@ -1,11 +1,10 @@
 .produtos-view {
     min-height: 100vh;
     padding: 1.5em;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+    box-shadow: var(--box-shadow-card);
     border-radius: 4px; 
     display: flex;
     flex-direction: column;  
-    gap: 1.5em;
 }
 
 .toolbar {
@@ -13,8 +12,6 @@
     grid-template-columns: 50% auto;
     align-items: center;
     justify-content: space-between;
-    padding: 1em;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
     border-radius: 4px;
     gap: 1em;
 }

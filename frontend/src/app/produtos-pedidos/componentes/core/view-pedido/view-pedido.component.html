@@ -1,1 +1,38 @@
-<p>view-pedido works!</p>
+<div class="pedidos-view">
+  <div class="table-produtos">
+    <app-produto-card-small
+      *ngFor="let produtoAtendimento of atendimento.produtos"
+      [produtoAtendimento]="produtoAtendimento"
+    ></app-produto-card-small>
+  </div>
+  <div class="view-actions">
+    <div class="descontos">
+      <div class="descontos-tab">
+        <h1>Descontos</h1>
+        <div class="descontos-buttons">
+          <p-selectButton
+            [allowEmpty]="false"
+            [options]="opcoesDesconto"
+            optionLabel="icon"
+          >
+            <ng-template let-item pTemplate>
+              <i [class]="item.icon"></i>
+            </ng-template>
+          </p-selectButton>
+          <input type="text" pInputText placeholder="Valor" />
+        </div>
+      </div>
+      <div class="valor-adicional">
+        <h1>Valor adicional</h1>
+        <p-inputNumber
+          mode="decimal"
+          [minFractionDigits]="2"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <p-button icon="pi pi-folder-open" label="Arquivar atendimento" />
+      <p-button icon="pi pi-arrow-right" label="Avançar" iconPos="right" />
+    </div>
+  </div>
+</div>

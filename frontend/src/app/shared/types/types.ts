@@ -108,3 +108,21 @@ export interface Produto {
   estoque: number;
   urlImagem: string;
 }
+
+export interface ProdutoAtendimento {
+  produto: Produto,
+  qtdAtendimento: number
+}
+
+export interface Atendimento {
+  id: string;
+  valorTotalComDesconto: number;
+  valorTotalSemDesconto: number;
+  descontoAtendimentoNumerico: number;
+  descontoAtendimentoPorcentagem: number;
+  descontoDosProdutos: number;
+  descontoTotal: number;
+  produtos: ProdutoAtendimento[];
+  qtdItens: number;
+  qtdProdutos: number;
+}

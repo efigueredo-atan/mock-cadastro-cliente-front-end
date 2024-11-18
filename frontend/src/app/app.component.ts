@@ -13,10 +13,7 @@ export class AppComponent {
   public sidebarVisivel: boolean = false;
   public items: MenuItem[];
 
-  constructor(
-    private primengConfig: PrimeNGConfig,
-    private router: Router
-  ) {}
+  constructor(private primengConfig: PrimeNGConfig, private router: Router) {}
 
   public ngOnInit() {
     this.primengConfig.ripple = true;
@@ -39,7 +36,7 @@ export class AppComponent {
             command: () => {
               this.router.navigate(['/cliente/cadastro']);
               this.sidebarVisivel = false;
-          }
+            },
           },
         ],
       },

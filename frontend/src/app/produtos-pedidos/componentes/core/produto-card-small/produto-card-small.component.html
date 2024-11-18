@@ -1,0 +1,28 @@
+<div class="card-produto-small">
+  <div
+    class="imagem"
+    [style]="
+      'background-image: url(' + produtoAtendimento.produto.urlImagem + ')'
+    "
+  ></div>
+  <div class="content">
+    <div class="info">
+      <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
+      <div class="valor-estoque">
+        <p class="info-valor">R$ {{ produtoAtendimento.produto.valor }}</p>
+        <p class="info-estoque">Estoque: {{ produtoAtendimento.produto.estoque }}</p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <div class="controles-quantidade">
+        <p-button icon="pi pi-plus" />
+        <p class="quantidade">{{ produtoAtendimento.qtdAtendimento }}</p>
+        <p-button icon="pi pi-minus" />
+      </div>
+      <div class="acoes">
+        <p-button icon="pi pi-trash" />
+      </div>
+    </div>
+  </div>
+</div>

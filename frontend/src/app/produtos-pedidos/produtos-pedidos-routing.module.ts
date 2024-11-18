@@ -4,8 +4,8 @@ import { ProdutosPedidosComponent } from './produtos-pedidos.component';
 
 const routes: Routes = [
   {
-    path: '',
-    title: 'Criar pedido',
+    path: 'atendimento',
+    title: 'Atendimento',
     component: ProdutosPedidosComponent,
     pathMatch: 'full'
   }
