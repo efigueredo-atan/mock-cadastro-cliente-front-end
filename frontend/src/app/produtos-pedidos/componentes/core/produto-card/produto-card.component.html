@@ -20,6 +20,6 @@
     </div>
   </div>
   <div *ngIf="!small" class="buttons">
-    <p-button label="Adicionar" size="small" icon="pi pi-shopping-cart" />
+    <p-button (onClick)="emitirEventoAdicionarProdutoAoAtendimento()" label="Adicionar" size="small" icon="pi pi-shopping-cart" />
   </div>
 </div>

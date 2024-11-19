@@ -5,13 +5,19 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
 @Component({
   selector: 'app-produto-card',
   templateUrl: './produto-card.component.html',
-  styleUrl: './produto-card.component.css'
+  styleUrl: './produto-card.component.css',
 })
 export class ProdutoCardComponent {
   @Input() public produto: Produto;
   @Input() public small: boolean = false;
 
   public emitirEventoAbrirDialogProduto(produto: Produto): void {
-    EventEmitterService.get("eventoAbrirDialogProduto").emit(produto);
+    EventEmitterService.get('eventoAbrirDialogProduto').emit(produto);
+  }
+
+  public emitirEventoAdicionarProdutoAoAtendimento(): void {
+    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
+      this.produto
+    );
   }
 }

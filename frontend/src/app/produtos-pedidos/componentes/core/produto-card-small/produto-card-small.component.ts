@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Produto, ProdutoAtendimento } from '../../../../shared/types/types';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-produto-card-small',
@@ -16,5 +17,11 @@ export class ProdutoCardSmallComponent {
     if (this.produtoAtendimento.qtdAtendimento > 1) {
       this.produtoAtendimento.qtdAtendimento--;
     }
+  }
+
+  public emitirEventoExcluirProdutoDoAtendimento(): void {
+    EventEmitterService.get('eventoExcluirProdutoAtendimento').emit(
+      this.produtoAtendimento
+    );
   }
 }

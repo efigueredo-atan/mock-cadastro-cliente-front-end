@@ -10,7 +10,9 @@
       <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
       <div class="valor-estoque">
         <p class="info-valor">R$ {{ produtoAtendimento.produto.valor }}</p>
-        <p class="info-estoque">Estoque: {{ produtoAtendimento.produto.estoque }}</p>
+        <p class="info-estoque">
+          Estoque: {{ produtoAtendimento.produto.estoque }}
+        </p>
       </div>
     </div>
 
@@ -21,7 +23,10 @@
         <p-button icon="pi pi-minus" (onClick)="diminuirQuantidadeItem()" />
       </div>
       <div class="acoes">
-        <p-button icon="pi pi-trash" />
+        <p-button
+          icon="pi pi-trash"
+          (onClick)="emitirEventoExcluirProdutoDoAtendimento()"
+        />
       </div>
     </div>
   </div>
