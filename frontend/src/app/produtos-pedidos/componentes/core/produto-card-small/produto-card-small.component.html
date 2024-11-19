@@ -16,9 +16,9 @@
 
     <div class="buttons">
       <div class="controles-quantidade">
-        <p-button icon="pi pi-plus" />
+        <p-button icon="pi pi-plus" (onClick)="aumentarQuantidadeItem()" />
         <p class="quantidade">{{ produtoAtendimento.qtdAtendimento }}</p>
-        <p-button icon="pi pi-minus" />
+        <p-button icon="pi pi-minus" (onClick)="diminuirQuantidadeItem()" />
       </div>
       <div class="acoes">
         <p-button icon="pi pi-trash" />
