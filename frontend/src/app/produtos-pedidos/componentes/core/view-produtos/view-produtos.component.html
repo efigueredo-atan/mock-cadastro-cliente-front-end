@@ -1,0 +1,44 @@
+<div class="produtos-view">
+  <form class="toolbar" [formGroup]="formularioPesquisaProduto">
+    <p-iconField iconPosition="left">
+      <p-inputIcon styleClass="pi pi-search" />
+      <input
+        type="text"
+        pInputText
+        placeholder="Pesquisar produto"
+        formControlName="produto"
+      />
+    </p-iconField>
+    <div class="filtro">
+      <div class="entry">
+        <label for="pesquisar-por">Pesquisar por</label>
+        <p-dropdown
+          id="pesquisar-por"
+          formControlName="filtro"
+          [options]="filtros"
+          optionLabel="name"
+          placeholder="Pesquisar por"
+        />
+      </div>
+      <div class="entry">
+        <label for="departamento">Departamento</label>
+        <p-dropdown
+          formControlName="departamento"
+          [options]="departamentos"
+          optionLabel="name"
+          placeholder="Departamento"
+        />
+      </div>
+    </div>
+  </form>
+  <div class="produtos-box">
+    <h1>Mais vendidos</h1>
+    <div class="produtos-table">
+      <app-produto-card
+        *ngFor="let produto of produtos"
+        [produto]="produto"
+      ></app-produto-card>
+    </div>
+  </div>
+</div>
+<app-dialog-produto></app-dialog-produto>

@@ -28,10 +28,9 @@
 }
 
 .content {
-  width: 100vw;
-  max-width: 100vw;
+  width: calc(100vw - var(--scrollbar-width));
   position: absolute;
-  top: 55px;
+  top: 53px;
 }
 
 ::ng-deep .p-stepper .p-stepper-panels {
@@ -81,4 +80,18 @@
 
 ::ng-deep .p-sidebar-content {
   margin-top: 1.5em;
+}
+
+::ng-deep .p-ripple {
+  box-shadow: none;
+}
+
+::ng-deep .p-inputtext:enabled:focus {
+  box-shadow: none;
+  border: 1px solid var(--bg1);
+}
+
+::ng-deep .p-inputtext:enabled:hover {
+  box-shadow: none;
+  border: 1px solid var(--bg1);
 }

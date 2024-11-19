@@ -1,0 +1,20 @@
+.produtos-pedidos {
+    min-height: calc( 100vh - var(--height-header));
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.box {
+    position: relative;
+    width: 1350px;
+    max-width: 1350px;
+    display: grid;
+    padding: 1.5em;
+    gap: 2em;
+    grid-template-columns: calc(60% - 1em) calc(40% - 1em);
+    align-items: flex-start;
+    justify-content: center;
+
+}

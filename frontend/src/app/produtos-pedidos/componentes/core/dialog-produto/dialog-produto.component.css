@@ -1,0 +1,95 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  gap: 2em;
+}
+
+.info-produtos {
+  display: flex;
+  gap: 2em;
+  padding: 0 1.5rem 0 1.5rem;
+}
+
+.info-produtos .img {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  height: 200px;
+  max-height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  height: 200px;
+  max-height: 200px;
+  justify-content: space-between;
+}
+
+.descricao {
+  font-size: 12px;
+  overflow-y: scroll;
+  padding-right: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.valor-estoque {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.valor {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.estoque-box {
+  display: flex;
+  gap: 0.5em;
+}
+
+.estoque {
+  height: 25px;
+  font-size: 10px;
+  background-color: var(--bg1);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0 0.5em;
+  border-radius: 4px;
+}
+
+.produto-relacionado {
+  margin: 1em;
+  padding: 1em 0;
+}
+
+.compre-junto {
+    border-top: var(--border);
+}
+
+.buttons {
+  padding: 1em;
+  border-top: var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 0;
+}
+
+::ng-deep .dialog .p-button {
+    background-color: var(--bg1);
+    color: var(--text-color);
+}

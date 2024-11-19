@@ -1,0 +1,59 @@
+<p-dialog
+  *ngIf="produto"
+  [header]="produto.nome"
+  [modal]="true"
+  [(visible)]="visivel"
+  [style]="{ width: '60%' }"
+>
+  <div class="dialog">
+    <div class="info-produtos">
+      <div
+        class="img"
+        [style]="'background-image: url(' + produto.urlImagem + ')'"
+      ></div>
+      <div class="info">
+        <div class="descricao">
+          <h1>Descrição</h1>
+          <p>{{ produto.descricao }}</p>
+        </div>
+        <div class="valor-estoque">
+          <p class="valor">R$ {{ produto.valor }}</p>
+          <div class="estoque-box">
+            <div class="estoque">
+              <p>Estoque na loja: {{ produto.estoque }}</p>
+            </div>
+            <div class="estoque">
+              <p>Estoque Caruaru: 0</p>
+            </div>
+            <div class="estoque">
+              <p>Estoque Salgueiro: 14</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="compre-junto">
+      <p-carousel
+        [showIndicators]="false"
+        [value]="produtosRelacionados"
+        [numVisible]="4"
+        [numScroll]="1"
+        [circular]="true"
+      >
+        <ng-template let-produtoRelacionado pTemplate="item">
+          <div class="produto-relacionado">
+            <app-produto-card
+              [small]="true"
+              [produto]="produtoRelacionado"
+            ></app-produto-card>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    <!-- <div class="buttons">
+        <p-button label="Voltar" size="small" icon="pi pi-arrow-left" />
+        <p-button label="Adicionar produto ao pedido" size="small" icon="pi pi-shopping-cart" />
+
+    </div> -->
+  </div>
+</p-dialog>

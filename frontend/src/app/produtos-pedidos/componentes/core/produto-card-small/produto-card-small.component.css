@@ -1,0 +1,95 @@
+.card-produto-small {
+    box-shadow: var(--box-shadow-card);
+    display: flex;
+    border-radius: 4px;
+    height: 90px;
+    transition: 0.1s;
+}
+
+.card-produto-small:hover {
+    background-color: var(--branco-fantasma);
+}
+
+.imagem {
+    border-radius: 4px 0 0 4px;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: white;
+}
+
+.content {
+    border-left: 1px solid  rgba(0, 0, 0, 0.2);
+    display: flex;
+    padding: 1em;
+    gap: 1em;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-nome {
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;  /* Limita a 2 linhas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.valor-estoque {
+    display: flex;
+    gap: 1em;
+}
+
+.info-estoque {
+    background-color: var(--bg1);
+    color: var(--text-color);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 0 0.5em;
+    font-weight: 700;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.controles-quantidade {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+::ng-deep .card-produto-small .buttons .p-button {
+    width: 26px;
+    height: 26px;
+    background-color: var(--bg1);
+}
+
+::ng-deep .card-produto-small .buttons .p-button-icon {
+    font-size: 12px;
+}
+
+
+.acoes {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.quantidade {
+    font-weight: 700;
+}
