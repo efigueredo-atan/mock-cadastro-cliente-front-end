@@ -9,7 +9,7 @@
     <div class="info">
       <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
       <div class="valor-estoque">
-        <p class="info-valor">R$ {{ produtoAtendimento.produto.valor }}</p>
+        <p class="info-valor">R$ {{ produtoAtendimento.produto.valor | number: '1.2-2' }}</p>
         <p class="info-estoque">
           Estoque: {{ produtoAtendimento.produto.estoque }}
         </p>

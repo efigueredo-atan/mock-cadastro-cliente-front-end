@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-  gap: 2em;
 }
 
 .info-produtos {
@@ -11,39 +10,54 @@
   padding: 0 1.5rem 0 1.5rem;
 }
 
+.img-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 .info-produtos .img {
   width: 200px;
   min-width: 200px;
   max-width: 200px;
   height: 200px;
   max-height: 200px;
+  min-height: 200px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .info {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1em;
   height: 200px;
   max-height: 200px;
   justify-content: space-between;
+  overflow-y: auto  ;
+}
+
+.descricao-box {
+  display: flex;
+  flex-direction: column;
+
 }
 
 .descricao {
   font-size: 12px;
-  overflow-y: scroll;
   padding-right: 1em;
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
-.valor-estoque {
+.valor-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem;
 }
 
 .valor {
@@ -52,21 +66,21 @@
 }
 
 .estoque-box {
+  font-weight: 700;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   gap: 0.5em;
 }
 
 .estoque {
-  height: 25px;
-  font-size: 10px;
-  background-color: var(--bg1);
-  color: var(--text-color);
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  padding: 0 0.5em;
+  justify-content: space-between;
+  border: var(--border);
   border-radius: 4px;
+  padding: 0.5em 1em;
+  font-size: 14px;
 }
 
 .produto-relacionado {
@@ -92,4 +106,21 @@
 ::ng-deep .dialog .p-button {
     background-color: var(--bg1);
     color: var(--text-color);
+}
+
+::ng-deep .dialog .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: var(--bg1);
+  border-color: var(--bg1);
+}
+
+
+
+::ng-deep .dialog .p-highlight {
+  background-color: transparent;
+}
+
+::ng-deep .dialog .p-tabview .p-tabview-panels {
+  width: 100%;
+  padding: 0;
+  padding-top: 1rem;
 }

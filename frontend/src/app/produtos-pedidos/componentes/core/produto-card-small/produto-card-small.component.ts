@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Produto, ProdutoAtendimento } from '../../../../shared/types/types';
+import { ProdutoAtendimento } from '../../../../shared/types/types';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
@@ -12,15 +12,24 @@ export class ProdutoCardSmallComponent {
 
   public aumentarQuantidadeItem(): void {
     this.produtoAtendimento.qtdAtendimento++;
+    this.emitirEventoQuantidadeProdutosAlterada();
   }
+
   public diminuirQuantidadeItem(): void {
     if (this.produtoAtendimento.qtdAtendimento > 1) {
       this.produtoAtendimento.qtdAtendimento--;
+      this.emitirEventoQuantidadeProdutosAlterada();
     }
   }
 
   public emitirEventoExcluirProdutoDoAtendimento(): void {
     EventEmitterService.get('eventoExcluirProdutoAtendimento').emit(
+      this.produtoAtendimento
+    );
+  }
+
+  public emitirEventoQuantidadeProdutosAlterada(): void {
+    EventEmitterService.get('eventoQuantidadeProdutoAlterada').emit(
       this.produtoAtendimento
     );
   }

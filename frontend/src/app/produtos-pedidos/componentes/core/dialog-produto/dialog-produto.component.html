@@ -7,30 +7,48 @@
 >
   <div class="dialog">
     <div class="info-produtos">
-      <div
-        class="img"
-        [style]="'background-image: url(' + produto.urlImagem + ')'"
-      ></div>
-      <div class="info">
-        <div class="descricao">
-          <h1>Descrição</h1>
-          <p>{{ produto.descricao }}</p>
-        </div>
-        <div class="valor-estoque">
-          <p class="valor">R$ {{ produto.valor }}</p>
-          <div class="estoque-box">
-            <div class="estoque">
-              <p>Estoque na loja: {{ produto.estoque }}</p>
-            </div>
-            <div class="estoque">
-              <p>Estoque Caruaru: 0</p>
-            </div>
-            <div class="estoque">
-              <p>Estoque Salgueiro: 14</p>
-            </div>
-          </div>
-        </div>
+      <div class="img-box">
+        <div
+          class="img"
+          [style]="'background-image: url(' + produto.urlImagem + ')'"
+        ></div>
       </div>
+      <div class="info">
+        <p-tabView>
+          <p-tabPanel header="Descrição">
+            <div class="descricao-box">
+              <div class="descricao">
+                <p>{{ produto.descricao }}</p>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Estoque">
+            <div class="estoque-box">
+              <div class="estoque">
+                <p>Loja - Custódia - PE</p>
+                <p>{{ produto.estoque }} {{produto.estoque == 1 ? 'unidade' : 'unidades'}}</p>
+              </div>
+              <div class="estoque">
+                <p>Caruaru - PE</p>
+                <p>4 unidades</p>
+              </div>
+              <div class="estoque">
+                <p>Salgueiro - PE</p>
+                <p>19 unidades</p>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+    
+    <div class="valor-actions">
+      <p class="valor">R$ {{ produto.valor | number: '1.2-2' }}</p>
+      <p-button
+        label="Adicionar produto ao pedido"
+        size="small"
+        icon="pi pi-shopping-cart"
+      />
     </div>
     <div class="compre-junto">
       <p-carousel

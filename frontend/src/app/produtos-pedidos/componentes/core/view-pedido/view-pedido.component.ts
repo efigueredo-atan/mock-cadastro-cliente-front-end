@@ -34,32 +34,17 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
 
   public $eventoExcluirProdutoAtendimento: EventEmitter<ProdutoAtendimento>;
   public $eventoAdicionarProdutoAtendimento: EventEmitter<Produto>;
+  public $eventoQuantidadeProdutoAlterada: EventEmitter<ProdutoAtendimento>;
 
   public ngOnInit(): void {
-    this.atendimento.produtos.push({
-      produto: produtosMock[0],
-      qtdAtendimento: 1,
-    });
-    this.atendimento.produtos.push({
-      produto: produtosMock[1],
-      qtdAtendimento: 1,
-    });
-    this.atendimento.produtos.push({
-      produto: produtosMock[2],
-      qtdAtendimento: 1,
-    });
-    this.atendimento.produtos.push({
-      produto: produtosMock[3],
-      qtdAtendimento: 1,
-    });
-    this.atendimento.produtos.push({
-      produto: produtosMock[4],
-      qtdAtendimento: 1,
-    });
+    this.adicionarProdutoAoAtendimento(produtosMock[0]);
+    this.adicionarProdutoAoAtendimento(produtosMock[1]);
     this.obterEventoExcluirProdutoDoAtendimento();
     this.obterEventoAdicionarProdutoAoAtendimento();
+    this.obterEventoQuantidadeProdutoAlterada();
     this.escutarEventoExcluirProdutoDoAtendimento();
     this.escutarEventoAdicionarProdutoAoAtendimento();
+    this.escutarEventoQuantidadeProdutoAlterada();
   }
 
   public ngOnDestroy(): void {
@@ -78,6 +63,12 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
     );
   }
 
+  public obterEventoQuantidadeProdutoAlterada(): void {
+    this.$eventoQuantidadeProdutoAlterada = EventEmitterService.get(
+      'eventoQuantidadeProdutoAlterada'
+    );
+  }
+
   public escutarEventoExcluirProdutoDoAtendimento(): void {
     this.$eventoExcluirProdutoAtendimento.subscribe((produtoAtendimento) => {
       this.excluirProdutoDoAtendimento(produtoAtendimento);
@@ -86,19 +77,64 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
 
   public escutarEventoAdicionarProdutoAoAtendimento(): void {
     this.$eventoAdicionarProdutoAtendimento.subscribe((produto) => {
-      this.adicionarProdutoAoAtendimento(produto)
+      this.adicionarProdutoAoAtendimento(produto);
     });
+  }
+
+  public escutarEventoQuantidadeProdutoAlterada(): void {
+    this.$eventoQuantidadeProdutoAlterada.subscribe((produtoAtendimento) => {
+      if (this.produtoExisteNoAtendimento(produtoAtendimento.produto)) {
+        this.recalcularValorTotalSemDescontos();
+        this.recalcularQuantidadeItens();
+      }
+    });
+  }
+
+  private recalcularValorTotalSemDescontos(): void {
+    var valorTotalSemDescontos = 0;
+    this.atendimento.produtos.map(produtoAtendimento => {
+      valorTotalSemDescontos+= (produtoAtendimento.qtdAtendimento * produtoAtendimento.produto.valor) 
+    })
+    this.atendimento.valorTotalSemDesconto = valorTotalSemDescontos;
+  }
+
+  private recalcularQuantidadeItens(): void {
+    var qtdItens = 0;
+    this.atendimento.produtos.map(produtoAtendimento => {
+      qtdItens += produtoAtendimento.qtdAtendimento;
+    })
+    this.atendimento.qtdItens = qtdItens;
+  }
+
+  private produtoExisteNoAtendimento(produto: Produto): boolean {
+    var produtoExisteNoAtendimento = false;
+    this.atendimento.produtos.find((produtoAtendimento) => {
+      if (produtoAtendimento.produto.id == produto.id) {
+        produtoExisteNoAtendimento = true;
+      }
+    });
+    return produtoExisteNoAtendimento;
   }
 
   private excluirProdutoDoAtendimento(produto: ProdutoAtendimento): void {
     const index = this.atendimento.produtos.indexOf(produto);
-    if (index >= 0) this.atendimento.produtos.splice(index, 1);
+    if (index >= 0) {
+      this.atendimento.produtos.splice(index, 1);
+      this.atendimento.qtdProdutos--;
+      this.atendimento.qtdItens -= produto.qtdAtendimento;
+      this.atendimento.valorTotalSemDesconto -=
+        produto.qtdAtendimento * produto.produto.valor;
+    }
   }
 
   private adicionarProdutoAoAtendimento(produto: Produto): void {
+    console.log(this.atendimento);
     this.atendimento.produtos.push({
       produto: produto,
-      qtdAtendimento: 1
+      qtdAtendimento: 1,
     });
+    this.atendimento.qtdItens++;
+    this.atendimento.qtdProdutos++;
+    this.atendimento.valorTotalSemDesconto += produto.valor;
   }
 }

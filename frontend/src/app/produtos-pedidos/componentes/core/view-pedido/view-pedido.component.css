@@ -1,6 +1,6 @@
 .pedidos-view {
-  width: calc((1350px * 0.4) - 2em);
-  height: calc(100vh - var(--height-header) - 3em);
+  width: 40vw;
+  height: calc(100vh - var(--height-header) - 6em);
   box-shadow: var(--box-shadow-card);
   border-radius: 4px;
   position: fixed;
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .view-actions {
@@ -23,6 +23,17 @@
   padding: 1.5em;
   border-top: var(--border);
   gap: 1em;
+}
+
+.rodape-info {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.valorTotal {
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .descontos {
