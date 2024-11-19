@@ -19,6 +19,9 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { TabViewModule } from 'primeng/tabview';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogProdutoComponent } from './componentes/core/dialog-produto/dialog-produto.component';
+import { DialogModule } from 'primeng/dialog';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ViewPedidoComponent,
     ProdutoCardComponent,
     ProdutoCardSmallComponent,
+    DialogProdutoComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputGroupModule,
     InputGroupAddonModule,
     TabViewModule,
-    InputNumberModule
+    InputNumberModule,
+    DialogModule,
+    CarouselModule
   ],
 })
 export class ProdutosPedidosModule {}

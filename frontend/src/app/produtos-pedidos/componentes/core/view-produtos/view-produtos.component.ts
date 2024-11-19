@@ -7,88 +7,90 @@ import { produtosMock } from '../../../../shared/produtos.mock';
 @Component({
   selector: 'app-view-produtos',
   templateUrl: './view-produtos.component.html',
-  styleUrl: './view-produtos.component.css'
+  styleUrl: './view-produtos.component.css',
 })
 export class ViewProdutosComponent implements OnInit {
   public formularioPesquisaProduto: FormGroup;
   public filtros = [
     {
       name: 'Todos',
-      value: 'todos'
+      value: 'todos',
     },
     {
       name: 'Nome',
-      value: 'nome'
+      value: 'nome',
     },
     {
       name: 'Cod. Referência',
-      value: 'codReferencia'
+      value: 'codReferencia',
     },
     {
       name: 'Cod. Barras',
-      value: 'codBarras'
+      value: 'codBarras',
     },
     {
       name: 'Cod. Interno',
-      value: 'codInterno'
+      value: 'codInterno',
     },
     {
       name: 'Tag',
-      value: 'tag'
+      value: 'tag',
     },
-  ]
+  ];
   public departamentos = [
     {
       name: 'Informática',
-      value: 'informatica'
+      value: 'informatica',
     },
     {
       name: 'Espuma',
-      value: 'espuma'
+      value: 'espuma',
     },
     {
       name: 'Antena',
-      value: 'antena'
+      value: 'antena',
     },
     {
       name: 'Eletrodomésticos',
-      value: 'eletrodomestico'
+      value: 'eletrodomestico',
     },
     {
       name: 'Eletroportáteis',
-      value: 'eletroportateis'
+      value: 'eletroportateis',
     },
     {
       name: 'Móveis',
-      value: 'moveis'
+      value: 'moveis',
     },
     {
       name: 'Decoração',
-      value: 'decoracao'
+      value: 'decoracao',
     },
     {
       name: 'Utilidades',
-      value: 'utilidades'
+      value: 'utilidades',
     },
     {
       name: 'Saúde',
-      value: 'saude'
+      value: 'saude',
     },
     {
       name: 'Infantil',
-      value: 'infantil'
+      value: 'infantil',
     },
     {
       name: 'Gamer',
-      value: 'gamer'
+      value: 'gamer',
     },
-  ]
-  public produtos: Produto[] = produtosMock;  
+  ];
+  public produtos: Produto[] = produtosMock;
 
-  constructor(private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService) {}
+  constructor(
+    private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService
+  ) {}
 
   public ngOnInit(): void {
-    this.formularioPesquisaProduto = this.formularioPesquisaProdutoService.formularioPesquisaProduto;
+    this.formularioPesquisaProduto =
+      this.formularioPesquisaProdutoService.formularioPesquisaProduto;
   }
-
 }

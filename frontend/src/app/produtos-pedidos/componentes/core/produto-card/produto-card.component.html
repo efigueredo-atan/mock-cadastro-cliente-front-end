@@ -1,14 +1,25 @@
-<div class="produto-card">
-  <div class="imagem" [style]="'background-image: url(' + produto.urlImagem + ')' ">
+<div [class]="this.small ? 'produto-card small' : 'produto-card'">
+  <div
+    (click)="emitirEventoAbrirDialogProduto(this.produto)"
+    class="imagem"
+    [style]="'background-image: url(' + produto.urlImagem + ')'"
+  >
     <span class="tag">
-        <p>Estoque: {{ produto.estoque }}</p>
+      <p>Estoque: {{ produto.estoque }}</p>
     </span>
   </div>
-  <div class="informacoes">
+  <div
+    (click)="emitirEventoAbrirDialogProduto(this.produto)"
+    class="informacoes"
+  >
     <p class="nome-produto">{{ produto.nome }}</p>
-    <p class="valor-produto">R$ {{ produto.valor }}</p>
+    <p *ngIf="!small" class="valor-produto">R$ {{ produto.valor }}</p>
+    <div *ngIf="small" class="valor-botao-box">
+      <p class="valor-produto">R$ {{ produto.valor }}</p>
+      <p-button size="small" icon="pi pi-shopping-cart" />
+    </div>
   </div>
-  <div class="buttons">
-    <p-button label="Adicionar" size="small" icon="pi pi-shopping-cart"/>
+  <div *ngIf="!small" class="buttons">
+    <p-button label="Adicionar" size="small" icon="pi pi-shopping-cart" />
   </div>
 </div>

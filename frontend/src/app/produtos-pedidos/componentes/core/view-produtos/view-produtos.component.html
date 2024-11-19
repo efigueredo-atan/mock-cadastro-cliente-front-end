@@ -10,22 +10,35 @@
       />
     </p-iconField>
     <div class="filtro">
-      <p-dropdown
-        formControlName="filtro"
-        [options]="filtros"
-        optionLabel="name"
-        placeholder="Filtrar por"
-      />
-      <p-dropdown
-        formControlName="departamento"
-        [options]="departamentos"
-        optionLabel="name"
-        placeholder="Departamento"
-      />
+      <div class="entry">
+        <label for="pesquisar-por">Pesquisar por</label>
+        <p-dropdown
+          id="pesquisar-por"
+          formControlName="filtro"
+          [options]="filtros"
+          optionLabel="name"
+          placeholder="Pesquisar por"
+        />
+      </div>
+      <div class="entry">
+        <label for="departamento">Departamento</label>
+        <p-dropdown
+          formControlName="departamento"
+          [options]="departamentos"
+          optionLabel="name"
+          placeholder="Departamento"
+        />
+      </div>
     </div>
   </form>
-  <p-divider />
-  <div class="produtos-table">
-    <app-produto-card *ngFor="let produto of produtos" [produto]="produto"></app-produto-card>
+  <div class="produtos-box">
+    <h1>Mais vendidos</h1>
+    <div class="produtos-table">
+      <app-produto-card
+        *ngFor="let produto of produtos"
+        [produto]="produto"
+      ></app-produto-card>
+    </div>
   </div>
 </div>
+<app-dialog-produto></app-dialog-produto>
