@@ -13,7 +13,7 @@
     class="informacoes"
   >
     <p class="nome-produto">{{ produto.nome }}</p>
-    <p *ngIf="!small" class="valor-produto">R$ {{ produto.valor }}</p>
+    <p *ngIf="!small" class="valor-produto">R$ {{ produto.valor | number: '1.2-2' }}</p>
     <div *ngIf="small" class="valor-botao-box">
       <p class="valor-produto">R$ {{ produto.valor }}</p>
       <p-button size="small" icon="pi pi-shopping-cart" />

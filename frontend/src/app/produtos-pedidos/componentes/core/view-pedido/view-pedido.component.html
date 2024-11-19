@@ -6,29 +6,19 @@
     ></app-produto-card-small>
   </div>
   <div class="view-actions">
-    <div class="descontos">
-      <div class="descontos-tab">
-        <h1>Descontos</h1>
-        <div class="descontos-buttons">
-          <p-selectButton
-            [allowEmpty]="false"
-            [options]="opcoesDesconto"
-            optionLabel="icon"
-          >
-            <ng-template let-item pTemplate>
-              <i [class]="item.icon"></i>
-            </ng-template>
-          </p-selectButton>
-          <input type="text" pInputText/>
-        </div>
+    <div class="rodape-info">
+      <div class="view-actions-info">
+        <p>
+          {{ atendimento.qtdProdutos }}
+          {{ atendimento.qtdProdutos == 1 ? "Produto" : "Produtos" }}
+        </p>
+        <p>
+          {{ atendimento.qtdItens }}
+          {{ atendimento.qtdProdutos == 1 ? "Item" : "Itens" }}
+        </p>
       </div>
-      <div class="valor-adicional">
-        <h1>Valor adicional</h1>
-        <p-inputNumber
-        prefix="R$ "
-          mode="decimal"
-          [minFractionDigits]="2"
-        />
+      <div class="valorTotal">
+        <p>R$ {{ atendimento.valorTotalSemDesconto | number: '1.2-2'}}</p>
       </div>
     </div>
     <div class="buttons">

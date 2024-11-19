@@ -18,12 +18,14 @@ import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SharedModule } from './shared/shared.module';
 
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    RodapeComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, RodapeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,9 +37,12 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     SidebarModule,
     PanelMenuModule,
-    SharedModule
-],
-  providers: [provideClientHydration()],
+    SharedModule,
+  ],
+  providers: [
+    provideClientHydration(),
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

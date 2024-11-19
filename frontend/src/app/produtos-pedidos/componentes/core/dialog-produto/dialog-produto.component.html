@@ -43,7 +43,7 @@
     </div>
     
     <div class="valor-actions">
-      <p class="valor">R$ {{ produto.valor }}</p>
+      <p class="valor">R$ {{ produto.valor | number: '1.2-2' }}</p>
       <p-button
         label="Adicionar produto ao pedido"
         size="small"
