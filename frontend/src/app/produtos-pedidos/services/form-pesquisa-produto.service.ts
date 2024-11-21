@@ -19,7 +19,7 @@ export class FormPesquisaProdutoService {
       produtoQuery: [null],
       pesquisarPor: ['todos'],
       departamento: [null],
-      ordenarPor: ['maisRelevantes']
+      ordenarPor: ['']
     });
   }
 }

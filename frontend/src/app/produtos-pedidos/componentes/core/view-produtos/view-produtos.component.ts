@@ -1,9 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormPesquisaProdutoService } from '../../../services/form-pesquisa-produto.service';
 import { Produto } from '../../../../shared/types/types';
 import { produtosMock } from '../../../../shared/produtos.mock';
-import { debounceTime, distinctUntilChanged, map, Observable, combineLatest, of, startWith } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  combineLatest,
+  of,
+  startWith,
+} from 'rxjs';
+import { EventEmitterService } from '../../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-view-produtos',
@@ -34,12 +43,13 @@ export class ViewProdutosComponent implements OnInit {
     { name: 'Gamer', value: 'gamer' },
   ];
   public ordenarPor = [
-    { name: 'Mais relevantes', value: 'maisRelevantes' },
     { name: 'Menor preço', value: 'menorPreco' },
     { name: 'Maior preço', value: 'maiorPreco' },
   ];
   public produtosOriginal: Produto[] = produtosMock;
   public produtosFiltrados$: Observable<Produto[]>;
+  public eventoAdicionarProdutoAtendimento$: EventEmitter<Produto>;
+  public eventoRemoverProdutoAtendimento$: EventEmitter<Produto>;
 
   constructor(
     private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService
@@ -49,27 +59,40 @@ export class ViewProdutosComponent implements OnInit {
     this.formularioPesquisaProduto =
       this.formularioPesquisaProdutoService.formularioPesquisaProduto;
     this.iniciarObservables();
+    this.obterEventoProdutoAdicionadoAoAtendimento();
+    this.escutarEventoProdutoAdicionadoAoAtendimento();
+    this.obterEventoProdutoRemovidoDoAtendimento();
+    this.escutarEventoProdutoRemovidoDoAtendimento();
   }
 
   private iniciarObservables(): void {
     // Observable para capturar as mudanças tanto na query quanto na ordenação
     this.produtosFiltrados$ = combineLatest([
-      this.formularioPesquisaProduto.get('produtoQuery')!.valueChanges.pipe(
-        startWith(''),
-        debounceTime(300),
-        distinctUntilChanged()
-      ),
-      this.formularioPesquisaProduto.get('ordenarPor')!.valueChanges.pipe(
-        startWith('maisRelevantes'),
-        debounceTime(300),
-        distinctUntilChanged()
-      ),
+      this.formularioPesquisaProduto
+        .get('produtoQuery')!
+        .valueChanges.pipe(
+          startWith(''),
+          debounceTime(300),
+          distinctUntilChanged()
+        ),
+      this.formularioPesquisaProduto
+        .get('ordenarPor')!
+        .valueChanges.pipe(
+          startWith(''),
+          debounceTime(300),
+          distinctUntilChanged()
+        ),
     ]).pipe(
-      map(([query, ordenacao]) => this.aplicarFiltrosEOrdenacao(query, ordenacao))
+      map(([query, ordenacao]) =>
+        this.aplicarFiltrosEOrdenacao(query, ordenacao)
+      )
     );
   }
 
-  private aplicarFiltrosEOrdenacao(query: string, ordenacaoSelecionada: string): Produto[] {
+  private aplicarFiltrosEOrdenacao(
+    query: string,
+    ordenacaoSelecionada: string
+  ): Produto[] {
     // Filtragem dos produtos com base na query
     let produtosFiltrados = this.filtrarProdutos(query);
 
@@ -98,5 +121,53 @@ export class ViewProdutosComponent implements OnInit {
 
   private ordenarProdutosPorMaiorPreco(produtos: Produto[]): Produto[] {
     return produtos.sort((a, b) => b.valor - a.valor);
+  }
+
+  public obterEventoProdutoAdicionadoAoAtendimento(): void {
+    this.eventoAdicionarProdutoAtendimento$ = EventEmitterService.get(
+      'eventoProdutoAdicionadoAoAtendimento'
+    );
+  }
+
+  public escutarEventoProdutoAdicionadoAoAtendimento(): void {
+    this.eventoAdicionarProdutoAtendimento$.subscribe((produto) => {
+      this.removerProdutoLista(produto);
+    });
+  }
+
+  public obterEventoProdutoRemovidoDoAtendimento(): void {
+    this.eventoRemoverProdutoAtendimento$ = EventEmitterService.get(
+      'eventoProdutoRemovidoDoAtendimento'
+    );
+  }
+
+  public escutarEventoProdutoRemovidoDoAtendimento(): void {
+    this.eventoRemoverProdutoAtendimento$.subscribe((produto) => {
+      console.log(produto);
+      this.adicionarProdutoLista(produto);
+    });
+  }
+
+  public removerProdutoLista(produto: Produto): void {
+    if (this.existeProdutoNaListaDeProdutos(produto)) {
+      const index = this.produtosOriginal.findIndex(
+        (produtoLista) => produtoLista.id == produto.id
+      );
+      if (index >= 0) this.produtosOriginal.splice(index, 1);
+    }
+  }
+
+  public adicionarProdutoLista(produto: Produto): void {
+    if (!this.existeProdutoNaListaDeProdutos(produto)) {
+      this.produtosOriginal.push(produto);
+      this.produtosOriginal = this.produtosOriginal = this.aplicarFiltrosEOrdenacao(
+        this.formularioPesquisaProduto.get('produtoQuery').value,
+        this.formularioPesquisaProduto.get('ordenarPor').value
+      );
+    }
+  }
+
+  private existeProdutoNaListaDeProdutos(produto: Produto): boolean {
+    return this.produtosOriginal.includes(produto);
   }
 }
