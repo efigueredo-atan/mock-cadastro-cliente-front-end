@@ -149,25 +149,29 @@ export class ViewProdutosComponent implements OnInit {
   }
 
   public removerProdutoLista(produto: Produto): void {
-    if (this.existeProdutoNaListaDeProdutos(produto)) {
-      const index = this.produtosOriginal.findIndex(
-        (produtoLista) => produtoLista.id == produto.id
-      );
-      if (index >= 0) this.produtosOriginal.splice(index, 1);
-    }
+    // if (this.existeProdutoNaListaDeProdutos(produto)) {
+    //   this.produtosOriginal = this.produtosOriginal.filter(
+    //     (produtoLista) => produtoLista.id !== produto.id
+    //   );
+    // }
   }
 
   public adicionarProdutoLista(produto: Produto): void {
-    if (!this.existeProdutoNaListaDeProdutos(produto)) {
-      this.produtosOriginal.push(produto);
-      this.produtosOriginal = this.produtosOriginal = this.aplicarFiltrosEOrdenacao(
-        this.formularioPesquisaProduto.get('produtoQuery').value,
-        this.formularioPesquisaProduto.get('ordenarPor').value
-      );
-    }
+    // if (!this.existeProdutoNaListaDeProdutos(produto)) {
+    //   this.produtosOriginal = [...this.produtosOriginal, produto];
+    // }
   }
 
   private existeProdutoNaListaDeProdutos(produto: Produto): boolean {
     return this.produtosOriginal.includes(produto);
+  }
+
+  private atualizarProdutosFiltrados(): void {
+    const query = this.formularioPesquisaProduto.get('produtoQuery')!.value;
+    const ordenacao = this.formularioPesquisaProduto.get('ordenarPor')!.value;
+
+    this.produtosFiltrados$ = of(
+      this.aplicarFiltrosEOrdenacao(query, ordenacao)
+    );
   }
 }
