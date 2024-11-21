@@ -26,7 +26,10 @@
             <div class="estoque-box">
               <div class="estoque">
                 <p>Loja - Custódia - PE</p>
-                <p>{{ produto.estoque }} {{produto.estoque == 1 ? 'unidade' : 'unidades'}}</p>
+                <p>
+                  {{ produto.estoque }}
+                  {{ produto.estoque == 1 ? "unidade" : "unidades" }}
+                </p>
               </div>
               <div class="estoque">
                 <p>Caruaru - PE</p>
@@ -41,9 +44,9 @@
         </p-tabView>
       </div>
     </div>
-    
+
     <div class="valor-actions">
-      <p class="valor">R$ {{ produto.valor | number: '1.2-2' }}</p>
+      <p class="valor">R$ {{ produto.valor | number : "1.2-2" }}</p>
       <p-button
         label="Adicionar produto ao pedido"
         size="small"
@@ -52,6 +55,7 @@
     </div>
     <div class="compre-junto">
       <p-carousel
+        [responsiveOptions]="responsiveOptions"
         [showIndicators]="false"
         [value]="produtosRelacionados"
         [numVisible]="4"

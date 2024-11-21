@@ -12,6 +12,23 @@ export class DialogProdutoComponent implements OnInit {
   public produto: Produto;
   public visivel: boolean = false;
   public produtosRelacionados: Produto[] = [];
+  public responsiveOptions = [
+    {
+        breakpoint: '1500px',
+        numVisible: 4,
+        numScroll: 1
+    },
+    {
+        breakpoint: '1900px',
+        numVisible: 5,
+        numScroll: 1
+    },
+    {
+        breakpoint: '2200px',
+        numVisible: 6,
+        numScroll: 1
+    },
+];
 
   public ngOnInit(): void {
     this.escutarEventoAbrirDialogProduto();
