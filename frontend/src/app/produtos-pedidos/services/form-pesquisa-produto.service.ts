@@ -16,9 +16,10 @@ export class FormPesquisaProdutoService {
 
   private construirFormulario(): void {
     this._formularioPesquisaProduto = this.formBuilder.group({
-      produto: [null],
-      filtro: ['todos'],
-      departamento: [null]
+      produtoQuery: [null],
+      pesquisarPor: ['todos'],
+      departamento: [null],
+      ordenarPor: ['maisRelevantes']
     });
   }
 }
