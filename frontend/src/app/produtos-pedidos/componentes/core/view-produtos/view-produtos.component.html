@@ -1,37 +1,61 @@
 <div class="produtos-view">
   <form class="toolbar" [formGroup]="formularioPesquisaProduto">
-    <p-iconField iconPosition="left">
-      <p-inputIcon styleClass="pi pi-search" />
-      <input
-        type="text"
-        pInputText
-        placeholder="Pesquisar produto"
-        formControlName="produto"
-      />
-    </p-iconField>
+    <div class="campo-busca">
+      <p-iconField iconPosition="left">
+        <p-inputIcon styleClass="pi pi-search" />
+        <input
+          type="text"
+          pInputText
+          placeholder="Pesquisar produto"
+          formControlName="produtoQuery"
+        />
+      </p-iconField>
+    </div>
     <div class="filtro">
-      <div class="entry">
-        <label for="pesquisar-por">Pesquisar por</label>
-        <p-dropdown
-          id="pesquisar-por"
-          formControlName="filtro"
-          [options]="filtros"
-          optionLabel="name"
-          placeholder="Pesquisar por"
-        />
+      <div class="filtro-toolbar">
+        <div class="entry">
+          <label for="pesquisar-por">Pesquisar por</label>
+          <p-dropdown
+            id="pesquisar-por"
+            formControlName="pesquisarPor"
+            placeholder="Pesquisar por"
+            [options]="pesquisarPor"
+            optionLabel="name"
+            optionValue="value"
+          />
+        </div>
+        <div
+          class="entry"
+          *ngIf="
+            formularioPesquisaProduto.get('pesquisarPor').value ==
+            'departamento'
+          "
+        >
+          <label for="departamento">Departamento</label>
+          <p-dropdown
+            formControlName="departamento"
+            [options]="departamentos"
+            optionLabel="name"
+            placeholder="Departamento"
+          />
+        </div>
       </div>
-      <div class="entry">
-        <label for="departamento">Departamento</label>
-        <p-dropdown
-          formControlName="departamento"
-          [options]="departamentos"
-          optionLabel="name"
-          placeholder="Departamento"
-        />
+      <div class="ordenar-por">
+        <div class="entry">
+          <label for="ordenar-por">Ordenar por</label>
+          <p-dropdown
+            id="ordenar-por"
+            placeholder="Selecione ordenação"
+            formControlName="ordenarPor"
+            [options]="ordenarPor"
+            optionLabel="name"
+            optionValue="value"
+          />
+        </div>
       </div>
     </div>
   </form>
-  <div class="produtos-box">
+  <div class="produtos-box" *ngIf="produtosFiltrados$ | async as produtos">
     <h1>Mais vendidos</h1>
     <div class="produtos-table">
       <app-produto-card

@@ -8,8 +8,8 @@
 
 .toolbar {
   display: grid;
-  grid-template-columns: 50% auto;
-  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   border-radius: 4px;
   gap: 1em;
   border-bottom: var(--border);
@@ -17,9 +17,21 @@
   padding: 1.5em;
 }
 
+.campo-busca {
+  width: 100%;
+}
+
 .filtro {
+  width: 100%;
   display: flex;
   align-items: center;
+  gap: 1em;
+  justify-content: space-between;
+}
+
+.filtro-toolbar {
+  width: 100%;
+  display: flex;
   gap: 1em;
 }
 

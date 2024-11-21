@@ -37,8 +37,6 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
   public $eventoQuantidadeProdutoAlterada: EventEmitter<ProdutoAtendimento>;
 
   public ngOnInit(): void {
-    this.adicionarProdutoAoAtendimento(produtosMock[0]);
-    this.adicionarProdutoAoAtendimento(produtosMock[1]);
     this.obterEventoExcluirProdutoDoAtendimento();
     this.obterEventoAdicionarProdutoAoAtendimento();
     this.obterEventoQuantidadeProdutoAlterada();
@@ -124,17 +122,28 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
       this.atendimento.qtdItens -= produto.qtdAtendimento;
       this.atendimento.valorTotalSemDesconto -=
         produto.qtdAtendimento * produto.produto.valor;
+        this.emitirEventoProdutoExcluidoDoAtendimento(produto.produto);
     }
   }
 
   private adicionarProdutoAoAtendimento(produto: Produto): void {
-    console.log(this.atendimento);
-    this.atendimento.produtos.push({
-      produto: produto,
-      qtdAtendimento: 1,
-    });
-    this.atendimento.qtdItens++;
-    this.atendimento.qtdProdutos++;
-    this.atendimento.valorTotalSemDesconto += produto.valor;
+    if(!this.produtoExisteNoAtendimento(produto)) {
+      this.atendimento.produtos.push({
+        produto: produto,
+        qtdAtendimento: 1,
+      });
+      this.atendimento.qtdItens++;
+      this.atendimento.qtdProdutos++;
+      this.atendimento.valorTotalSemDesconto += produto.valor;
+      this.emitirEventoProdutoAdicionadoAoAtendimento(produto);
+    }
+  }
+
+  private emitirEventoProdutoAdicionadoAoAtendimento(produto: Produto): void {
+    EventEmitterService.get("eventoProdutoAdicionadoAoAtendimento").emit(produto);
+  }
+
+  private emitirEventoProdutoExcluidoDoAtendimento(produto: Produto): void {
+    EventEmitterService.get("eventoProdutoRemovidoDoAtendimento").emit(produto);
   }
 }
