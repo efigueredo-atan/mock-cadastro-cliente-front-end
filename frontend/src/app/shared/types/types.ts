@@ -107,6 +107,7 @@ export interface Produto {
   valor: number;
   estoque: number;
   urlImagem: string;
+  inseridoNoAtendimento: boolean;
 }
 
 export interface ProdutoAtendimento {

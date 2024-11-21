@@ -25,6 +25,7 @@ export class ProdutoCardSmallComponent {
   }
 
   public emitirEventoExcluirProdutoDoAtendimento(): void {
+    this.produtoAtendimento.produto.inseridoNoAtendimento = false;
     EventEmitterService.get('eventoExcluirProdutoAtendimento').emit(
       this.produtoAtendimento
     );

@@ -14,11 +14,11 @@
     <p class="nome-produto">{{ produto.nome }}</p>
     <p *ngIf="!small" class="valor-produto">R$ {{ produto.valor | number: '1.2-2' }}</p>
     <div *ngIf="small" class="valor-botao-box">
-      <p class="valor-produto">R$ {{ produto.valor }}</p>
-      <p-button (onClick)="emitirEventoAdicionarProdutoAoAtendimentoFecharDialog()" size="small" icon="pi pi-shopping-cart" />
+      <p class="valor-produto">R$ {{ produto.valor | number : "1.2-2"  }}</p>
+      <p-button [disabled]="produto.inseridoNoAtendimento" (onClick)="emitirEventoAdicionarProdutoAoAtendimentoFecharDialog()" size="small" icon="pi pi-shopping-cart" />
     </div>
   </div>
   <div *ngIf="!small" class="buttons">
-    <p-button (onClick)="emitirEventoAdicionarProdutoAoAtendimento()" label="Adicionar" size="small" icon="pi pi-shopping-cart" />
+    <p-button [disabled]="produto.inseridoNoAtendimento" (onClick)="emitirEventoAdicionarProdutoAoAtendimento()" label="Adicionar" size="small" icon="pi pi-shopping-cart" />
   </div>
 </div>

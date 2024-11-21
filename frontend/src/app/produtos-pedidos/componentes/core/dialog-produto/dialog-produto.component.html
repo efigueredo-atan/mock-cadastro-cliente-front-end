@@ -48,7 +48,7 @@
     <div class="valor-actions">
       <p class="valor">R$ {{ produto.valor | number : "1.2-2" }}</p>
       <p-button
-      *ngIf="mostrarBotaoAdicionar"
+        *ngIf="!produto.inseridoNoAtendimento"
         (onClick)="emitirEventoAdicionarProdutoAoAtendimento()"
         label="Adicionar produto ao pedido"
         size="small"
