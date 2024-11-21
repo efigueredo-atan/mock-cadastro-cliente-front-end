@@ -28,7 +28,7 @@
           class="entry"
           *ngIf="
             formularioPesquisaProduto.get('pesquisarPor').value ==
-            'departamento'
+            'Departamento'
           "
         >
           <label for="departamento">Departamento</label>
@@ -53,6 +53,17 @@
           />
         </div>
       </div>
+    </div>
+    <div class="tags-filtros">
+      <ul>
+        <li *ngFor="let filtro of filtros">
+          <p-chip
+          (onRemove)="removerFiltro(filtro)"
+            [label]="filtro.tipoFiltro + ': ' + filtro.valor"
+            [removable]="true"
+          />
+        </li>
+      </ul>
     </div>
   </form>
   <div class="produtos-box" *ngIf="produtosFiltrados$ | async as produtos">

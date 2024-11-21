@@ -1,7 +1,12 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormPesquisaProdutoService } from '../../../services/form-pesquisa-produto.service';
-import { Produto } from '../../../../shared/types/types';
+import {
+  Departamento,
+  Filtro,
+  Produto,
+  TipoFiltro,
+} from '../../../../shared/types/types';
 import { produtosMock } from '../../../../shared/produtos.mock';
 import {
   debounceTime,
@@ -22,25 +27,42 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
 export class ViewProdutosComponent implements OnInit {
   public formularioPesquisaProduto: FormGroup;
   public pesquisarPor = [
-    { name: 'Todos', value: 'todos' },
-    { name: 'Departamento', value: 'departamento' },
-    { name: 'Linha', value: 'linha' },
-    { name: 'Grupo', value: 'grupo' },
-    { name: 'Subgrupo', value: 'subgrupo' },
-    { name: 'Características', value: 'caracteristicas' },
+    {
+      name: TipoFiltro.DEPARTAMENTO.toString(),
+      value: TipoFiltro.DEPARTAMENTO,
+    },
+    { name: TipoFiltro.LINHA.toString(), value: TipoFiltro.LINHA },
+    { name: TipoFiltro.GRUPO.toString(), value: TipoFiltro.GRUPO },
+    { name: TipoFiltro.SUBGRUPO.toString(), value: TipoFiltro.SUBGRUPO },
+    {
+      name: TipoFiltro.CARACTERISTICAS.toString(),
+      value: TipoFiltro.CARACTERISTICAS,
+    },
   ];
   public departamentos = [
-    { name: 'Informática', value: 'informatica' },
-    { name: 'Espuma', value: 'espuma' },
-    { name: 'Antena', value: 'antena' },
-    { name: 'Eletrodomésticos', value: 'eletrodomestico' },
-    { name: 'Eletroportáteis', value: 'eletroportateis' },
-    { name: 'Móveis', value: 'moveis' },
-    { name: 'Decoração', value: 'decoracao' },
-    { name: 'Utilidades', value: 'utilidades' },
-    { name: 'Saúde', value: 'saude' },
-    { name: 'Infantil', value: 'infantil' },
-    { name: 'Gamer', value: 'gamer' },
+    {
+      name: Departamento.INFORMATICA.toString(),
+      value: Departamento.INFORMATICA,
+    },
+    { name: Departamento.ESPUMA.toString(), value: Departamento.ESPUMA },
+    { name: Departamento.ANTENA.toString(), value: Departamento.ANTENA },
+    {
+      name: Departamento.ELETRODOMESTICOS.toString(),
+      value: Departamento.ELETRODOMESTICOS,
+    },
+    {
+      name: Departamento.ELETROPORTATEIS.toString(),
+      value: Departamento.ELETROPORTATEIS,
+    },
+    { name: Departamento.MOVEIS.toString(), value: Departamento.MOVEIS },
+    { name: Departamento.DECORACAO.toString(), value: Departamento.DECORACAO },
+    {
+      name: Departamento.UTILIDADES.toString(),
+      value: Departamento.UTILIDADES,
+    },
+    { name: Departamento.SAUDE.toString(), value: Departamento.SAUDE },
+    { name: Departamento.INFANTIL.toString(), value: Departamento.INFANTIL },
+    { name: Departamento.GAMER.toString(), value: Departamento.GAMER },
   ];
   public ordenarPor = [
     { name: 'Menor preço', value: 'menorPreco' },
@@ -50,6 +72,7 @@ export class ViewProdutosComponent implements OnInit {
   public produtosFiltrados$: Observable<Produto[]>;
   public eventoAdicionarProdutoAtendimento$: EventEmitter<Produto>;
   public eventoRemoverProdutoAtendimento$: EventEmitter<Produto>;
+  public filtros: Filtro[] = [];
 
   constructor(
     private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService
@@ -82,19 +105,26 @@ export class ViewProdutosComponent implements OnInit {
           debounceTime(300),
           distinctUntilChanged()
         ),
+      this.formularioPesquisaProduto
+        .get('departamento')
+        .valueChanges.pipe(startWith(''), distinctUntilChanged()),
     ]).pipe(
-      map(([query, ordenacao]) =>
-        this.aplicarFiltrosEOrdenacao(query, ordenacao)
+      map(([query, ordenacao, departamento]) =>
+        this.aplicarFiltrosEOrdenacao(query, ordenacao, departamento)
       )
     );
   }
 
   private aplicarFiltrosEOrdenacao(
     query: string,
-    ordenacaoSelecionada: string
+    ordenacaoSelecionada: string,
+    departamento: any
   ): Produto[] {
     // Filtragem dos produtos com base na query
     let produtosFiltrados = this.filtrarProdutos(query);
+
+    // Filtragrem dos produtos com base no departamento
+    this.adicionarDepartamentoAListaDeFiltragem(departamento.value);
 
     // Ordenação dos produtos filtrados com base na ordenação selecionada
     if (ordenacaoSelecionada === 'menorPreco') {
@@ -104,6 +134,40 @@ export class ViewProdutosComponent implements OnInit {
     }
 
     return produtosFiltrados;
+  }
+
+  public removerFiltro(filtro: Filtro): void {
+    console.log(this.filtros)
+    this.filtros = this.filtros.filter((filtroLista) => {
+      const valorNaoIgual = filtroLista.valor != filtro.valor;
+      const tipoNaoIgual = filtroLista.tipoFiltro != filtro.tipoFiltro;
+      return valorNaoIgual && tipoNaoIgual;
+    });
+    console.log(this.filtros)
+  }
+
+  private adicionarDepartamentoAListaDeFiltragem(departamento: string): void {
+    if (departamento) {
+      const filtro: Filtro = {
+        tipoFiltro: TipoFiltro.DEPARTAMENTO,
+        valor: departamento,
+      };
+      if (!this.jaExisteFiltroNaLista(filtro)) {
+        this.filtros.unshift(filtro);
+      }
+    }
+  }
+
+  private jaExisteFiltroNaLista(filtro: Filtro): boolean {
+    const filtroEncontrado = this.filtros.find((filtroLista) => {
+      const valorIgual = filtroLista.valor == filtro.valor;
+      const tipoFiltroIgual = filtroLista.tipoFiltro == filtro.tipoFiltro;
+      return valorIgual && tipoFiltroIgual;
+    });
+    if (filtroEncontrado) {
+      return true;
+    }
+    return false;
   }
 
   private filtrarProdutos(query: string): Produto[] {
@@ -166,12 +230,12 @@ export class ViewProdutosComponent implements OnInit {
     return this.produtosOriginal.includes(produto);
   }
 
-  private atualizarProdutosFiltrados(): void {
-    const query = this.formularioPesquisaProduto.get('produtoQuery')!.value;
-    const ordenacao = this.formularioPesquisaProduto.get('ordenarPor')!.value;
+  // private atualizarProdutosFiltrados(): void {
+  //   const query = this.formularioPesquisaProduto.get('produtoQuery')!.value;
+  //   const ordenacao = this.formularioPesquisaProduto.get('ordenarPor')!.value;
 
-    this.produtosFiltrados$ = of(
-      this.aplicarFiltrosEOrdenacao(query, ordenacao)
-    );
-  }
+  //   this.produtosFiltrados$ = of(
+  //     this.aplicarFiltrosEOrdenacao(query, ordenacao)
+  //   );
+  // }
 }

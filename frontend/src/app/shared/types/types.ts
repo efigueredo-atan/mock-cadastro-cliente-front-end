@@ -108,6 +108,7 @@ export interface Produto {
   estoque: number;
   urlImagem: string;
   inseridoNoAtendimento: boolean;
+  departamento: Departamento;
 }
 
 export interface ProdutoAtendimento {
@@ -126,4 +127,32 @@ export interface Atendimento {
   produtos: ProdutoAtendimento[];
   qtdItens: number;
   qtdProdutos: number;
+}
+
+export enum Departamento {
+  INFORMATICA = "Informática",
+  ESPUMA = 'Espuma',
+  ANTENA = 'Antena',
+  ELETRODOMESTICOS = 'Eletrodomésticos',
+  ELETROPORTATEIS = 'Eletroportáteis',
+  MOVEIS = 'Móveis',
+  DECORACAO = 'Decoração',
+  UTILIDADES = 'Utilidades',
+  SAUDE = 'Saúde',
+  INFANTIL = 'Infantil',
+  GAMER = 'Gamer'
+}
+
+export enum TipoFiltro {
+  DEPARTAMENTO = 'Departamento',
+  LINHA = 'Linha',
+  GRUPO = 'Grupo',
+  SUBGRUPO = 'Subgrupo',
+  CARACTERISTICAS = 'Características'
+
+}
+
+export interface Filtro {
+  tipoFiltro: TipoFiltro,
+  valor: string; 
 }

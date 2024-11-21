@@ -95,3 +95,13 @@
   font-size: 64px;
   font-weight: 700;
 }
+
+.tags-filtros {
+  width: 100%;
+}
+
+.tags-filtros ul {
+  list-style: none;
+  display: flex;
+  gap: 0.5em;
+}

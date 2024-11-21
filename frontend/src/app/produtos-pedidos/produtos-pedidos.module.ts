@@ -22,6 +22,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogProdutoComponent } from './componentes/core/dialog-produto/dialog-produto.component';
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'primeng/carousel';
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { CarouselModule } from 'primeng/carousel';
     TabViewModule,
     InputNumberModule,
     DialogModule,
-    CarouselModule
+    CarouselModule,
+    ChipModule
   ],
 })
 export class ProdutosPedidosModule {}
