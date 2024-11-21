@@ -137,13 +137,12 @@ export class ViewProdutosComponent implements OnInit {
   }
 
   public removerFiltro(filtro: Filtro): void {
-    console.log(this.filtros)
-    this.filtros = this.filtros.filter((filtroLista) => {
-      const valorNaoIgual = filtroLista.valor != filtro.valor;
-      const tipoNaoIgual = filtroLista.tipoFiltro != filtro.tipoFiltro;
-      return valorNaoIgual && tipoNaoIgual;
+    const index = this.filtros.findIndex((filtroLista) => {
+      const valorIgual = filtroLista.valor != filtro.valor;
+      const tipoIgual = filtroLista.tipoFiltro != filtro.tipoFiltro;
+      return valorIgual && tipoIgual;
     });
-    console.log(this.filtros)
+    this.filtros.splice(index, 1);
   }
 
   private adicionarDepartamentoAListaDeFiltragem(departamento: string): void {
