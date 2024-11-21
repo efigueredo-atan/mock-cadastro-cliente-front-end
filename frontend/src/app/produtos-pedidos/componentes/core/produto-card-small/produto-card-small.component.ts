@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { ProdutoAtendimento } from '../../../../shared/types/types';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { blurAnimation } from '../../../../animations';
 
 @Component({
   selector: 'app-produto-card-small',
   templateUrl: './produto-card-small.component.html',
   styleUrl: './produto-card-small.component.css',
+  animations: [blurAnimation]
 })
 export class ProdutoCardSmallComponent {
   @Input() public produtoAtendimento: ProdutoAtendimento;
