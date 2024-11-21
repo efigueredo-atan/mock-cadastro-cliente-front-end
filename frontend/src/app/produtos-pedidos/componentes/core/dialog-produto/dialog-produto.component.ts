@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 import { Produto } from '../../../../shared/types/types';
 import { produtosMock } from '../../../../shared/produtos.mock';
@@ -12,6 +12,7 @@ export class DialogProdutoComponent implements OnInit {
   public produto: Produto;
   public visivel: boolean = false;
   public produtosRelacionados: Produto[] = [];
+  public eventoFecharDialog$: EventEmitter<Produto>;
   public responsiveOptions = [
     {
         breakpoint: '1500px',
@@ -28,7 +29,8 @@ export class DialogProdutoComponent implements OnInit {
         numVisible: 6,
         numScroll: 1
     },
-];
+  ];
+  public mostrarBotaoAdicionar: boolean = true;
 
   public ngOnInit(): void {
     this.escutarEventoAbrirDialogProduto();
@@ -38,13 +40,36 @@ export class DialogProdutoComponent implements OnInit {
     this.produtosRelacionados.push(produtosMock[3])
     this.produtosRelacionados.push(produtosMock[4])
     this.produtosRelacionados.push(produtosMock[5])
+    this.obterEventoFecharDialog();
+    this.escutarEventoFecharDialog();
+  }
+
+  private obterEventoFecharDialog(): void {
+    this.eventoFecharDialog$ = EventEmitterService.get("eventoFecharDialog");
+  }
+
+  private escutarEventoFecharDialog(): void {
+    this.eventoFecharDialog$.subscribe((produto) => {
+      this.fecharDialog();
+    })
   }
 
   public escutarEventoAbrirDialogProduto(): void {
-    EventEmitterService.get('eventoAbrirDialogProduto').subscribe((produto) => {
-      this.produto = produto;
+    EventEmitterService.get('eventoAbrirDialogProduto').subscribe((resposta) => {
+      this.produto = resposta.produto;
+      this.mostrarBotaoAdicionar = resposta.mostrarBotaoAdd;
       this.visivel = true;
-      console.log(this.produtosRelacionados)
     });
+  }
+
+  public emitirEventoAdicionarProdutoAoAtendimento(): void {
+    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
+      this.produto
+    );
+    this.fecharDialog();
+  }
+
+  public fecharDialog(): void {
+    this.visivel = false;
   }
 }
