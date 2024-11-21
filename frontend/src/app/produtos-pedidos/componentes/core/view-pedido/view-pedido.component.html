@@ -1,5 +1,12 @@
 <div class="pedidos-view">
   <div class="table-produtos">
+    <div
+      class="atendimento-sem-produtos"
+      *ngIf="atendimento.produtos.length == 0"
+    >
+      
+      <p><i class="pi pi-cart-plus"></i>Adicione produtos ao atendimento</p>
+    </div>
     <app-produto-card-small
       *ngFor="let produtoAtendimento of atendimento.produtos"
       [produtoAtendimento]="produtoAtendimento"
@@ -18,7 +25,7 @@
         </p>
       </div>
       <div class="valorTotal">
-        <p>R$ {{ atendimento.valorTotalSemDesconto | number: '1.2-2'}}</p>
+        <p>R$ {{ atendimento.valorTotalSemDesconto | number : "1.2-2" }}</p>
       </div>
     </div>
     <div class="buttons">

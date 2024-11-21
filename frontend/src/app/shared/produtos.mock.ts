@@ -48,14 +48,6 @@ export var produtosMock = [
         estoque: 4
     },
     {
-        id: '7',
-        nome: 'Geladeira Consul Frost Free Duplex 386 litros com Altura Flex cor  Inox  CRM44AK',
-        valor: 2729.00,
-        urlImagem: "https://consul.vtexassets.com/arquivos/ids/250371-800-800?v=638672107704970000&width=800&height=800&aspect=true",
-        descricao: 'A Geladeira Consul Frost Free Duplex 386 litros com Altura Flex tem o design moderno que combina com a sua cozinha! Ela vem Altura Flex, que permite ajustar as prateleiras em até 4 níveis diferentes, cabe da jarra a melancia, além de possuir um freezer espaçoso para guardar todos os congelados, sem necessidade de malabarismos. A Geladeira também conta com Iluminação em LED, Função Turbo, Forminhas de Gelo e Porta Ovos. Ahhh!! Bem pensado.',
-        estoque: 4
-    },
-    {
         id: '8',
         nome: 'Cooktop 5 Bocas Mondial a Gás GLP Preto - CTG-02',
         valor: 460.79,
