@@ -138,8 +138,8 @@ export class ViewProdutosComponent implements OnInit {
 
   public removerFiltro(filtro: Filtro): void {
     const index = this.filtros.findIndex((filtroLista) => {
-      const valorIgual = filtroLista.valor != filtro.valor;
-      const tipoIgual = filtroLista.tipoFiltro != filtro.tipoFiltro;
+      const valorIgual = filtroLista.valor == filtro.valor;
+      const tipoIgual = filtroLista.tipoFiltro == filtro.tipoFiltro;
       return valorIgual && tipoIgual;
     });
     this.filtros.splice(index, 1);
