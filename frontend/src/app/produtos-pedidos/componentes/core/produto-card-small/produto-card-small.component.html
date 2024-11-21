@@ -1,10 +1,17 @@
 <div class="card-produto-small" @blurAnimation>
-  <img class="imagem" [src]="produtoAtendimento.produto.urlImagem" alt="">
+  <img
+    (click)="emitirEventoAbrirDialogProduto(this.produtoAtendimento.produto)"
+    class="imagem"
+    [src]="produtoAtendimento.produto.urlImagem"
+    alt=""
+  />
   <div class="content">
     <div class="info">
       <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
       <div class="valor-estoque">
-        <p class="info-valor">R$ {{ produtoAtendimento.produto.valor | number: '1.2-2' }}</p>
+        <p class="info-valor">
+          R$ {{ produtoAtendimento.produto.valor | number : "1.2-2" }}
+        </p>
         <p class="info-estoque">
           Estoque: {{ produtoAtendimento.produto.estoque }}
         </p>

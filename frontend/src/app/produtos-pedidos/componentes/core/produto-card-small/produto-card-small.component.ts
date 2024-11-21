@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProdutoAtendimento } from '../../../../shared/types/types';
+import { Produto, ProdutoAtendimento } from '../../../../shared/types/types';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 import { blurAnimation } from '../../../../animations';
 
@@ -34,5 +34,12 @@ export class ProdutoCardSmallComponent {
     EventEmitterService.get('eventoQuantidadeProdutoAlterada').emit(
       this.produtoAtendimento
     );
+  }
+
+  public emitirEventoAbrirDialogProduto(produto: Produto): void {
+    EventEmitterService.get('eventoAbrirDialogProduto').emit({
+      produto: produto,
+      mostrarBotaoAdd: false
+    });
   }
 }

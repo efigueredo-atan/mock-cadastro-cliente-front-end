@@ -56,8 +56,11 @@
     </div>
   </form>
   <div class="produtos-box" *ngIf="produtosFiltrados$ | async as produtos">
-    <h1>Mais vendidos</h1>
-    <div class="produtos-table">
+    <div *ngIf="produtos.length == 0" class="sem-produtos">
+      <p><i class="pi pi-search"></i>Nenhum produto encontrado</p>
+    </div>
+    <h1 *ngIf="produtos.length > 0">Mais vendidos</h1>
+    <div *ngIf="produtos.length > 0" class="produtos-table">
       <app-produto-card
         *ngFor="let produto of produtos"
         [produto]="produto"

@@ -9,14 +9,13 @@
     </span> -->
   </div>
   <div
-    (click)="emitirEventoAbrirDialogProduto(this.produto)"
     class="informacoes"
   >
     <p class="nome-produto">{{ produto.nome }}</p>
     <p *ngIf="!small" class="valor-produto">R$ {{ produto.valor | number: '1.2-2' }}</p>
     <div *ngIf="small" class="valor-botao-box">
       <p class="valor-produto">R$ {{ produto.valor }}</p>
-      <p-button size="small" icon="pi pi-shopping-cart" />
+      <p-button (onClick)="emitirEventoAdicionarProdutoAoAtendimentoFecharDialog()" size="small" icon="pi pi-shopping-cart" />
     </div>
   </div>
   <div *ngIf="!small" class="buttons">

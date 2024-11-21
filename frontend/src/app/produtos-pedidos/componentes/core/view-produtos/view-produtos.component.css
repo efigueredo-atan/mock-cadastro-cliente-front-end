@@ -1,5 +1,5 @@
 .produtos-view {
-  min-height: 100vh;
+  height: 100%;
   box-shadow: var(--box-shadow-card);
   border-radius: 4px;
   display: flex;
@@ -50,7 +50,8 @@
 }
 
 .produtos-box {
-    padding: 1.5em;
+  height: 100%;
+  padding: 1.5em;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -61,5 +62,36 @@
 }
 
 .entry {
-    display: flex;
+  display: flex;
+}
+
+.sem-produtos {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4em 2em;
+}
+
+.sem-produtos p {
+  text-align: center;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 32px;
+  font-weight: 700;
+  opacity: 0.5;
+}
+
+.sem-produtos i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  font-size: 64px;
+  font-weight: 700;
 }

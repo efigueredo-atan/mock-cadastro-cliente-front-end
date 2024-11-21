@@ -128,7 +128,7 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
 
   private adicionarProdutoAoAtendimento(produto: Produto): void {
     if(!this.produtoExisteNoAtendimento(produto)) {
-      this.atendimento.produtos.push({
+      this.atendimento.produtos.unshift({
         produto: produto,
         qtdAtendimento: 1,
       });

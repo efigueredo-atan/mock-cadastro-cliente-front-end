@@ -14,7 +14,10 @@ export class ProdutoCardComponent {
   @Input() public small: boolean = false;
 
   public emitirEventoAbrirDialogProduto(produto: Produto): void {
-    EventEmitterService.get('eventoAbrirDialogProduto').emit(produto);
+    EventEmitterService.get('eventoAbrirDialogProduto').emit({
+      produto: produto,
+      mostrarBotaoAdd: true
+    })
   }
 
   public emitirEventoAdicionarProdutoAoAtendimento(): void {
@@ -22,4 +25,13 @@ export class ProdutoCardComponent {
       this.produto
     );
   }
+
+  public emitirEventoAdicionarProdutoAoAtendimentoFecharDialog(): void {
+    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
+      this.produto
+    );
+    EventEmitterService.get('eventoFecharDialog').emit(
+      this.produto
+    );
+  } 
 }
