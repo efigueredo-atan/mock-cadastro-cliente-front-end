@@ -32,6 +32,7 @@ export class StepEnderecosClienteComponent implements Step {
     enderecos: [],
     funcionario: null,
     ativo: null,
+    enderecoSelecionado: null
   };
   // Inserir input no html apos alteração
   // public cliente = cliente;

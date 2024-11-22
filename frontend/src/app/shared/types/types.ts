@@ -22,6 +22,7 @@ export interface Cliente {
   enderecos: Endereco[] | null;
   funcionario: boolean | null;
   ativo: boolean | null;
+  enderecoSelecionado: Endereco | null;
 }
 
 export interface Endereco {
@@ -107,11 +108,29 @@ export interface Produto {
   valor: number;
   estoque: number;
   urlImagem: string;
+  inseridoNoAtendimento: boolean;
+  departamento: Departamento;
+  estoquesProduto: Estoque[]
 }
 
 export interface ProdutoAtendimento {
-  produto: Produto,
-  qtdAtendimento: number
+  produto: Produto;
+  qtdAtendimento: number;
+  garantiaEstendida: boolean;
+  tipoRetirada: TipoRetirada;
+  estoque: Estoque;
+  frete: number;
+  montagem: boolean;
+}
+
+export interface Estoque {
+  nome: string,
+  quantidade: number;
+}
+
+export enum TipoRetirada {
+  ENTREGA = 'Entrega',
+  RETIRAR_NA_LOJA = 'Retirar na loja'
 }
 
 export interface Atendimento {
@@ -125,4 +144,32 @@ export interface Atendimento {
   produtos: ProdutoAtendimento[];
   qtdItens: number;
   qtdProdutos: number;
+}
+
+export enum Departamento {
+  INFORMATICA = "Informática",
+  ESPUMA = 'Espuma',
+  ANTENA = 'Antena',
+  ELETRODOMESTICOS = 'Eletrodomésticos',
+  ELETROPORTATEIS = 'Eletroportáteis',
+  MOVEIS = 'Móveis',
+  DECORACAO = 'Decoração',
+  UTILIDADES = 'Utilidades',
+  SAUDE = 'Saúde',
+  INFANTIL = 'Infantil',
+  GAMER = 'Gamer'
+}
+
+export enum TipoFiltro {
+  DEPARTAMENTO = 'Departamento',
+  LINHA = 'Linha',
+  GRUPO = 'Grupo',
+  SUBGRUPO = 'Subgrupo',
+  CARACTERISTICAS = 'Características'
+
+}
+
+export interface Filtro {
+  tipoFiltro: TipoFiltro,
+  valor: string; 
 }

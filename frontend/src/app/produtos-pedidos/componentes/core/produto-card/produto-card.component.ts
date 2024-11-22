@@ -7,7 +7,7 @@ import { fadeInAnimation } from '../../../../animations';
   selector: 'app-produto-card',
   templateUrl: './produto-card.component.html',
   styleUrl: './produto-card.component.css',
-  animations: [fadeInAnimation]
+  animations: [fadeInAnimation],
 })
 export class ProdutoCardComponent {
   @Input() public produto: Produto;
@@ -16,22 +16,18 @@ export class ProdutoCardComponent {
   public emitirEventoAbrirDialogProduto(produto: Produto): void {
     EventEmitterService.get('eventoAbrirDialogProduto').emit({
       produto: produto,
-      mostrarBotaoAdd: true
-    })
+      mostrarBotaoAdd: true,
+    });
   }
 
-  public emitirEventoAdicionarProdutoAoAtendimento(): void {
-    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
-      this.produto
-    );
+  public emitirEventoAbrirDialogAdicionarProdutoAoAtendimento(): void {
+    EventEmitterService.get(
+      'eventoAbrirDialogAdicionarProdutoAtendimento'
+    ).emit(this.produto);
   }
 
   public emitirEventoAdicionarProdutoAoAtendimentoFecharDialog(): void {
-    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
-      this.produto
-    );
-    EventEmitterService.get('eventoFecharDialog').emit(
-      this.produto
-    );
-  } 
+    this.emitirEventoAbrirDialogAdicionarProdutoAoAtendimento();
+    EventEmitterService.get('eventoFecharDialog').emit(this.produto);
+  }
 }

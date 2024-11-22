@@ -27,6 +27,7 @@ export class CadastroClienteComponent implements OnInit {
     enderecos: [],
     funcionario: null,
     ativo: null,
+    enderecoSelecionado: null,
   };
   public stepAtivo: number = 0;
 

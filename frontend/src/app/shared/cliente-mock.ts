@@ -26,6 +26,19 @@ export let cliente: Cliente = {
     telefone2: '(87) 99999-9999',
     email: 'email@atan.com.br',
   },
+  enderecoSelecionado: {
+    id: '1',
+    cep: '56640000',
+    rua: 'Rua Ademar Bezerra de Lima',
+    numero: 2020,
+    complemento: 'Casa',
+    uf: 'PE',
+    cidade: 'Custódia',
+    bairro: 'Rodoviária',
+    referencia: 'Próximo a estação de energia',
+    tipoEndereco: tiposEnderecosMock[0],
+    principal: true
+  },
   enderecos: [
     {
       id: '1',

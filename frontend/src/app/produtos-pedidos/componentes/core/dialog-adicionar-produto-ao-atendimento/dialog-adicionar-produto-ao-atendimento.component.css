@@ -1,0 +1,145 @@
+.dialog-adicionar-produto-atendimento {
+  padding: 2em;
+}
+
+.step-estoque {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 1em;
+}
+
+.buttons {
+  padding: 1em;
+  border-top: var(--border);
+}
+
+.selecionar-estoque {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.estoque {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  cursor: pointer;
+  border: var(--border);
+  border-radius: 4px;
+  padding: 1em;
+  transition: 0.1s;
+  font-weight: 700;
+}
+
+.estoque:hover {
+  border-color: var(--bg1);
+}
+
+.localicazacao {
+  font-weight: 700;
+}
+
+.selecionado {
+  border: solid 1px var(--bg1);
+  color: var(--text-color);
+  background-color: var(--bg1);
+}
+
+.buttons-estoque {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::ng-deep .buttons .p-button {
+  background-color: var(--bg1);
+  color: var(--text-color);
+}
+
+.retirada {
+  padding: 1em;
+}
+
+.selecionar-retirada {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.buttons-retirada {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+::ng-deep .p-dialog-draggable .p-dialog-header {
+  border-bottom: var(--border);
+}
+
+.frete {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.frete-titulo {
+border: var(--border);
+  background-color: var(--branco-fantasma);
+  padding: 0.5em 1em;
+  border-radius: 4px 4px 0 0;
+  font-weight: 700;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.frete-valor {
+    font-weight: 700;
+  padding: 0.5em 1em;
+  border-radius: 0 0 4px 4px;
+  border: var(--border);
+  border-top: none;
+}
+
+.garantia {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.buttons-garantia {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+.stepper {
+    display: flex;
+    gap: 0.5em;
+    color: var(--text-color2);
+    opacity: 1;
+    align-items: center;
+}
+
+.icone-stepper {
+    background-color: var(--bg1);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepper h3 {
+    margin-bottom: 5px;
+}

@@ -145,6 +145,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
       incricaoEstadual: null,
       nomeFantasia: resposta.fantasia,
       dataFundacao: resposta.abertura,
+      enderecoSelecionado: null,
       enderecos: [
         {
           id: uuidv4(),

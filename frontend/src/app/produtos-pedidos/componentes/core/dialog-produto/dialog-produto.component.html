@@ -48,8 +48,8 @@
     <div class="valor-actions">
       <p class="valor">R$ {{ produto.valor | number : "1.2-2" }}</p>
       <p-button
-      *ngIf="mostrarBotaoAdicionar"
-        (onClick)="emitirEventoAdicionarProdutoAoAtendimento()"
+        *ngIf="!produto.inseridoNoAtendimento"
+        (onClick)="emitirEventoAbrirDialogAdicionarProdutoAoAtendimento()"
         label="Adicionar produto ao pedido"
         size="small"
         icon="pi pi-shopping-cart"
