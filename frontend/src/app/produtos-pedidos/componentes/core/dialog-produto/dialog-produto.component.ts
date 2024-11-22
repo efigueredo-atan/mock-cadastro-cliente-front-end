@@ -62,9 +62,8 @@ export class DialogProdutoComponent implements OnInit {
     });
   }
 
-  public emitirEventoAdicionarProdutoAoAtendimento(): void {
-    this.produto.inseridoNoAtendimento = true;
-    EventEmitterService.get('eventoAdicionarProdutoAtendimento').emit(
+  public emitirEventoAbrirDialogAdicionarProdutoAoAtendimento(): void {
+    EventEmitterService.get('eventoAbrirDialogAdicionarProdutoAtendimento').emit(
       this.produto
     );
     this.fecharDialog();

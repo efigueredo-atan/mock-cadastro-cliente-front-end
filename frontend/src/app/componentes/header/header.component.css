@@ -1,7 +1,7 @@
 header {
     background-color: var(--header-bg);
     position: fixed;
-    z-index: 10000;
+    z-index: 1101;
     width: 100vw;
 }
 

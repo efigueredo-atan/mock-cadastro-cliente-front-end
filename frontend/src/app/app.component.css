@@ -105,3 +105,7 @@
 ::ng-deep .p-dropdown-items .p-dropdown-item {
   border-radius: 4px;
 }
+
+::ng-deep .p-dialog {
+  z-index: 100000000;
+}

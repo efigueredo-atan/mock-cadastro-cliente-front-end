@@ -1,0 +1,144 @@
+<p-dialog
+  *ngIf="produto"
+  [header]="produto.nome"
+  [modal]="true"
+  [(visible)]="visivel"
+  [style]="{ width: '40%' }"
+>
+  <div class="dialog-adicionar-produto-atendimento">
+    <p-stepper [linear]="true" [(activeStep)]="step">
+      <p-stepperPanel header="Estoque">
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <div class="step-estoque">
+            <div class="selecionar-estoque">
+              <h1>Selecione o estoque</h1>
+              <div
+                [class]="
+                  estoqueSelecionado == estoque
+                    ? 'estoque selecionado'
+                    : 'estoque'
+                "
+                *ngFor="let estoque of produto.estoquesProduto"
+                (click)="selecionarEstoque(estoque)"
+              >
+                <p class="localicazacao">
+                  <i class="pi pi-map-marker"></i> {{ estoque.nome }}
+                </p>
+                <p>
+                  {{ estoque.quantidade }}
+                  {{ estoque.quantidade == 1 ? " unidade" : " unidades" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel header="Retirada">
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <form class="retirada" [formGroup]="formularioDialog">
+            <div class="selecionar-retirada">
+              <h1>Selecione a forma de retirada</h1>
+              <p-selectButton
+                [allowEmpty]="false"
+                [options]="tiposRetiradas"
+                formControlName="formaRetirada"
+                optionLabel="label"
+                optionValue="formaRetirada"
+              />
+              <div class="checkbox">
+                <p-checkbox
+                  formControlName="montagem"
+                  id="checkbox"
+                  [binary]="true"
+                  inputId="binary"
+                />
+                <label for="checkbox">Montagem</label>
+              </div>
+              <div
+                *ngIf="
+                  formularioDialog.get('formaRetirada')?.value == 'Entrega'
+                "
+                class="frete"
+              >
+                <p class="frete-titulo">
+                  <i class="pi pi-truck"></i>
+                  Frete para o endereço: {{ formatarEnderecoSelecionado() }}
+                </p>
+                <p class="frete-valor">R$ 50,00</p>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel header="Garantia">
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-index="index"
+        >
+          <form class="garantia" [formGroup]="formularioDialog">
+            <h1>Deseja incluir garantia extendida?</h1>
+            <div class="checkbox">
+              <p-checkbox
+                formControlName="garantiaEstendida"
+                id="garantiaEstendida"
+                [binary]="true"
+                inputId="binary"
+              />
+              <label for="garantiaEstendida">Garantia Estendida</label>
+            </div>
+          </form>
+        </ng-template>
+      </p-stepperPanel>
+    </p-stepper>
+  </div>
+  <div class="buttons">
+    <div *ngIf="step == 0" class="buttons-estoque">
+      <p-button
+        [disabled]="!estoqueSelecionado"
+        label="Avançar"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        (onClick)="avancarStep()"
+      />
+    </div>
+    <div *ngIf="step == 1" class="buttons-retirada">
+      <p-button
+        label="Voltar"
+        icon="pi pi-arrow-left"
+        iconPos="left"
+        (onClick)="voltarStep()"
+      />
+      <p-button
+        [disabled]="formularioDialog.get('formaRetirada').invalid"
+        label="Avançar"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        (onClick)="avancarStep()"
+      />
+    </div>
+    <div *ngIf="step == 2" class="buttons-garantia">
+      <p-button
+        label="Voltar"
+        icon="pi pi-arrow-left"
+        iconPos="left"
+        (onClick)="voltarStep()"
+      />
+      <p-button
+        label="Adicionar produto"
+        icon="pi pi-cart-plus"
+        iconPos="right"
+        (onClick)="adicionarProdutoAoAtendimento()"
+      />
+    </div>
+  </div>
+</p-dialog>

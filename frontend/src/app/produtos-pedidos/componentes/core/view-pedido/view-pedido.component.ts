@@ -4,9 +4,7 @@ import {
   Produto,
   ProdutoAtendimento,
 } from '../../../../shared/types/types';
-import { produtosMock } from '../../../../shared/produtos.mock';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
-import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 
 @Component({
   selector: 'app-view-pedido',
@@ -32,9 +30,9 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
     { icon: 'pi pi-percentage', justify: 'Right' },
   ];
 
-  public $eventoExcluirProdutoAtendimento: EventEmitter<ProdutoAtendimento>;
-  public $eventoAdicionarProdutoAtendimento: EventEmitter<Produto>;
-  public $eventoQuantidadeProdutoAlterada: EventEmitter<ProdutoAtendimento>;
+  public eventoExcluirProdutoAtendimento$: EventEmitter<ProdutoAtendimento>;
+  public eventoAdicionarProdutoAtendimento$: EventEmitter<ProdutoAtendimento>;
+  public eventoQuantidadeProdutoAlterada$: EventEmitter<ProdutoAtendimento>;
 
   public ngOnInit(): void {
     this.obterEventoExcluirProdutoDoAtendimento();
@@ -46,41 +44,43 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.$eventoExcluirProdutoAtendimento.unsubscribe();
+    this.eventoExcluirProdutoAtendimento$.unsubscribe();
+    this.eventoAdicionarProdutoAtendimento$.unsubscribe();
+    this.eventoQuantidadeProdutoAlterada$.unsubscribe();
   }
 
   public obterEventoExcluirProdutoDoAtendimento(): void {
-    this.$eventoExcluirProdutoAtendimento = EventEmitterService.get(
+    this.eventoExcluirProdutoAtendimento$ = EventEmitterService.get(
       'eventoExcluirProdutoAtendimento'
     );
   }
 
   public obterEventoAdicionarProdutoAoAtendimento(): void {
-    this.$eventoAdicionarProdutoAtendimento = EventEmitterService.get(
+    this.eventoAdicionarProdutoAtendimento$ = EventEmitterService.get(
       'eventoAdicionarProdutoAtendimento'
     );
   }
 
   public obterEventoQuantidadeProdutoAlterada(): void {
-    this.$eventoQuantidadeProdutoAlterada = EventEmitterService.get(
+    this.eventoQuantidadeProdutoAlterada$ = EventEmitterService.get(
       'eventoQuantidadeProdutoAlterada'
     );
   }
 
   public escutarEventoExcluirProdutoDoAtendimento(): void {
-    this.$eventoExcluirProdutoAtendimento.subscribe((produtoAtendimento) => {
+    this.eventoExcluirProdutoAtendimento$.subscribe((produtoAtendimento) => {
       this.excluirProdutoDoAtendimento(produtoAtendimento);
     });
   }
 
   public escutarEventoAdicionarProdutoAoAtendimento(): void {
-    this.$eventoAdicionarProdutoAtendimento.subscribe((produto) => {
-      this.adicionarProdutoAoAtendimento(produto);
+    this.eventoAdicionarProdutoAtendimento$.subscribe((produtoAtendimento) => {
+      this.adicionarProdutoAoAtendimento(produtoAtendimento);
     });
   }
 
   public escutarEventoQuantidadeProdutoAlterada(): void {
-    this.$eventoQuantidadeProdutoAlterada.subscribe((produtoAtendimento) => {
+    this.eventoQuantidadeProdutoAlterada$.subscribe((produtoAtendimento) => {
       if (this.produtoExisteNoAtendimento(produtoAtendimento.produto)) {
         this.recalcularValorTotalSemDescontos();
         this.recalcularQuantidadeItens();
@@ -90,17 +90,18 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
 
   private recalcularValorTotalSemDescontos(): void {
     var valorTotalSemDescontos = 0;
-    this.atendimento.produtos.map(produtoAtendimento => {
-      valorTotalSemDescontos+= (produtoAtendimento.qtdAtendimento * produtoAtendimento.produto.valor) 
-    })
+    this.atendimento.produtos.map((produtoAtendimento) => {
+      valorTotalSemDescontos +=
+        produtoAtendimento.qtdAtendimento * produtoAtendimento.produto.valor;
+    });
     this.atendimento.valorTotalSemDesconto = valorTotalSemDescontos;
   }
 
   private recalcularQuantidadeItens(): void {
     var qtdItens = 0;
-    this.atendimento.produtos.map(produtoAtendimento => {
+    this.atendimento.produtos.map((produtoAtendimento) => {
       qtdItens += produtoAtendimento.qtdAtendimento;
-    })
+    });
     this.atendimento.qtdItens = qtdItens;
   }
 
@@ -122,28 +123,32 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
       this.atendimento.qtdItens -= produto.qtdAtendimento;
       this.atendimento.valorTotalSemDesconto -=
         produto.qtdAtendimento * produto.produto.valor;
-        this.emitirEventoProdutoExcluidoDoAtendimento(produto.produto);
+      this.emitirEventoProdutoExcluidoDoAtendimento(produto.produto);
     }
   }
 
-  private adicionarProdutoAoAtendimento(produto: Produto): void {
-    if(!this.produtoExisteNoAtendimento(produto)) {
-      this.atendimento.produtos.unshift({
-        produto: produto,
-        qtdAtendimento: 1,
-      });
+  private adicionarProdutoAoAtendimento(
+    produtoAtendimento: ProdutoAtendimento
+  ): void {
+    if (!this.produtoExisteNoAtendimento(produtoAtendimento.produto)) {
+      this.atendimento.produtos.unshift(produtoAtendimento);
       this.atendimento.qtdItens++;
       this.atendimento.qtdProdutos++;
-      this.atendimento.valorTotalSemDesconto += produto.valor;
-      this.emitirEventoProdutoAdicionadoAoAtendimento(produto);
+      this.atendimento.valorTotalSemDesconto +=
+        produtoAtendimento.produto.valor;
+      this.emitirEventoProdutoAdicionadoAoAtendimento(
+        produtoAtendimento.produto
+      );
     }
   }
 
   private emitirEventoProdutoAdicionadoAoAtendimento(produto: Produto): void {
-    EventEmitterService.get("eventoProdutoAdicionadoAoAtendimento").emit(produto);
+    EventEmitterService.get('eventoProdutoAdicionadoAoAtendimento').emit(
+      produto
+    );
   }
 
   private emitirEventoProdutoExcluidoDoAtendimento(produto: Produto): void {
-    EventEmitterService.get("eventoProdutoRemovidoDoAtendimento").emit(produto);
+    EventEmitterService.get('eventoProdutoRemovidoDoAtendimento').emit(produto);
   }
 }

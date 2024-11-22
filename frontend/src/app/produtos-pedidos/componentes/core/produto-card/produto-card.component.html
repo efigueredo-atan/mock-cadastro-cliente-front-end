@@ -19,6 +19,6 @@
     </div>
   </div>
   <div *ngIf="!small" class="buttons">
-    <p-button [disabled]="produto.inseridoNoAtendimento" (onClick)="emitirEventoAdicionarProdutoAoAtendimento()" label="Adicionar" size="small" icon="pi pi-shopping-cart" />
+    <p-button [disabled]="produto.inseridoNoAtendimento" (onClick)="emitirEventoAbrirDialogAdicionarProdutoAoAtendimento()" label="Adicionar" size="small" icon="pi pi-shopping-cart" />
   </div>
 </div>

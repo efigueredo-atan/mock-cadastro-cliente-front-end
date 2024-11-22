@@ -23,6 +23,9 @@ import { DialogProdutoComponent } from './componentes/core/dialog-produto/dialog
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'primeng/carousel';
 import { ChipModule } from 'primeng/chip';
+import { DialogAdicionarProdutoAoAtendimentoComponent } from './componentes/core/dialog-adicionar-produto-ao-atendimento/dialog-adicionar-produto-ao-atendimento.component';
+import { StepperModule } from 'primeng/stepper';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { ChipModule } from 'primeng/chip';
     ProdutoCardComponent,
     ProdutoCardSmallComponent,
     DialogProdutoComponent,
+    DialogAdicionarProdutoAoAtendimentoComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +55,9 @@ import { ChipModule } from 'primeng/chip';
     InputNumberModule,
     DialogModule,
     CarouselModule,
-    ChipModule
+    ChipModule,
+    StepperModule,
+    CheckboxModule
   ],
 })
 export class ProdutosPedidosModule {}
