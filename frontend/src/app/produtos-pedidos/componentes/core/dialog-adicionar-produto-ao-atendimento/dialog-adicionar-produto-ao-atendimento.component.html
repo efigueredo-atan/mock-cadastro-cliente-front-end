@@ -105,11 +105,12 @@
               </div>
               <div class="total-servicos">
                 <h3>
-                  Total serviços: R$ 
+                  Total serviços: R$
                   {{
                     (formularioDialog.get("montagem")?.value ? 34 : 0) +
-                      (formularioDialog.get("formaRetirada")?.value == "Entrega" ? 50 : 0)
-                      | number : "1.2-2"
+                      (formularioDialog.get("formaRetirada")?.value == "Entrega"
+                        ? 50
+                        : 0) | number : "1.2-2"
                   }}
                 </h3>
               </div>
@@ -133,15 +134,28 @@
           let-index="index"
         >
           <form class="garantia" [formGroup]="formularioDialog">
-            <h1>Deseja incluir garantia extendida?</h1>
-            <div class="checkbox">
-              <p-checkbox
-                formControlName="garantiaEstendida"
-                id="garantiaEstendida"
-                [binary]="true"
-                inputId="binary"
-              />
-              <label for="garantiaEstendida">Garantia Estendida</label>
+            <h1>Selecione a garantia estendida</h1>
+            <div class="grid-garantia-estendida">
+              <p-table
+                selectionMode="single"
+                [(selection)]="garantiaEstendidaSelecionada"
+                [value]="garantiasExtendidas"
+                styleClass="p-datatable-gridlines"
+                [tableStyle]="{ 'min-width': '100%' }"
+              >
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Tempo</th>
+                    <th>Valor</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-garantia>
+                  <tr [pSelectableRow]="garantia">
+                    <td>{{ garantia.tempo }}</td>
+                    <td>R$ {{ garantia.valor | number : "1.2-2" }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
             </div>
           </form>
         </ng-template>

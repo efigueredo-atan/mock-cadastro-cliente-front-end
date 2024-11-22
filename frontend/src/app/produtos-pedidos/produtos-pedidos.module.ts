@@ -27,6 +27,7 @@ import { DialogAdicionarProdutoAoAtendimentoComponent } from './componentes/core
 import { StepperModule } from 'primeng/stepper';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     ChipModule,
     StepperModule,
     CheckboxModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    TableModule
   ],
 })
 export class ProdutosPedidosModule {}

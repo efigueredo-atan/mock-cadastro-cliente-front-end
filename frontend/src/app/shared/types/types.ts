@@ -101,6 +101,11 @@ export interface ViaCepResponse {
   erro: string;
 }
 
+export interface GarantiaEstendida {
+  tempo: string; 
+  valor: number;
+}
+
 export interface Produto {
   id: string;
   nome: string;

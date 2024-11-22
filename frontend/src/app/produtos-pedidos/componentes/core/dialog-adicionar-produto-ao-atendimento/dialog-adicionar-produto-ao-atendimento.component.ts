@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import {
   Cliente,
   Estoque,
+  GarantiaEstendida,
   Produto,
   ProdutoAtendimento,
   TipoRetirada,
@@ -19,12 +20,31 @@ export class DialogAdicionarProdutoAoAtendimentoComponent
   implements OnInit, OnDestroy
 {
   public cliente: Cliente = cliente;
+  public garantiasExtendidas: GarantiaEstendida[] = [
+    {
+      tempo: '1 ano',
+      valor: 50,
+    },
+    {
+      tempo: '2 anos',
+      valor: 90,
+    },
+    {
+      tempo: '3 anos',
+      valor: 130,
+    },
+    {
+      tempo: '4 anos',
+      valor: 160,
+    },
+  ];
   public step: number = 1;
   public produto: Produto;
   public visivel: boolean = false;
   public eventoFecharDialog$: EventEmitter<Produto>;
   public eventoEditarProdutoDoPedido$: EventEmitter<ProdutoAtendimento>;
   public estoqueSelecionado: Estoque;
+  public garantiaEstendidaSelecionada: GarantiaEstendida;
   public tiposRetiradas: any[] = [
     { label: TipoRetirada.ENTREGA, formaRetirada: TipoRetirada.ENTREGA },
     {
@@ -52,7 +72,9 @@ export class DialogAdicionarProdutoAoAtendimentoComponent
 
   public ngOnDestroy(): void {
     this.eventoFecharDialog$ ? this.eventoFecharDialog$.unsubscribe() : null;
-    this.eventoEditarProdutoDoPedido$? this.eventoEditarProdutoDoPedido$.unsubscribe() : null;
+    this.eventoEditarProdutoDoPedido$
+      ? this.eventoEditarProdutoDoPedido$.unsubscribe()
+      : null;
   }
 
   public adicionarProdutoAoAtendimento(): void {
