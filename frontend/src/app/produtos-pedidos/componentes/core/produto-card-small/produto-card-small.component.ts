@@ -43,4 +43,10 @@ export class ProdutoCardSmallComponent {
       mostrarBotaoAdd: false
     });
   }
+
+  public emitirEventoEditarProdutoDoPedido(): void {
+    EventEmitterService.get('eventoEditarProdutoDoPedido').emit(
+      this.produtoAtendimento
+    );
+  }
 }

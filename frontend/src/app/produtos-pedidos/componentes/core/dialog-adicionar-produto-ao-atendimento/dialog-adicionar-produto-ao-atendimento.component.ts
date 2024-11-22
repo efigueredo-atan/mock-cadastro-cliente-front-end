@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import {
   Cliente,
   Estoque,
@@ -15,12 +15,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './dialog-adicionar-produto-ao-atendimento.component.html',
   styleUrl: './dialog-adicionar-produto-ao-atendimento.component.css',
 })
-export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
+export class DialogAdicionarProdutoAoAtendimentoComponent
+  implements OnInit, OnDestroy
+{
   public cliente: Cliente = cliente;
-  public step: number = 0;
+  public step: number = 1;
   public produto: Produto;
   public visivel: boolean = false;
   public eventoFecharDialog$: EventEmitter<Produto>;
+  public eventoEditarProdutoDoPedido$: EventEmitter<ProdutoAtendimento>;
   public estoqueSelecionado: Estoque;
   public tiposRetiradas: any[] = [
     { label: TipoRetirada.ENTREGA, formaRetirada: TipoRetirada.ENTREGA },
@@ -34,15 +37,22 @@ export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
   constructor(private readonly formBuilder: FormBuilder) {
     this.formularioDialog = this.formBuilder.group({
       formaRetirada: [null, Validators.required],
-      montagem: [false],
+      montagem: ['Sem_montagem'],
       garantiaEstendida: [false],
     });
   }
 
   public ngOnInit(): void {
+    this.obterEventoEditarProdutoDoPedido();
+    this.escutarEventoEditarProdutoDoPedido();
     this.escutarEventoAbrirDialogProduto();
     this.obterEventoFecharDialog();
     this.escutarEventoFecharDialog();
+  }
+
+  public ngOnDestroy(): void {
+    this.eventoFecharDialog$ ? this.eventoFecharDialog$.unsubscribe() : null;
+    this.eventoEditarProdutoDoPedido$? this.eventoEditarProdutoDoPedido$.unsubscribe() : null;
   }
 
   public adicionarProdutoAoAtendimento(): void {
@@ -50,11 +60,12 @@ export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
       produto: this.produto,
       qtdAtendimento: 1,
       garantiaEstendida: this.formularioDialog.get('garantiaEstendida')?.value,
-      tipoRetirada: this.formularioDialog.get('formaRetirada').value as TipoRetirada,
+      tipoRetirada: this.formularioDialog.get('formaRetirada')
+        .value as TipoRetirada,
       estoque: this.estoqueSelecionado,
-      montagem: this.formularioDialog.get("montagem")?.value,
-      frete: 50
-    }
+      montagem: this.formularioDialog.get('montagem')?.value,
+      frete: 50,
+    };
     this.emitirEventoAdicionarProdutoAoAtendimento(produtoAtendimento);
   }
 
@@ -65,8 +76,21 @@ export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
       this.produto = produto;
       this.visivel = true;
       this.step = 0;
-      this.formularioDialog.reset()
+      this.formularioDialog.reset();
       this.estoqueSelecionado = null;
+    });
+  }
+
+  private obterEventoEditarProdutoDoPedido(): void {
+    this.eventoEditarProdutoDoPedido$ = EventEmitterService.get(
+      'eventoEditarProdutoDoPedido'
+    );
+  }
+
+  private escutarEventoEditarProdutoDoPedido(): void {
+    this.eventoEditarProdutoDoPedido$.subscribe((produtoAtendimento) => {
+      console.log('editar');
+      console.log(produtoAtendimento);
     });
   }
 

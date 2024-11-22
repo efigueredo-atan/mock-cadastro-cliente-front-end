@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Cliente, Endereco } from '../../../../shared/types/types';
 import { cliente } from '../../../../shared/cliente-mock';
@@ -13,7 +13,7 @@ import { Step } from '../step.inteface';
   templateUrl: './step-enderecos-cliente.component.html',
   styleUrl: './step-enderecos-cliente.component.css',
 })
-export class StepEnderecosClienteComponent implements Step {
+export class StepEnderecosClienteComponent implements Step, OnDestroy, OnInit {
   @Input() public cliente: Cliente = {
     nome: null,
     nomeFantasia: null,
@@ -42,6 +42,7 @@ export class StepEnderecosClienteComponent implements Step {
   public modalAdicionarEnderecoVisivel = false;
   public modalEditarEnderecoVisivel = false;
   public formularioEndereco: FormGroup;
+  public eventoTrocarStep$: EventEmitter<any>
 
   constructor(
     private readonly messageService: MessageService,
@@ -52,11 +53,23 @@ export class StepEnderecosClienteComponent implements Step {
     this.mostrarMensagemEndereçoRegistrado();
     this.ordenarEnderecosPorPrincipal();
     this.definirEnderecoPrincipalComoSelecionado();
+  }
+
+  public ngOnInit(): void {
+    this.obterEventoTrocarStep();
     this.escutarEventoTrocarStep();
   }
 
+  public ngOnDestroy(): void {
+    this.eventoTrocarStep$ ? this.eventoTrocarStep$.unsubscribe() : null;
+  }
+
+  public obterEventoTrocarStep(): void {
+    this.eventoTrocarStep$ = EventEmitterService.get('eventoTrocarStep');
+  }
+
   public escutarEventoTrocarStep(): void {
-    EventEmitterService.get('eventoTrocarStep').subscribe((resposta) => {
+    this.eventoTrocarStep$.subscribe((resposta) => {
       if (resposta.index == this.indexStep) {
         
       }

@@ -44,9 +44,9 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.eventoExcluirProdutoAtendimento$.unsubscribe();
-    this.eventoAdicionarProdutoAtendimento$.unsubscribe();
-    this.eventoQuantidadeProdutoAlterada$.unsubscribe();
+    this.eventoExcluirProdutoAtendimento$ ? this.eventoExcluirProdutoAtendimento$.unsubscribe() : null;
+    this.eventoAdicionarProdutoAtendimento$ ? this.eventoAdicionarProdutoAtendimento$.unsubscribe() : null;
+    this.eventoQuantidadeProdutoAlterada$ ? this.eventoQuantidadeProdutoAlterada$.unsubscribe() : null;
   }
 
   public obterEventoExcluirProdutoDoAtendimento(): void {
