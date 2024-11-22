@@ -7,7 +7,16 @@
 >
   <div class="dialog-adicionar-produto-atendimento">
     <p-stepper [linear]="true" [(activeStep)]="step">
-      <p-stepperPanel header="Estoque">
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span *ngIf="index == step" class="icone-stepper">1</span>
+            <span *ngIf="index < step" class="icone-stepper"
+              ><i class="pi pi-check"></i
+            ></span>
+            <h3>Estoque</h3>
+          </div>
+        </ng-template>
         <ng-template
           pTemplate="content"
           let-nextCallback="nextCallback"
@@ -37,7 +46,16 @@
           </div>
         </ng-template>
       </p-stepperPanel>
-      <p-stepperPanel header="Retirada">
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span *ngIf="index == step" class="icone-stepper">2</span>
+            <span *ngIf="index < step" class="icone-stepper"
+              ><i class="pi pi-check"></i
+            ></span>
+            <h3>Retirada</h3>
+          </div>
+        </ng-template>
         <ng-template
           pTemplate="content"
           let-prevCallback="prevCallback"
@@ -79,10 +97,19 @@
           </form>
         </ng-template>
       </p-stepperPanel>
-      <p-stepperPanel header="Garantia">
+      <p-stepperPanel>
+        <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+          <div class="stepper">
+            <span *ngIf="index == step" class="icone-stepper">3</span>
+            <span *ngIf="index < step" class="icone-stepper"
+              ><i class="pi pi-check"></i
+            ></span>
+            <h3>Garantia</h3>
+          </div>
+        </ng-template>
         <ng-template
           pTemplate="content"
-          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
           let-index="index"
         >
           <form class="garantia" [formGroup]="formularioDialog">

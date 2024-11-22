@@ -64,6 +64,9 @@ export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
     ).subscribe((produto) => {
       this.produto = produto;
       this.visivel = true;
+      this.step = 0;
+      this.formularioDialog.reset()
+      this.estoqueSelecionado = null;
     });
   }
 
