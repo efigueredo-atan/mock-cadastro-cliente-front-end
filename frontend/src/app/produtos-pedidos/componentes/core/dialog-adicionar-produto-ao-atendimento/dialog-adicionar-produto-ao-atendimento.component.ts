@@ -57,8 +57,7 @@ export class DialogAdicionarProdutoAoAtendimentoComponent
   constructor(private readonly formBuilder: FormBuilder) {
     this.formularioDialog = this.formBuilder.group({
       formaRetirada: [null, Validators.required],
-      montagem: ['Sem_montagem'],
-      garantiaEstendida: [false],
+      montagem: ['Sem montagem'],
     });
   }
 
@@ -81,13 +80,15 @@ export class DialogAdicionarProdutoAoAtendimentoComponent
     const produtoAtendimento = {
       produto: this.produto,
       qtdAtendimento: 1,
-      garantiaEstendida: this.formularioDialog.get('garantiaEstendida')?.value,
+      garantiaEstendida: this.garantiaEstendidaSelecionada,
+      valorMontagem: 34,
       tipoRetirada: this.formularioDialog.get('formaRetirada')
         .value as TipoRetirada,
       estoque: this.estoqueSelecionado,
       montagem: this.formularioDialog.get('montagem')?.value,
       frete: 50,
     };
+    console.log(produtoAtendimento)
     this.emitirEventoAdicionarProdutoAoAtendimento(produtoAtendimento);
   }
 

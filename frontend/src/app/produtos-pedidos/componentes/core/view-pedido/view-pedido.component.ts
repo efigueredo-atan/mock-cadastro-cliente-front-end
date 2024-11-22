@@ -3,8 +3,10 @@ import {
   Atendimento,
   Produto,
   ProdutoAtendimento,
+  TipoRetirada,
 } from '../../../../shared/types/types';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
+import { produtosMock } from '../../../../shared/produtos.mock';
 
 @Component({
   selector: 'app-view-pedido',
@@ -20,7 +22,22 @@ export class ViewPedidoComponent implements OnInit, OnDestroy {
     descontoAtendimentoPorcentagem: 0,
     descontoDosProdutos: 0,
     descontoTotal: 0,
-    produtos: [],
+    produtos: [{
+      produto: produtosMock[0],
+      estoque: {
+        nome: 'Matriz - Custódia',
+        quantidade: 3
+      },
+      frete: 50,
+      garantiaEstendida: {
+        tempo: '1 ano',
+        valor: 50
+      },
+      montagem: true,
+      valorMontagem: 34,
+      qtdAtendimento: 1,
+      tipoRetirada: TipoRetirada.ENTREGA
+    }],
     qtdItens: 0,
     qtdProdutos: 0,
   };
