@@ -1,35 +1,43 @@
 <div class="card-produto-small" @blurAnimation>
-  <img
-    (click)="emitirEventoAbrirDialogProduto(this.produtoAtendimento.produto)"
-    class="imagem"
-    [src]="produtoAtendimento.produto.urlImagem"
-    alt=""
-  />
-  <div class="content">
-    <div class="info">
-      <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
-      <div class="valor-estoque">
-        <p class="info-valor">
-          R$ {{ produtoAtendimento.produto.valor | number : "1.2-2" }}
-        </p>
-        <p class="info-estoque">
-          Estoque: {{ produtoAtendimento.produto.estoque }}
-        </p>
+  <div class="card-info">
+    <img
+      (click)="emitirEventoAbrirDialogProduto(this.produtoAtendimento.produto)"
+      class="imagem"
+      [src]="produtoAtendimento.produto.urlImagem"
+      alt=""
+    />
+    <div class="content">
+      <div class="info">
+        <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
+        <div class="tags">
+          <p class="info-valor">
+            R$ {{ produtoAtendimento.produto.valor | number : "1.2-2" }}
+          </p>
+        </div>
       </div>
-    </div>
 
-    <div class="buttons">
-      <div class="controles-quantidade">
-        <p-button icon="pi pi-plus" (onClick)="aumentarQuantidadeItem()" />
-        <p class="quantidade">{{ produtoAtendimento.qtdAtendimento }}</p>
-        <p-button icon="pi pi-minus" (onClick)="diminuirQuantidadeItem()" />
-      </div>
-      <div class="acoes">
-        <p-button
-          icon="pi pi-trash"
-          (onClick)="emitirEventoExcluirProdutoDoAtendimento()"
-        />
+      <div class="buttons">
+        <div class="controles-quantidade">
+          <p-button icon="pi pi-plus" (onClick)="aumentarQuantidadeItem()" />
+          <p class="quantidade">{{ produtoAtendimento.qtdAtendimento }}</p>
+          <p-button icon="pi pi-minus" (onClick)="diminuirQuantidadeItem()" />
+        </div>
+        <div class="acoes">
+          <p-button
+            icon="pi pi-trash"
+            (onClick)="emitirEventoExcluirProdutoDoAtendimento()"
+          />
+        </div>
       </div>
     </div>
+  </div>
+  <div class="info-tags">
+    <p class="tag">
+      Loja: {{ produtoAtendimento.estoque.nome }} 
+    </p>
+    <p class="tag">{{ produtoAtendimento.tipoRetirada }}</p>
+    <p class="tag" *ngIf="produtoAtendimento.montagem">Montagem<i class="pi pi-check"></i></p>
+    <p class="tag" *ngIf="produtoAtendimento.garantiaEstendida">Garantia estendida<i class="pi pi-check"></i></p>
+    <p class="tag" *ngIf="produtoAtendimento.frete">Frete: R$ {{ produtoAtendimento.frete | number : "1.2-2" }}</p>
   </div>
 </div>

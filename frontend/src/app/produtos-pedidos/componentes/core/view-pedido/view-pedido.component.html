@@ -4,7 +4,6 @@
       class="atendimento-sem-produtos"
       *ngIf="atendimento.produtos.length == 0"
     >
-      
       <p><i class="pi pi-cart-plus"></i>Adicione produtos ao atendimento</p>
     </div>
     <app-produto-card-small
@@ -29,8 +28,17 @@
       </div>
     </div>
     <div class="buttons">
-      <p-button icon="pi pi-folder-open" label="Arquivar atendimento" />
-      <p-button icon="pi pi-arrow-right" label="Avançar" iconPos="right" />
+      <p-button
+        size="small"
+        icon="pi pi-folder-open"
+        label="Arquivar atendimento"
+      />
+      <p-button
+        size="small"
+        icon="pi pi-arrow-right"
+        label="Avançar"
+        iconPos="right"
+      />
     </div>
   </div>
 </div>

@@ -1,7 +1,13 @@
 .card-produto-small {
-    box-shadow: var(--box-shadow-card);
     display: flex;
-    border-radius: 4px;
+    flex-direction: column;
+}
+
+.card-info {
+    border: var(--border);
+    border-bottom: none;
+    display: flex;
+    border-radius: 4px 4px 0 0 ;
     transition: 0.1s;
     min-height: 85px;
 }
@@ -50,22 +56,11 @@
     text-overflow: ellipsis;
 }
 
-.valor-estoque {
+.tags {
     display: flex;
     gap: 1em;
 }
 
-.info-estoque {
-    background-color: var(--bg1);
-    color: var(--text-color);
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 0 0.5em;
-    font-weight: 700;
-}
 
 .buttons {
     display: flex;
@@ -99,4 +94,35 @@
 
 .quantidade {
     font-weight: 700;
+}
+
+.info-tags {
+    border: var(--border);
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    gap: 0.5em;
+    padding: 0.5em;
+}
+
+.tag {
+    background-color: var(--bg1);
+    color: var(--text-color);
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 4px;
+    padding: 0.25em 0.5em;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;  /* Limita a 1 linhas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tag i {
+    font-size: 1.2em;
+    margin-left: 0.5em;
 }

@@ -58,7 +58,7 @@
       <ul>
         <li *ngFor="let filtro of filtros">
           <p-chip
-          (onRemove)="removerFiltro(filtro)"
+            (onRemove)="removerFiltro(filtro)"
             [label]="filtro.tipoFiltro + ': ' + filtro.valor"
             [removable]="true"
           />

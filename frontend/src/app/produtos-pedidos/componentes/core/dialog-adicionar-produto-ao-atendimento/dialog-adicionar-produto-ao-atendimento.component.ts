@@ -48,7 +48,7 @@ export class DialogAdicionarProdutoAoAtendimentoComponent implements OnInit {
   public adicionarProdutoAoAtendimento(): void {
     const produtoAtendimento = {
       produto: this.produto,
-      qtdAtendimento: 0,
+      qtdAtendimento: 1,
       garantiaEstendida: this.formularioDialog.get('garantiaEstendida')?.value,
       tipoRetirada: this.formularioDialog.get('formaRetirada').value as TipoRetirada,
       estoque: this.estoqueSelecionado,
