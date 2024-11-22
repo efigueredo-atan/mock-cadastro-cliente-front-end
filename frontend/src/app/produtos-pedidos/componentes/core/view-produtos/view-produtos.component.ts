@@ -1,4 +1,9 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormPesquisaProdutoService } from '../../../services/form-pesquisa-produto.service';
 import {
@@ -16,6 +21,8 @@ import {
   combineLatest,
   of,
   startWith,
+  BehaviorSubject,
+  Subject,
 } from 'rxjs';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 
@@ -75,17 +82,14 @@ export class ViewProdutosComponent implements OnInit {
   public filtros: Filtro[] = [];
 
   constructor(
-    private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService
+    private readonly formularioPesquisaProdutoService: FormPesquisaProdutoService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.formularioPesquisaProduto =
       this.formularioPesquisaProdutoService.formularioPesquisaProduto;
     this.iniciarObservables();
-    this.obterEventoProdutoAdicionadoAoAtendimento();
-    this.escutarEventoProdutoAdicionadoAoAtendimento();
-    this.obterEventoProdutoRemovidoDoAtendimento();
-    this.escutarEventoProdutoRemovidoDoAtendimento();
   }
 
   private iniciarObservables(): void {
@@ -123,7 +127,7 @@ export class ViewProdutosComponent implements OnInit {
     // Filtragem dos produtos com base na query
     let produtosFiltrados = this.filtrarProdutos(query);
 
-    // Filtragrem dos produtos com base no departamento
+
     this.adicionarDepartamentoAListaDeFiltragem(departamento.value);
 
     // Ordenação dos produtos filtrados com base na ordenação selecionada
@@ -137,12 +141,11 @@ export class ViewProdutosComponent implements OnInit {
   }
 
   public removerFiltro(filtro: Filtro): void {
-    const index = this.filtros.findIndex((filtroLista) => {
-      const valorIgual = filtroLista.valor == filtro.valor;
-      const tipoIgual = filtroLista.tipoFiltro == filtro.tipoFiltro;
-      return valorIgual && tipoIgual;
+    this.filtros = this.filtros.filter((filtroLista) => {
+      const valorIgual = filtroLista.valor === filtro.valor;
+      const tipoIgual = filtroLista.tipoFiltro === filtro.tipoFiltro;
+      return !(valorIgual && tipoIgual); // Remove apenas se ambos forem iguais
     });
-    this.filtros.splice(index, 1);
   }
 
   private adicionarDepartamentoAListaDeFiltragem(departamento: string): void {
@@ -185,56 +188,4 @@ export class ViewProdutosComponent implements OnInit {
   private ordenarProdutosPorMaiorPreco(produtos: Produto[]): Produto[] {
     return produtos.sort((a, b) => b.valor - a.valor);
   }
-
-  public obterEventoProdutoAdicionadoAoAtendimento(): void {
-    this.eventoAdicionarProdutoAtendimento$ = EventEmitterService.get(
-      'eventoProdutoAdicionadoAoAtendimento'
-    );
-  }
-
-  public escutarEventoProdutoAdicionadoAoAtendimento(): void {
-    this.eventoAdicionarProdutoAtendimento$.subscribe((produto) => {
-      this.removerProdutoLista(produto);
-    });
-  }
-
-  public obterEventoProdutoRemovidoDoAtendimento(): void {
-    this.eventoRemoverProdutoAtendimento$ = EventEmitterService.get(
-      'eventoProdutoRemovidoDoAtendimento'
-    );
-  }
-
-  public escutarEventoProdutoRemovidoDoAtendimento(): void {
-    this.eventoRemoverProdutoAtendimento$.subscribe((produto) => {
-      console.log(produto);
-      this.adicionarProdutoLista(produto);
-    });
-  }
-
-  public removerProdutoLista(produto: Produto): void {
-    // if (this.existeProdutoNaListaDeProdutos(produto)) {
-    //   this.produtosOriginal = this.produtosOriginal.filter(
-    //     (produtoLista) => produtoLista.id !== produto.id
-    //   );
-    // }
-  }
-
-  public adicionarProdutoLista(produto: Produto): void {
-    // if (!this.existeProdutoNaListaDeProdutos(produto)) {
-    //   this.produtosOriginal = [...this.produtosOriginal, produto];
-    // }
-  }
-
-  private existeProdutoNaListaDeProdutos(produto: Produto): boolean {
-    return this.produtosOriginal.includes(produto);
-  }
-
-  // private atualizarProdutosFiltrados(): void {
-  //   const query = this.formularioPesquisaProduto.get('produtoQuery')!.value;
-  //   const ordenacao = this.formularioPesquisaProduto.get('ordenarPor')!.value;
-
-  //   this.produtosFiltrados$ = of(
-  //     this.aplicarFiltrosEOrdenacao(query, ordenacao)
-  //   );
-  // }
 }
