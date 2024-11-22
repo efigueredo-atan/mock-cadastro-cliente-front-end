@@ -27,11 +27,11 @@ export class AppComponent {
   public carregarItens(): void {
     this.items = [
       {
-        label: 'Clientes',
-        icon: 'pi pi-user',
+        label: 'Atendimento',
+        icon: 'pi pi-shop',
         items: [
           {
-            label: 'Cadastrar',
+            label: 'Novo pedido',
             icon: 'pi pi-plus',
             command: () => {
               this.router.navigate(['/cliente/cadastro']);

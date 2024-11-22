@@ -1,11 +1,14 @@
 <div class="card-produto-small" @blurAnimation>
   <div class="card-info">
-    <img
-      (click)="emitirEventoAbrirDialogProduto(this.produtoAtendimento.produto)"
-      class="imagem"
-      [src]="produtoAtendimento.produto.urlImagem"
-      alt=""
-    />
+    <div class="imagem">
+      <img
+        (click)="
+          emitirEventoAbrirDialogProduto(this.produtoAtendimento.produto)
+        "
+        [src]="produtoAtendimento.produto.urlImagem"
+        alt=""
+      />
+    </div>
     <div class="content">
       <div class="info">
         <p class="info-nome">{{ produtoAtendimento.produto.nome }}</p>
@@ -32,12 +35,16 @@
     </div>
   </div>
   <div class="info-tags">
-    <p class="tag">
-      Loja: {{ produtoAtendimento.estoque.nome }} 
-    </p>
+    <p class="tag">Loja: {{ produtoAtendimento.estoque.nome }}</p>
     <p class="tag">{{ produtoAtendimento.tipoRetirada }}</p>
-    <p class="tag" *ngIf="produtoAtendimento.montagem">Montagem<i class="pi pi-check"></i></p>
-    <p class="tag" *ngIf="produtoAtendimento.garantiaEstendida">Garantia estendida<i class="pi pi-check"></i></p>
-    <p class="tag" *ngIf="produtoAtendimento.frete">Frete: R$ {{ produtoAtendimento.frete | number : "1.2-2" }}</p>
+    <p class="tag" *ngIf="produtoAtendimento.montagem">
+      Montagem<i class="pi pi-check"></i>
+    </p>
+    <p class="tag" *ngIf="produtoAtendimento.garantiaEstendida">
+      Garantia estendida<i class="pi pi-check"></i>
+    </p>
+    <p class="tag" *ngIf="produtoAtendimento.frete">
+      Frete: R$ {{ produtoAtendimento.frete | number : "1.2-2" }}
+    </p>
   </div>
 </div>
