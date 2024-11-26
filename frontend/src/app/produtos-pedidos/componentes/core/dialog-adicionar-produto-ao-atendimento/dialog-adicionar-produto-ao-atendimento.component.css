@@ -1,5 +1,6 @@
 .dialog-adicionar-produto-atendimento {
   padding: 2em;
+  transition: 0.5s;
 }
 
 .step-estoque {
@@ -66,6 +67,11 @@
   gap: 1em;
 }
 
+.inputs {
+  display: flex;
+  gap: 2em;
+}
+
 .buttons-retirada {
   display: flex;
   justify-content: space-between;
@@ -81,13 +87,13 @@
   border-bottom: var(--border);
 }
 
-.frete {
+.info {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.frete-titulo {
+.info-titulo {
 border: var(--border);
   background-color: var(--branco-fantasma);
   padding: 0.5em 1em;
@@ -98,7 +104,7 @@ border: var(--border);
   align-items: center;
 }
 
-.frete-valor {
+.info-valor {
     font-weight: 700;
   padding: 0.5em 1em;
   border-radius: 0 0 4px 4px;
@@ -142,4 +148,29 @@ border: var(--border);
 
 .stepper h3 {
     margin-bottom: 5px;
+}
+
+.grid-garantia-estendida td {
+  cursor: pointer;
+  transition: 0.1s;
+  font-weight: 700;
+}
+/* 
+.grid-garantia-estendida tr:hover {
+  background-color: var(--bg1);
+  color: var(--text-color);
+}
+
+.grid-garantia-estendida tr:active {
+  background-color: var(--bg1);
+  color: var(--text-color);
+} */
+
+.garantia-selecionada {
+  background-color: var(--bg1);
+  color: var(--text-color);
+}
+
+::ng-deep .garantia .p-datatable-table {
+  border-radius: 4px;
 }

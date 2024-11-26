@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Cliente } from '../../../../shared/types/types';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 
@@ -8,7 +8,7 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
   styleUrl: './cadastro-cliente.component.css',
   encapsulation: ViewEncapsulation.Emulated,
 })
-export class CadastroClienteComponent implements OnInit {
+export class CadastroClienteComponent implements OnInit, OnDestroy {
   public cliente: Cliente = {
     nome: null,
     nomeFantasia: null,
@@ -30,10 +30,16 @@ export class CadastroClienteComponent implements OnInit {
     enderecoSelecionado: null,
   };
   public stepAtivo: number = 0;
+  public eventoTrocarStep$: EventEmitter<any>;
 
   
   public ngOnInit(): void {
+    this.obterEventoTrocarStep();
     this.escutarEventoTrocarStep();
+  }
+
+  public ngOnDestroy(): void {
+    this.eventoTrocarStep$ ? this.eventoTrocarStep$.unsubscribe() : null;
   }
   
   public escutarEventoTrocarStep(): void {
@@ -41,5 +47,9 @@ export class CadastroClienteComponent implements OnInit {
       this.stepAtivo = obj.index;
       this.cliente = obj.cliente;
     })
+  }
+
+  public obterEventoTrocarStep(): void {
+    this.eventoTrocarStep$ = EventEmitterService.get('eventoTrocarStep');
   }
 }

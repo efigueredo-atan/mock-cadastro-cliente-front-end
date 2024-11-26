@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { EventEmitterService } from '../../../../services/event-emitter.service';
 import { Produto } from '../../../../shared/types/types';
 import { produtosMock } from '../../../../shared/produtos.mock';
@@ -8,7 +8,7 @@ import { produtosMock } from '../../../../shared/produtos.mock';
   templateUrl: './dialog-produto.component.html',
   styleUrl: './dialog-produto.component.css',
 })
-export class DialogProdutoComponent implements OnInit {
+export class DialogProdutoComponent implements OnInit, OnDestroy {
   public produto: Produto;
   public visivel: boolean = false;
   public produtosRelacionados: Produto[] = [];
@@ -42,6 +42,10 @@ export class DialogProdutoComponent implements OnInit {
     this.produtosRelacionados.push(produtosMock[5])
     this.obterEventoFecharDialog();
     this.escutarEventoFecharDialog();
+  }
+
+  public ngOnDestroy(): void {
+    this.eventoFecharDialog$ ? this.eventoFecharDialog$.unsubscribe() : null;
   }
 
   private obterEventoFecharDialog(): void {

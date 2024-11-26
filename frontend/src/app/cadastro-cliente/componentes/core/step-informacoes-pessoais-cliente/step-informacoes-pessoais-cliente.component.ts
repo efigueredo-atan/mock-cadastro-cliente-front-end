@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { Cliente, Genero } from '../../../../shared/types/types';
@@ -17,7 +25,9 @@ import { EventEmitterService } from '../../../../services/event-emitter.service'
   templateUrl: './step-informacoes-pessoais-cliente.component.html',
   styleUrl: './step-informacoes-pessoais-cliente.component.css',
 })
-export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
+export class StepInformacoesPessoaisClienteComponent
+  implements OnInit, Step, OnDestroy
+{
   @Input() public cliente: Cliente;
 
   public tipoDocumento: any[] = [
@@ -48,6 +58,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
     this.formularioInformacoesPessoaisCPF;
 
   public indexStep = 0;
+  public eventoTrocarStep$: EventEmitter<any>;
 
   constructor(
     private readonly formCadastroClienteService: FormCadastroClienteService,
@@ -60,13 +71,22 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
     this.obterInstanciasDeFormularios();
     this.formularioInformacoesPessoaisSelecionado =
       this.formularioInformacoesPessoaisCPF;
+
+    this.obterEventoTrocarStep();
     this.escutarEventoTrocarStep();
+  }
+
+  public ngOnDestroy(): void {
+    this.eventoTrocarStep$ ? this.eventoTrocarStep$.unsubscribe() : null;
+  }
+
+  public obterEventoTrocarStep(): void {
+    this.eventoTrocarStep$ = EventEmitterService.get('eventoTrocarStep');
   }
 
   public escutarEventoTrocarStep(): void {
     EventEmitterService.get('eventoTrocarStep').subscribe((resposta) => {
       if (resposta.index == this.indexStep) {
-        
       }
     });
   }
@@ -82,7 +102,7 @@ export class StepInformacoesPessoaisClienteComponent implements OnInit, Step {
   public emitirEventoTrocarStep(index: number): void {
     EventEmitterService.get('eventoTrocarStep').emit({
       index: index,
-      cliente: this.cliente
+      cliente: this.cliente,
     });
   }
 
